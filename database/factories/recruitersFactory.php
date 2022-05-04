@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\recruiters;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RecruitersFactory extends Factory
+class recruitersFactory extends Factory
 {
     protected $model = recruiters::class;
 
@@ -13,7 +13,7 @@ class RecruitersFactory extends Factory
     {
     	return [
     	    'company_name'=>$this->faker->name,
-            'needs_description'=>$this->faker->sentences,
+            'needs_description'=>$this->faker->sentence,
             'web_site_link'=>$this->url,
     	];
     }
