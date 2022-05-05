@@ -4,3 +4,4 @@ Homestead.json
 Homestead.yaml
 .env
 .phpunit.result.cache
+Procedure_migrate_db.md

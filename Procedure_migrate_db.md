@@ -1,19 +1,23 @@
+## Flipbox setup
+
 use Flipbox\LumenGenerator\LumenGeneratorServiceProvider;
 
-terminal
-composer require flipbox/lumen-generator
+`composer require flipbox/lumen-generator`
 
-copier code dans fichier boostrap/app.php
-Inside your bootstrap/app.php file, add:
-$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+Inside your bootstrap/app.php file, in the 'Register Service Providers' section, add:
+`$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);`
 
+Generate the key that will connect our app to the DB
+`php artisan key:generate`
+The genrated key will automatically be copied in the .env file.
 
-//generation tables bdd
-```php artisan key:generate
-php artisan make:model users -fmc```
-
-//apres cette commande modifier fichier generé dans database/migrations
+### Create new migration
+This command will create a new migration file into the database folder and a model file for the new table
+`php artisan make:model users -fmc`
+In the migration file, add the properties you want to appear in the table and then send it for creation to the DB with this command:
 `php artisan migrate`
+
+
 
 // pour rajouter colonne dans table existante
 //ensuite relancer php artisan migration apres avois rajouté dans le nouveau fichier la ligne a rajouter dans la function de la classe
