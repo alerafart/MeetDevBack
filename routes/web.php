@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function() use ($router){
     $router->get('/users', 'UsersController@list');
-    //$router->post('/posts', 'PostController@store');
+    $router->post('/users', 'UsersController@create');
     //$router->put('/posts/{id}', 'PostController@update');
     //$router->delete('/posts/{id}', 'PostController@destroy');
 });
