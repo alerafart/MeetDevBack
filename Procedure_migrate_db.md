@@ -18,7 +18,6 @@ In the migration file, add the properties you want to appear in the table and th
 `php artisan migrate`
 
 
-
 // pour rajouter colonne dans table existante
 //ensuite relancer php artisan migration apres avois rajouté dans le nouveau fichier la ligne a rajouter dans la function de la classe
 ```
@@ -30,12 +29,14 @@ php artisan migrate
 php artisan tinker
 // App\Models\User::factory()->count(2)->create()
 // App\Models\Users::factory()->count(2)->create()
-App\Models\users::factory()->count(2)->create()
+App\Models\users::factory()->count(4)->create()
 App\Models\developers::factory()->count(2)->create()
+App\Models\recruiters::factory()->count(2)->create()
 ```
 
 dans routes web.php
 créer route
+------------------------------------------
 
 ```
 $router->group(['prefix' => 'api'], function() use ($router){

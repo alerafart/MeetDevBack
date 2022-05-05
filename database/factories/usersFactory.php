@@ -17,9 +17,9 @@ class usersFactory extends Factory
             'firstname' => $this->faker->firstName,
             'email_address' => $this->faker->safeEmail,
             'password' => $this->faker->password,
-            //'phone' => $this->faker->phoneNumber,
-            //'dev_id' => $this->faker->randomDigit,
-            'recrut_id' => $this->randomDigit,
+            'phone' => $this->faker->phoneNumber,
+            // 'dev_id' => $this->faker->randomDigit,
+            // 'recrut_id' => $this->randomDigit,
             'subscribe_to_push_notif' => $this->faker->boolean,
             'profile_picture' => $this->faker->url,
     	];
