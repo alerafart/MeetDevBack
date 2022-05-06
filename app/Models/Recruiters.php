@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class recruiters extends Model
 {
     use HasFactory;
+
+    public function favorites() {
+            return $this->hasMany( "App\Models\Favorites" );
+    }
 }
