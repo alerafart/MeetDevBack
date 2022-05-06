@@ -59,3 +59,10 @@ $router->group(['prefix'=>'api/languages'], function() use ($router){
     $router->put('/{id}', 'LanguagesController@update');
     $router->delete('/{id}', 'LanguagesController@delete');
 });
+
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->get('/dev_langs', 'DevLangController@list');
+    $router->post('/dev_langs', 'DevLangController@create');
+    $router->put('/dev_langs/{id}', 'DevLangController@update');
+    $router->delete('/dev_langs/{id}', 'DevLangController@delete');
+});
