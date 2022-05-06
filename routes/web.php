@@ -24,25 +24,23 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->delete('/users/{id}', 'UsersController@delete');
 });
 
- 
 $router->group(['prefix' => 'api'], function() use ($router){
     $router->get('/recruiters', 'RecruitersController@list');
     $router->post('/recruiters', 'RecruitersController@create');
     $router->put('/recruiters/{id}', 'RecruitersController@update');
     $router->delete('/recruiters/{id}', 'RecruitersController@delete');
+});
 
 $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->get('/', 'FavoritesController@list');
     $router->post('/', 'FavoritesController@create');
     $router->put('/{id}', 'FavoritesController@update');
     $router->delete('/{id}', 'FavoritesController@delete');
+});
 
-<<<<<<< HEAD
 $router->group(['prefix'=>'api/users/developers'], function() use ($router){
     $router->get('/', 'DevelopersController@list');
     $router->post('/', 'DevelopersController@create');
     $router->put('/{id}', 'DevelopersController@update');
     $router->delete('/{id}', 'DevelopersController@delete');
-=======
->>>>>>> a423c7f5ef78f9173001ecffaf62382972ae1c86
 });
