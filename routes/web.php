@@ -23,3 +23,10 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->put('/users/{id}', 'UsersController@update');
     $router->delete('/users/{id}', 'UsersController@delete');
 });
+
+$router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
+    $router->get('/', 'FavoritesController@list');
+    $router->post('/', 'FavoritesController@create');
+    $router->put('/{id}', 'FavoritesController@update');
+    $router->delete('/{id}', 'FavoritesController@delete');
+});
