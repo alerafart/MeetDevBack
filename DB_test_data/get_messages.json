@@ -1,0 +1,48 @@
+// http://localhost:8080/api/messages
+[
+  {
+    "id": 1,
+    "receiver_user_id": null,
+    "sender_user_id": null,
+    "message_content": "Commodi quasi nihil labore dolore doloremque.",
+    "signature": "Envoyé par MeetDev",
+    "created_at": "2022-05-06T09:36:25.000000Z",
+    "updated_at": "2022-05-06T09:36:25.000000Z"
+  },
+  {
+    "id": 2,
+    "receiver_user_id": null,
+    "sender_user_id": null,
+    "message_content": "Eaque delectus provident quo similique mollitia qui.",
+    "signature": "Envoyé par MeetDev",
+    "created_at": "2022-05-06T09:36:25.000000Z",
+    "updated_at": "2022-05-06T09:36:25.000000Z"
+  },
+  {
+    "id": 3,
+    "receiver_user_id": null,
+    "sender_user_id": null,
+    "message_content": "Voluptatem id nisi aspernatur.",
+    "signature": "Envoyé par MeetDev",
+    "created_at": "2022-05-06T09:36:26.000000Z",
+    "updated_at": "2022-05-06T09:36:26.000000Z"
+  },
+  {
+    "id": 4,
+    "receiver_user_id": null,
+    "sender_user_id": null,
+    "message_content": "Ipsam omnis quis est at cumque sit enim.",
+    "signature": "Envoyé par MeetDev",
+    "created_at": "2022-05-06T09:36:26.000000Z",
+    "updated_at": "2022-05-06T09:36:26.000000Z"
+  },
+  {
+    "id": 5,
+    "receiver_user_id": null,
+    "sender_user_id": null,
+    "message_content": "Iusto perferendis occaecati officiis.",
+    "signature": "Envoyé par MeetDev",
+    "created_at": "2022-05-06T09:36:26.000000Z",
+    "updated_at": "2022-05-06T09:36:26.000000Z"
+  }
+]

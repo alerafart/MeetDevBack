@@ -32,6 +32,7 @@ php artisan tinker
 App\Models\users::factory()->count(4)->create()
 App\Models\developers::factory()->count(2)->create()
 App\Models\recruiters::factory()->count(2)->create()
+App\Models\Messages::factory()->count(5)->create()
 ```
 
 dans routes web.php

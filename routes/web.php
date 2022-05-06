@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\MessagesController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -31,6 +33,13 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->delete('/recruiters/{id}', 'RecruitersController@delete');
 });
 
+
+$router->group(['prefix' => 'api'], function() use ($router) {
+    $router->get('/messages', 'MessagesController@list');
+    $router->post('/messages', 'MessagesController@create');
+    $router->put('/messages/{id}', 'MessagesController@update');
+    $router->delete('/messages/{id}', 'MessagesController@delete');
+
 $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->get('/', 'FavoritesController@list');
     $router->post('/', 'FavoritesController@create');
@@ -43,4 +52,5 @@ $router->group(['prefix'=>'api/users/developers'], function() use ($router){
     $router->post('/', 'DevelopersController@create');
     $router->put('/{id}', 'DevelopersController@update');
     $router->delete('/{id}', 'DevelopersController@delete');
+
 });
