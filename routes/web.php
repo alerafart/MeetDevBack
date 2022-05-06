@@ -23,3 +23,10 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->put('/users/{id}', 'UsersController@update');
     $router->delete('/users/{id}', 'UsersController@delete');
 });
+
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->get('/recruiters', 'RecruitersController@list');
+    $router->post('/recruiters', 'RecruitersController@create');
+    $router->put('/recruiters/{id}', 'RecruitersController@update');
+    $router->delete('/recruiters/{id}', 'RecruitersController@delete');
+});
