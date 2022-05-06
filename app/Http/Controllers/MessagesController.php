@@ -22,7 +22,7 @@ class MessagesController extends Controller
             $messages->signature = $request->signature;
 
             if ($messages->save()) {
-                return response()->json(['status' => 'succes', 'message' => 'Message created successfully']);
+                return response()->json(['status' => 'success', 'message' => 'Message created successfully']);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -38,7 +38,7 @@ class MessagesController extends Controller
             $messages->signature = $request->signature;
 
             if ($messages->save()) {
-                return response()->json(['status' => 'succes', 'message' => 'Message updated successfully']);
+                return response()->json(['status' => 'success', 'message' => 'Message updated successfully']);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -51,7 +51,7 @@ class MessagesController extends Controller
             $messages = Messages::findOrFail($id);
 
             if ($messages->delete()) {
-                return response()->json(['status' => 'succes', 'message' => 'Message deleted succesfully']);
+                return response()->json(['status' => 'success', 'message' => 'Message deleted succesfully']);
             }
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

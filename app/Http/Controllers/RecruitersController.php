@@ -20,7 +20,7 @@ class RecruitersController extends Controller
             $recruiters->web_site_link = $request->web_site_link;
 
             if ($recruiters->save()) {
-                return response()->json(['status' => 'succes', 'message' => 'Recruiter created successfully']);
+                return response()->json(['status' => 'success', 'message' => 'Recruiter created successfully']);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -35,7 +35,7 @@ class RecruitersController extends Controller
             $recruiters->web_site_link = $request->web_site_link;
 
             if ($recruiters->update()) {
-                return response()->json(['status' => 'succes', 'message' =>'Recruiter updated successfully' ]);
+                return response()->json(['status' => 'success', 'message' =>'Recruiter updated successfully' ]);
             }
 
         } catch(\Exception $e) {
@@ -48,7 +48,7 @@ class RecruitersController extends Controller
             $recruiters = Recruiters::findOrFail($id);
 
             if ($recruiters->delete()) {
-                return response()->json(['status' => 'succes', 'message' => 'Recruiter deleted succesfully']);
+                return response()->json(['status' => 'success', 'message' => 'Recruiter deleted succesfully']);
             }
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
