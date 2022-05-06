@@ -16,6 +16,8 @@ class UsersController extends Controller
             $users = new Users();
             $users->lastname = $request->lastname;
             $users->firstname = $request ->firstname;
+            $users->city = $request ->city;
+            $users->zip_code = $request ->zip_code;
             $users->email_address = $request->email_address;
             $users->password = $request ->password;
             $users->phone = $request ->phone;
