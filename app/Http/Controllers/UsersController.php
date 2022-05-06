@@ -25,7 +25,7 @@ class UsersController extends Controller
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
-                return response()->json(['status' => 'succes', 'message' => 'User created successfully']);
+                return response()->json(['status' => 'success', 'message' => 'User created successfully']);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -46,7 +46,7 @@ class UsersController extends Controller
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
-                return response()->json(['status' => 'succes', 'message' =>'User updated successfully' ]);
+                return response()->json(['status' => 'success', 'message' =>'User updated successfully' ]);
             }
 
         } catch(\Exception $e) {
