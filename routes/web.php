@@ -45,6 +45,7 @@ $router->group(['prefix' => 'api'], function() use ($router) {
     $router->post('/messages', 'MessagesController@create');
     $router->put('/messages/{id}', 'MessagesController@update');
     $router->delete('/messages/{id}', 'MessagesController@delete');
+});
 
 $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->get('/', 'FavoritesController@list');
