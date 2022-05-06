@@ -38,22 +38,61 @@ AND `recruiters`.`id`=$recrutId
 get all data from all users who have recrut_id
 ```sql
 SELECT * FROM `users` 
-RIGHT JOIN `developers` 
-ON `users`.`dev_id` = `developers`.`id
+RIGHT JOIN `recruiters` 
+ON `users`.`recrut_id` = `recruiters`.`id
 ```
+
+get users id based on a known $language
+```sql
+SELECT `users`.`id` FROM  `users`, `developers`,  `languages` , `dev_langs`
+WHERE  `languages`.`id` = `dev_langs`.`language_id`
+AND `developers`.`id` = `dev_langs`.`developer_id`
+AND `developers`.`id` = `users`.`id`
+AND `languages`.`language_name`= $language
+```
+
+
+get all devs profiles based on a known $language and $city and $exp (dev + users tables)
+```sql
+SELECT * FROM `users` 
+JOIN `developers` 
+ON `developers`.`id` = `users`.`dev_id` 
+AND `users`.`city`= $city
+AND `developers`.`years_of_experience` = $exp
+AND `users`.`dev_id` IN
+    (SELECT `developers`.`id` FROM  `developers`,  `languages` , `dev_langs`
+    WHERE  `languages`.`id` = `dev_langs`.`language_id`
+    AND `developers`.`id` = `dev_langs`.`developer_id`
+    AND `languages`.`language_name`= $language)
+```
+
+get all devs profiles based on a known $language (dev + users tables)
+```sql
+SELECT * FROM `users` 
+JOIN `developers` 
+ON `developers`.`id` = `users`.`dev_id` 
+AND `users`.`dev_id` IN
+    (SELECT `developers`.`id` FROM  `developers`,  `languages` , `dev_langs`
+    WHERE  `languages`.`id` = `dev_langs`.`language_id`
+    AND `developers`.`id` = `dev_langs`.`developer_id`
+    AND `languages`.`language_name`= $language)
+```
+
 
 ### post
 create new user
 ```sql
- INSERT INTO `users` (lastname, firstname, email_address, phone, password, dev_id, recrut_id, subscribe_to_push_notif, profile_picture)
+ INSERT INTO `users` (lastname, firstname, city, zip_code, email_address, phone, password, dev_id, recrut_id, subscribe_to_push_notif, profile_picture)
  VALUES('value1', 'value2', 'value3',...valueN)
 ```
 
-
-
-
 ### put / patch
-update
+update user profile based on user id
+```sql
+UPDATE `users`
+SET `lastname`='value', `firstname`='value', `city`='value', `zip_code`='value', `email_address`='value@value', `phone`='value', `password`='value', `dev_id`=1, `recrut_id`=1, `subscribe_to_push_notif`=0, `profile_picture`='value'
+WHERE `users`.`id` = 2
+```
 
 ### delete
 delete
@@ -65,6 +104,14 @@ delete
 ### get
 getAll
 getItem
+
+get id of devs who marked $language as known
+```sql
+SELECT `developers`.`id` FROM `developers`,  `languages` , `dev_langs`
+WHERE  `languages`.`id` = `dev_langs`.`language_id`
+AND `developers`.`id` = `dev_langs`.`developer_id`
+AND `languages`.`language_name`= $language
+```
 
 ### post
 create new developer 
@@ -128,6 +175,14 @@ delete
 ### get
 getAll
 getItem
+
+get languages names associated to a dev profile using id 
+```sql
+SELECT `language_name` FROM `languages` , `developers`, `dev_langs`
+WHERE  `languages`.`id` = `dev_langs`.`language_id`
+AND `developers`.`id` = `dev_langs`.`developer_id`
+AND `developers`.`id`=$devId
+```
 
 ### post
 insert new row into entity
