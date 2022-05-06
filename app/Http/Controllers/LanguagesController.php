@@ -17,6 +17,7 @@ class LanguagesController extends Controller
         try {
             $language = new Languages();
             $language->language_name = $request->language_name;
+            $language->language_icon = $request->language_icon;
 
             if ($language->save()) {
                 return response()->json(['status' => 'success', 'message' => 'Language created successfully']);
@@ -30,6 +31,7 @@ class LanguagesController extends Controller
         try {
             $language = Languages::findOrFail($id);
             $language->language_name = $request->language_name;
+            $language->language_icon = $request->language_icon;
 
             if ($language->save()) {
                 return response()->json(['status' => 'success', 'message' => 'Language updated successfully']);
