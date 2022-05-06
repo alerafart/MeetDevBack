@@ -12,6 +12,7 @@ class RecruitersController extends Controller
     }
 
     public function create(Request $request){
+
         try {
             $recruiters = new Recruiters();
             $recruiters->company_name = $request->company_name;

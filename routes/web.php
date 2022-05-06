@@ -54,3 +54,10 @@ $router->group(['prefix'=>'api/users/developers'], function() use ($router){
     $router->delete('/{id}', 'DevelopersController@delete');
 
 });
+
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->get('/dev_langs', 'DevLangController@list');
+    $router->post('/dev_langs', 'DevLangController@create');
+    $router->put('/dev_langs/{id}', 'DevLangController@update');
+    $router->delete('/dev_langs/{id}', 'DevLangController@delete');
+});
