@@ -151,7 +151,6 @@ delete
 
 
 
-
 ## Developers entity
 
 ### GET queries
