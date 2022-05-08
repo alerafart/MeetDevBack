@@ -3,6 +3,7 @@
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,4 +67,8 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->post('/dev_langs', 'DevLangController@create');
     $router->put('/dev_langs/{id}', 'DevLangController@update');
     $router->delete('/dev_langs/{id}', 'DevLangController@delete');
+});
+
+$router->group(['prefix' => 'api/users-developers'], function() use ($router){
+    $router->post('/', 'UsersController@createNewDevUser');
 });
