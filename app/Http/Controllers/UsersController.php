@@ -259,12 +259,6 @@ class UsersController extends Controller
      * @return void
      */
     public function login(Request $request){
-<<<<<<< HEAD
-        $request->email
-        $request->password
-
-=======
->>>>>>> b2269ccbca7d2ceedbd57a8f526ec1796d747bfc
         //dev/ recruit => true/ false à retourner au front
         $email_address = $request->email_address;
         $password = $request->password;
