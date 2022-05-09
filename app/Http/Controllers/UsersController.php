@@ -29,7 +29,7 @@ class UsersController extends Controller
      * @return void
      */
     public function item($id){
-        return response()->json( Users::findOrFail( $id )->load( "user" ) );
+        return User::whereId($id)->first();
     }
 
     /**
@@ -255,7 +255,8 @@ class UsersController extends Controller
      * @return void
      */
     public function login(Request $request){
-
+        $request->email
+        $request->password
 
         //dev/ recruit => true/ false à retourner au front
     }
