@@ -10,6 +10,7 @@ use App\Models\Dev_lang;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -263,34 +264,28 @@ class UsersController extends Controller
         $email_address = $request->email_address;
         $password = $request->password;
         $user = Users::where('email_address', '=', $email_address)->first();
-        if(!$user) {
+        if (!$user) {
             return response()->json(['status' => 'success', 'message' => 'Login Fail, please check email id']);
         }
 
-        if($password===$user->password) {
-            return response()->json(['status' => 'success', 'message' => 'login successfull']);
+        if($password===$user->password) { // ((Hash::check($password, $user->password))){
+            if(!empty($user->dev_id)) {
+              // if($isDev){
+               // return Developers::where('id', '=', $user->dev_id);
+               // return $user;
+                $dev_id = $user->dev_id;
+                $dev = DB::table('developers')
+                ->select('*')
+                ->where('id', '=', $dev_id)
+                ->get();
+                return $dev;
+            //    return $dev;
+            }
+
+            //return response()->json(['status' => 'success', 'message' => 'login successfull']);
         }else {
             return response()->json(['status' => 'error', 'message' => 'Login Fail, pls check password'], 400);
         }
-        // if (!$user) {
-        //     return response()->json(['success'=>false, 'message' => 'Login Fail, please check email id']);
-        //   }
-        // if ($password===$user->password)
-        //     // ((Hash::check($password, $user->password)))
-        //     {
-        //         $isDev = $user->whereNotNull('dev_id')->exists();
-        //         if($isDev){
-
-        //             return Developers::whereId($user->dev_id);
-        //         }
-        //     return response()->json(['success'=>true,'message'=>'success']);}
-
-        //  else
-        //  // (!Hash::check($password, $user->password))
-        //  {
-        //     return response()->json(['success'=>false, 'message' => 'Login Fail, pls check password']);
-        //  }
-
 
     }
 }
