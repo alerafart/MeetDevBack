@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use App\Models\Developers;
-use App\Models\Languages;
-use App\Models\Dev_lang;
 //use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
@@ -107,22 +105,11 @@ class UsersController extends Controller
                         if ($developer->save()) {
                             $devId = $developer->id;
                             $user->dev_id = $devId;
-                            $user->save();
 
-                            $language = Languages::where('language_name', '=', $request->language)->first();
-                            if ($language) {
-                                $dev_lang = new Dev_lang();
-                                $dev_lang->language_id = $language->id;
-                                $dev_lang->developer_id	 = $devId;
-                                $dev_lang->save();
+                            $request->language;
 
-                                if ($user->save() && $dev_lang->save()) {
-                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved']);
-                                } else {
-                                    return response()->json(['status' => 'error', 'message' => 'Language not saved'],400);
-                                }
-                            } elseif (!$language) {
-                                return response()->json(['status' => 'error', 'message' => 'Language does not exists, profile save'],400);
+                            if ($user->save()) {
+                                return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
                             }
                         }
                     } catch (\Exception $e) {
@@ -176,7 +163,6 @@ class UsersController extends Controller
                         if ($recruiter->save()) {
                             $recruiterId = $recruiter->id;
                             $user->recrut_id = $recruiterId;
-                            // $request->language;
 
                             if ($user->save()) {
                                 return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully']);
@@ -255,9 +241,24 @@ class UsersController extends Controller
      * @return void
      */
     public function login(Request $request){
+<<<<<<< HEAD
         $request->email
         $request->password
 
+=======
+>>>>>>> b2269ccbca7d2ceedbd57a8f526ec1796d747bfc
         //dev/ recruit => true/ false à retourner au front
+        $email_address = $request->email_address;
+        $password = $request->password;
+        $user = Users::where('email_address', '=', $email_address)->first();
+
+        if (!$user) {
+            return response()->json(['success'=>false, 'message' => 'Login Fail, please check email id']);
+         }
+         if (!Hash::check($password, $user->password)) {
+            return response()->json(['success'=>false, 'message' => 'Login Fail, pls check password']);
+         }
+            return response()->json(['success'=>true,'message'=>'success', 'data' => $user]);
+
     }
 }
