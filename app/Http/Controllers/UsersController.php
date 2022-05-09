@@ -199,8 +199,6 @@ class UsersController extends Controller
     }
 
 
-
-
     /**
      * update a specific user row
      *
@@ -218,8 +216,6 @@ class UsersController extends Controller
             $users->email_address = $request->email_address;
             $users->password = $request ->password;
             $users->phone = $request ->phone;
-            // $users->dev_id = $request->dev_id;
-            // $users->recrut_id = $request ->recrut_id;
             $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
             $users->profile_picture = $request ->profile_picture;
 
@@ -230,8 +226,8 @@ class UsersController extends Controller
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-
     }
+
 
     /**
      * Delete user row
