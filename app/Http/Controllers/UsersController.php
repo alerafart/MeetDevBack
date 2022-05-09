@@ -260,7 +260,8 @@ class UsersController extends Controller
      * @return void
      */
     public function login(Request $request){
-        //dev/ recruit => true/ false à retourner au front
+        $isDev = false;
+
         $email_address = $request->email_address;
         $password = $request->password;
         $user = Users::where('email_address', '=', $email_address)->first();
@@ -270,19 +271,24 @@ class UsersController extends Controller
 
         if($password===$user->password) { // ((Hash::check($password, $user->password))){
             if(!empty($user->dev_id)) {
-              // if($isDev){
-               // return Developers::where('id', '=', $user->dev_id);
-               // return $user;
+                $isDev = true;
+
                 $dev_id = $user->dev_id;
                 $dev = DB::table('developers')
                 ->select('*')
                 ->where('id', '=', $dev_id)
                 ->get();
-                return $dev;
-            //    return $dev;
+
+                return response()->json(['status' => 'success', 'message' => 'login successfull', 'isDev' => $isDev, 'general' => $user, 'spec' => $dev]);
+            } else if(!empty($user->recrut_id)) {
+                $recrut_id = $user->recrut_id;
+                $recrut = DB::table('recruiters')
+                ->select('*')
+                ->where('id', '=', $recrut_id)
+                ->get();
+                return response()->json(['status' => 'success', 'message' => 'login successfull','isDev' => $isDev, 'general' => $user, 'spec' => $recrut]);
             }
 
-            //return response()->json(['status' => 'success', 'message' => 'login successfull']);
         }else {
             return response()->json(['status' => 'error', 'message' => 'Login Fail, pls check password'], 400);
         }
