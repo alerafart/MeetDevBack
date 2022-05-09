@@ -254,13 +254,14 @@ class UsersController extends Controller
 
 
     /**
-     * User login method
+     * User login method that return user data, including dev or recruiter info
      *
      * @param Request $request
      * @return void
      */
     public function login(Request $request){
         $isDev = false;
+        $isRecruiter = false;
 
         $email_address = $request->email_address;
         $password = $request->password;
@@ -269,7 +270,7 @@ class UsersController extends Controller
             return response()->json(['status' => 'success', 'message' => 'Login Fail, please check email id']);
         }
 
-        if($password===$user->password) { // ((Hash::check($password, $user->password))){
+        if((Hash::check($password, $user->password))){ //($password===$user->password) {
             if(!empty($user->dev_id)) {
                 $isDev = true;
 
@@ -279,18 +280,20 @@ class UsersController extends Controller
                 ->where('id', '=', $dev_id)
                 ->get();
 
-                return response()->json(['status' => 'success', 'message' => 'login successfull', 'isDev' => $isDev, 'general' => $user, 'spec' => $dev]);
+                return response()->json(['status' => 'success', 'message' => 'Login successfull', 'isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $dev]);
             } else if(!empty($user->recrut_id)) {
+                $isRecruiter = true;
+
                 $recrut_id = $user->recrut_id;
                 $recrut = DB::table('recruiters')
                 ->select('*')
                 ->where('id', '=', $recrut_id)
                 ->get();
-                return response()->json(['status' => 'success', 'message' => 'login successfull','isDev' => $isDev, 'general' => $user, 'spec' => $recrut]);
+                return response()->json(['status' => 'success', 'message' => 'Login successfull','isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $recrut]);
             }
 
         }else {
-            return response()->json(['status' => 'error', 'message' => 'Login Fail, pls check password'], 400);
+            return response()->json(['status' => 'error', 'message' => 'Login fail, pls check password'], 400);
         }
 
     }
