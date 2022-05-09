@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use Illuminate\Http\Request;
-use App\Http\Controllers\DevelopersController;
+//use App\Http\Controllers\DevelopersController;
 use App\Models\Developers;
 use Illuminate\Support\Facades\Hash;
 
@@ -105,11 +105,14 @@ class UsersController extends Controller
                             $devId = $developer->id;
                             $user->dev_id = $devId;
 
+                            $request->language;
+
                             if ($user->save()) {
                                 return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
                             }
                         }
                     } catch (\Exception $e) {
+                        $user->delete();
                         return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                     }
                 }
