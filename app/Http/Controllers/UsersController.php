@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use App\Models\Developers;
+use App\Models\Languages;
+use App\Models\Dev_lang;
 //use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
@@ -27,7 +29,7 @@ class UsersController extends Controller
      * @return void
      */
     public function item($id){
-        return User::whereId($id)->first();
+        return Users::whereId($id)->first();
     }
 
     /**
@@ -105,14 +107,31 @@ class UsersController extends Controller
                         if ($developer->save()) {
                             $devId = $developer->id;
                             $user->dev_id = $devId;
+                            $user->save();
 
-                            $request->language;
+                            $language = Languages::where('language_name', '=', $request->language)->first();
+                            if ($language) {
+                                $dev_lang = new Dev_lang();
+                                $dev_lang->language_id = $language->id;
+                                $dev_lang->developer_id	 = $devId;
+                                $dev_lang->save();
 
-                            if ($user->save()) {
-                                return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
+                                if ($user->save() && $dev_lang->save()) {
+                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved']);
+                                } else {
+                                    return response()->json(['status' => 'error', 'message' => 'Language not saved'], 400);
+                                }
+                            } elseif (!$language) {
+                                return response()->json(['status' => 'error', 'message' => 'Language does not exists, profile save'], 400);
+
+                                $request->language;
+
+                                if ($user->save()) {
+                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
+                                }
                             }
                         }
-                    } catch (\Exception $e) {
+                        }catch (\Exception $e) {
                         $user->delete();
                         return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                     }
@@ -122,7 +141,6 @@ class UsersController extends Controller
             }
         }
     }
-
 
     /**
      * create new recruiter user into DB which means: 1 new row in the Users tables, 1 other in the Recruiters table and the id of the recruiter newly created row being pushed into the Users recrut_id column.
