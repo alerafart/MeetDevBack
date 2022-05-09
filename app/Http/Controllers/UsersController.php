@@ -10,6 +10,7 @@ use App\Models\Dev_lang;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -253,24 +254,47 @@ class UsersController extends Controller
 
 
     /**
-     * User login method
+     * User login method that return user data, including dev or recruiter info
      *
      * @param Request $request
      * @return void
      */
     public function login(Request $request){
-        //dev/ recruit => true/ false à retourner au front
+        $isDev = false;
+        $isRecruiter = false;
+
         $email_address = $request->email_address;
         $password = $request->password;
         $user = Users::where('email_address', '=', $email_address)->first();
-
         if (!$user) {
-            return response()->json(['success'=>false, 'message' => 'Login Fail, please check email id']);
-         }
-         if (!Hash::check($password, $user->password)) {
-            return response()->json(['success'=>false, 'message' => 'Login Fail, pls check password']);
-         }
-            return response()->json(['success'=>true,'message'=>'success', 'data' => $user]);
+            return response()->json(['status' => 'success', 'message' => 'Login Fail, please check email id']);
+        }
+
+        if((Hash::check($password, $user->password))){ //($password===$user->password) {
+            if(!empty($user->dev_id)) {
+                $isDev = true;
+
+                $dev_id = $user->dev_id;
+                $dev = DB::table('developers')
+                ->select('*')
+                ->where('id', '=', $dev_id)
+                ->get();
+
+                return response()->json(['status' => 'success', 'message' => 'Login successfull', 'isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $dev]);
+            } else if(!empty($user->recrut_id)) {
+                $isRecruiter = true;
+
+                $recrut_id = $user->recrut_id;
+                $recrut = DB::table('recruiters')
+                ->select('*')
+                ->where('id', '=', $recrut_id)
+                ->get();
+                return response()->json(['status' => 'success', 'message' => 'Login successfull','isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $recrut]);
+            }
+
+        }else {
+            return response()->json(['status' => 'error', 'message' => 'Login fail, pls check password'], 400);
+        }
 
     }
 }
