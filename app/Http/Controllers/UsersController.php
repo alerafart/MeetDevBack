@@ -259,24 +259,38 @@ class UsersController extends Controller
      * @return void
      */
     public function login(Request $request){
-<<<<<<< HEAD
-        $request->email
-        $request->password
-
-=======
->>>>>>> b2269ccbca7d2ceedbd57a8f526ec1796d747bfc
         //dev/ recruit => true/ false à retourner au front
         $email_address = $request->email_address;
         $password = $request->password;
         $user = Users::where('email_address', '=', $email_address)->first();
+        if(!$user) {
+            return response()->json(['status' => 'success', 'message' => 'Login Fail, please check email id']);
+        }
 
-        if (!$user) {
-            return response()->json(['success'=>false, 'message' => 'Login Fail, please check email id']);
-         }
-         if (!Hash::check($password, $user->password)) {
-            return response()->json(['success'=>false, 'message' => 'Login Fail, pls check password']);
-         }
-            return response()->json(['success'=>true,'message'=>'success', 'data' => $user]);
+        if($password===$user->password) {
+            return response()->json(['status' => 'success', 'message' => 'login successfull']);
+        }else {
+            return response()->json(['status' => 'error', 'message' => 'Login Fail, pls check password'], 400);
+        }
+        // if (!$user) {
+        //     return response()->json(['success'=>false, 'message' => 'Login Fail, please check email id']);
+        //   }
+        // if ($password===$user->password)
+        //     // ((Hash::check($password, $user->password)))
+        //     {
+        //         $isDev = $user->whereNotNull('dev_id')->exists();
+        //         if($isDev){
+
+        //             return Developers::whereId($user->dev_id);
+        //         }
+        //     return response()->json(['success'=>true,'message'=>'success']);}
+
+        //  else
+        //  // (!Hash::check($password, $user->password))
+        //  {
+        //     return response()->json(['success'=>false, 'message' => 'Login Fail, pls check password']);
+        //  }
+
 
     }
 }
