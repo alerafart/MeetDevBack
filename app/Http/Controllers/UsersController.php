@@ -6,6 +6,8 @@ use App\Models\Users;
 use Illuminate\Http\Request;
 //use App\Http\Controllers\DevelopersController;
 use App\Models\Developers;
+use App\Models\Languages;
+use App\Models\Dev_lang;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -104,11 +106,22 @@ class UsersController extends Controller
                         if ($developer->save()) {
                             $devId = $developer->id;
                             $user->dev_id = $devId;
+                            $user->save();
 
-                            $request->language;
+                            $language = Languages::where('language_name', '=', $request->language)->first();
+                            if ($language) {
+                                $dev_lang = new Dev_lang();
+                                $dev_lang->language_id = $language->id;
+                                $dev_lang->developer_id	 = $devId;
+                                $dev_lang->save();
 
-                            if ($user->save()) {
-                                return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
+                                if ($user->save() && $dev_lang->save()) {
+                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved']);
+                                } else {
+                                    return response()->json(['status' => 'error', 'message' => 'Language not saved'],400);
+                                }
+                            } elseif (!$language) {
+                                return response()->json(['status' => 'error', 'message' => 'Language does not exists, profile save'],400);
                             }
                         }
                     } catch (\Exception $e) {
