@@ -22,12 +22,13 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function() use ($router){
     $router->get('/users', 'UsersController@list');
+    $router->get('/users/{id}', 'UsersController@item');
     $router->post('/users', 'UsersController@create');
     $router->put('/users/{id}', 'UsersController@update');
     $router->delete('/users/{id}', 'UsersController@delete');
 });
 
-$router->group(['prefix'=>'api/users/developers'], function() use ($router){
+$router->group(['prefix'=>'api/developers'], function() use ($router){
     $router->get('/', 'DevelopersController@list');
     $router->post('/', 'DevelopersController@create');
     $router->put('/{id}', 'DevelopersController@update');
@@ -69,6 +70,8 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->delete('/dev_langs/{id}', 'DevLangController@delete');
 });
 
-$router->group(['prefix' => 'api/users-developers'], function() use ($router){
-    $router->post('/', 'UsersController@createNewDevUser');
+$router->group(['prefix' => 'api/users'], function() use ($router){
+    $router->post('/developer', 'UsersController@createNewDevUser');
+    $router->post('/recruiter', 'UsersController@createNewRecruiterUser');
+    $router->post('/login', 'UsersController@login');
 });

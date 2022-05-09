@@ -10,6 +10,7 @@ use App\Models\Dev_lang;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -29,7 +30,7 @@ class UsersController extends Controller
      * @return void
      */
     public function item($id){
-        return response()->json( Users::findOrFail( $id )->load( "user" ) );
+        return Users::whereId($id)->first();
     }
 
     /**
@@ -119,13 +120,19 @@ class UsersController extends Controller
                                 if ($user->save() && $dev_lang->save()) {
                                     return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved']);
                                 } else {
-                                    return response()->json(['status' => 'error', 'message' => 'Language not saved'],400);
+                                    return response()->json(['status' => 'error', 'message' => 'Language not saved'], 400);
                                 }
                             } elseif (!$language) {
-                                return response()->json(['status' => 'error', 'message' => 'Language does not exists, profile save'],400);
+                                return response()->json(['status' => 'error', 'message' => 'Language does not exists, profile save'], 400);
+
+                                $request->language;
+
+                                if ($user->save()) {
+                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
+                                }
                             }
                         }
-                    } catch (\Exception $e) {
+                        }catch (\Exception $e) {
                         $user->delete();
                         return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                     }
@@ -135,7 +142,6 @@ class UsersController extends Controller
             }
         }
     }
-
 
     /**
      * create new recruiter user into DB which means: 1 new row in the Users tables, 1 other in the Recruiters table and the id of the recruiter newly created row being pushed into the Users recrut_id column.
@@ -176,7 +182,6 @@ class UsersController extends Controller
                         if ($recruiter->save()) {
                             $recruiterId = $recruiter->id;
                             $user->recrut_id = $recruiterId;
-                            // $request->language;
 
                             if ($user->save()) {
                                 return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully']);
@@ -192,8 +197,6 @@ class UsersController extends Controller
             }
         }
     }
-
-
 
 
     /**
@@ -213,8 +216,6 @@ class UsersController extends Controller
             $users->email_address = $request->email_address;
             $users->password = $request ->password;
             $users->phone = $request ->phone;
-            // $users->dev_id = $request->dev_id;
-            // $users->recrut_id = $request ->recrut_id;
             $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
             $users->profile_picture = $request ->profile_picture;
 
@@ -225,8 +226,8 @@ class UsersController extends Controller
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-
     }
+
 
     /**
      * Delete user row
@@ -249,14 +250,47 @@ class UsersController extends Controller
 
 
     /**
-     * User login method
+     * User login method that return user data, including dev or recruiter info
      *
      * @param Request $request
      * @return void
      */
     public function login(Request $request){
+        $isDev = false;
+        $isRecruiter = false;
 
+        $email_address = $request->email_address;
+        $password = $request->password;
+        $user = Users::where('email_address', '=', $email_address)->first();
+        if (!$user) {
+            return response()->json(['status' => 'success', 'message' => 'Login Fail, please check email id']);
+        }
 
-        //dev/ recruit => true/ false à retourner au front
+        if((Hash::check($password, $user->password))){ //($password===$user->password) {
+            if(!empty($user->dev_id)) {
+                $isDev = true;
+
+                $dev_id = $user->dev_id;
+                $dev = DB::table('developers')
+                ->select('*')
+                ->where('id', '=', $dev_id)
+                ->get();
+
+                return response()->json(['status' => 'success', 'message' => 'Login successfull', 'isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $dev]);
+            } else if(!empty($user->recrut_id)) {
+                $isRecruiter = true;
+
+                $recrut_id = $user->recrut_id;
+                $recrut = DB::table('recruiters')
+                ->select('*')
+                ->where('id', '=', $recrut_id)
+                ->get();
+                return response()->json(['status' => 'success', 'message' => 'Login successfull','isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $recrut]);
+            }
+
+        }else {
+            return response()->json(['status' => 'error', 'message' => 'Login fail, pls check password'], 400);
+        }
+
     }
 }

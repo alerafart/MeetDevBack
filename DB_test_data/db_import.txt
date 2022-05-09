@@ -1,0 +1,195 @@
+-- Adminer 4.7.6 MySQL dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+SET NAMES utf8mb4;
+
+DROP TABLE IF EXISTS `developers`;
+CREATE TABLE `developers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `available_for_recruiters` tinyint(1) unsigned zerofill DEFAULT 1,
+  `available_for_developers` tinyint(1) unsigned zerofill DEFAULT 0,
+  `minimum_salary_requested` int(11) unsigned NOT NULL,
+  `maximum_salary_requested` int(11) unsigned DEFAULT NULL,
+  `age` int(11) unsigned NOT NULL,
+  `years_of_experience` int(11) unsigned NOT NULL,
+  `github_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `portfolio_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `other_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `developers` (`id`, `description`, `available_for_recruiters`, `available_for_developers`, `minimum_salary_requested`, `maximum_salary_requested`, `age`, `years_of_experience`, `github_link`, `portfolio_link`, `other_link`, `created_at`, `updated_at`) VALUES
+(1,	'Sint odio non similique et facilis minima.',	NULL,	NULL,	3172,	392,	4,	5,	'https://jakubowski.net/iure-cumque-odio-ducimus.html',	'http://www.olson.biz/',	'https://morissette.com/iusto-harum-enim-eligendi-sed-tenetur-numquam-atque.html',	'2022-05-04 13:10:10',	'2022-05-04 13:10:10'),
+(2,	'Soluta aut adipisci ab est quas magnam autem.',	NULL,	NULL,	985,	96052683,	2,	8,	'http://www.kohler.com/illo-illo-sequi-ipsam-ipsa-rerum-vero-exercitationem-id',	'http://anderson.com/',	'http://www.adams.com/',	'2022-05-04 13:10:10',	'2022-05-04 13:10:10'),
+(3,	'Ut nemo qui eos ex.',	NULL,	NULL,	67189162,	897475,	8,	3,	'http://www.boehm.com/animi-enim-dolores-est-autem-aut-corporis-repellat',	'http://www.batz.com/',	'http://okon.net/aperiam-accusamus-tempora-explicabo-sunt',	'2022-05-05 09:49:51',	'2022-05-05 09:49:51'),
+(4,	'Dolorem iste et consequatur.',	NULL,	NULL,	3838137,	913434463,	1,	0,	'https://www.cremin.net/iusto-dicta-dolores-a-error-quae-sit',	'http://www.thompson.biz/quia-laboriosam-in-veniam-iusto-omnis-ea',	'http://skiles.com/est-consequuntur-sint-quis-et-nihil-est.html',	'2022-05-05 09:49:51',	'2022-05-05 09:49:51'),
+(5,	'blablablbalabla',	1,	0,	48000,	52000,	43,	11,	NULL,	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(6,	'gneugneu',	1,	0,	62100,	100000,	58,	30,	'github.github',	'portfolio.portfolio',	'other',	'2022-05-06 16:57:37',	'2022-05-06 16:57:37');
+
+DROP TABLE IF EXISTS `dev_langs`;
+CREATE TABLE `dev_langs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) unsigned NOT NULL,
+  `developer_id` int(11) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `language_id` (`language_id`),
+  KEY `developer_id` (`developer_id`),
+  CONSTRAINT `dev_langs_ibfk_3` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `dev_langs_ibfk_5` FOREIGN KEY (`developer_id`) REFERENCES `developers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `dev_langs` (`id`, `language_id`, `developer_id`, `created_at`, `updated_at`) VALUES
+(2,	6,	2,	'2022-05-06 13:52:52',	'2022-05-06 13:54:23'),
+(3,	1,	2,	'2022-05-06 14:09:36',	'0000-00-00 00:00:00'),
+(4,	4,	4,	'2022-05-06 14:09:53',	'0000-00-00 00:00:00'),
+(5,	6,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(6,	6,	5,	'2022-05-06 16:17:38',	'0000-00-00 00:00:00');
+
+DROP TABLE IF EXISTS `favorites`;
+CREATE TABLE `favorites` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `developer_id` int(11) unsigned NOT NULL,
+  `recruiter_id` int(11) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `developer_id` (`developer_id`),
+  KEY `recruiter_id` (`recruiter_id`),
+  CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`developer_id`) REFERENCES `developers` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `languages`;
+CREATE TABLE `languages` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `language_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language_icon` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `languages` (`id`, `language_name`, `language_icon`, `created_at`, `updated_at`) VALUES
+(1,	'HTML',	NULL,	'2022-05-04 12:35:52',	'2022-05-04 12:35:52'),
+(2,	'JAVASCRIPT',	NULL,	'2022-05-04 12:35:52',	'2022-05-04 12:35:52'),
+(3,	'REACT',	NULL,	'2022-05-04 12:49:21',	'2022-05-04 12:49:21'),
+(4,	'CSS',	NULL,	'2022-05-04 12:49:21',	'2022-05-04 12:49:21'),
+(5,	'SASS',	NULL,	'2022-05-05 08:54:11',	'2022-05-05 08:54:11'),
+(6,	'Ruby on Rails',	NULL,	'2022-05-05 08:54:11',	'2022-05-05 08:54:11'),
+(7,	'PHP',	NULL,	'2022-05-06 13:53:20',	'2022-05-06 13:53:20'),
+(9,	'Java',	NULL,	'2022-05-06 13:33:14',	'2022-05-06 13:33:14'),
+(10,	'C#',	NULL,	'2022-05-06 13:53:49',	'0000-00-00 00:00:00');
+
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `receiver_user_id` int(11) unsigned zerofill DEFAULT 00000000000,
+  `sender_user_id` int(11) unsigned zerofill DEFAULT 00000000000,
+  `message_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Envoyé par MeetDev',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `receiver_user_id` (`receiver_user_id`),
+  KEY `sender_user_id` (`sender_user_id`),
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`receiver_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`sender_user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `messages` (`id`, `receiver_user_id`, `sender_user_id`, `message_content`, `signature`, `created_at`, `updated_at`) VALUES
+(1,	NULL,	NULL,	'Commodi quasi nihil labore dolore doloremque.',	'Envoyé par MeetDev',	'2022-05-06 12:55:17',	'2022-05-06 13:56:08'),
+(2,	NULL,	NULL,	'Eaque delectus provident quo similique mollitia qui.',	'Envoyé par MeetDev',	'2022-05-06 09:36:25',	'2022-05-06 09:36:25'),
+(3,	NULL,	NULL,	'Voluptatem id nisi aspernatur.',	'Envoyé par MeetDev',	'2022-05-06 09:36:26',	'2022-05-06 09:36:26'),
+(4,	NULL,	NULL,	'Ipsam omnis quis est at cumque sit enim.',	'Envoyé par MeetDev',	'2022-05-06 09:36:26',	'2022-05-06 09:36:26'),
+(5,	NULL,	NULL,	'Iusto perferendis occaecati officiis.',	'Envoyé par MeetDev',	'2022-05-06 09:36:26',	'2022-05-06 09:36:26'),
+(6,	NULL,	NULL,	'Commodi quasi nihil labore dolore doloremque.',	'Envoyé par MeetDev',	'2022-05-06 10:28:11',	'2022-05-06 10:28:11'),
+(7,	NULL,	NULL,	'Updated Commodi quasi nihil labore dolore doloremque.',	' updated Envoyé par MeetDev',	'2022-05-06 10:40:14',	'2022-05-06 10:40:14');
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1,	'2022_05_04_092349_create_users_table',	1),
+(2,	'2022_05_04_100514_add_phone_to_users_table',	2),
+(3,	'2022_05_04_101141_add_phone_to_users_table',	3),
+(4,	'2022_05_04_120344_create_languages_table',	4),
+(5,	'2022_05_04_120935_create_messages_table',	5),
+(6,	'2022_05_04_121346_create_recruiters_table',	6),
+(7,	'2022_05_04_121700_create_developers_table',	7),
+(8,	'2022_05_05_095557_create_favorites_table',	8),
+(9,	'2022_05_05_100001_create_dev_langs_table',	9);
+
+DROP TABLE IF EXISTS `recruiters`;
+CREATE TABLE `recruiters` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `needs_description` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `web_site_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `recruiters` (`id`, `company_name`, `needs_description`, `web_site_link`, `created_at`, `updated_at`) VALUES
+(1,	'otelo',	'Rattaché à la Direction du Patrimoine bâti, et sous l\'autorité hiérarchique du ...',	'www.otelo.com',	'2022-05-06 09:26:27',	'2022-05-06 09:26:27'),
+(2,	'Mrs. Ada Kulas IV',	'Sunt dolore modi est inventore molestias.',	NULL,	'2022-05-05 09:51:50',	'2022-05-05 09:51:50'),
+(3,	'Alfreda Kiehn DDS',	'Doloremque iste adipisci in sed natus.',	NULL,	'2022-05-05 09:52:25',	'2022-05-05 09:52:25'),
+(4,	'Dr. Felton Franecki DVM',	'Nemo iste voluptatem maiores nam sed.',	NULL,	'2022-05-05 09:52:25',	'2022-05-05 09:52:25'),
+(6,	'coucou',	NULL,	NULL,	'2022-05-09 14:01:07',	'2022-05-09 14:01:07');
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `zip_code` int(11) unsigned NOT NULL,
+  `email_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` bigint(17) NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dev_id` int(11) unsigned DEFAULT NULL,
+  `recrut_id` int(11) unsigned DEFAULT NULL,
+  `subscribe_to_push_notif` tinyint(1) unsigned zerofill NOT NULL DEFAULT 0,
+  `profile_picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dev_id` (`dev_id`),
+  KEY `recrut_id` (`recrut_id`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`dev_id`) REFERENCES `developers` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `users_ibfk_2` FOREIGN KEY (`recrut_id`) REFERENCES `recruiters` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `users` (`id`, `lastname`, `firstname`, `city`, `zip_code`, `email_address`, `phone`, `password`, `dev_id`, `recrut_id`, `subscribe_to_push_notif`, `profile_picture`, `created_at`, `updated_at`) VALUES
+(1,	'Fadel',	'Darrin',	'Paris',	75018,	'rhermiston@example.net',	13645595259,	'|Ucp+D_',	2,	NULL,	1,	'http://www.parisian.org/consequatur-quis-tempora-ducimus-quo-labore-voluptates-rerum',	'2022-05-09 14:08:36',	'2022-05-06 16:10:19'),
+(2,	'Stark',	'Lulu',	'Lyon',	69001,	'olittel@example.org',	8162379680,	'OO9sJ;C?',	1,	NULL,	1,	'http://cassin.com/aspernatur-tenetur-asperiores-repellat-omnis-aspernatur.html',	'2022-05-09 14:12:34',	'2022-05-06 16:10:30'),
+(4,	'Kiehn',	'Mariana',	'',	0,	'lori.walsh@example.com',	14799484971,	'/#2S9`wi39m\"CLPt',	4,	NULL,	1,	'http://runte.com/consectetur-odit-in-dolores-amet',	'2022-05-09 14:08:49',	'2022-05-05 09:48:05'),
+(5,	'Kerluke',	'Amani',	'',	0,	'wdeckow@example.net',	19383420345,	'Ih7$p/;kJmqYLv@H',	3,	NULL,	1,	'http://www.kirlin.biz/',	'2022-05-09 14:12:10',	'2022-05-05 09:48:05'),
+(6,	'Sauer',	'Camille',	'',	0,	'kale51@example.net',	14638707406,	']aWhe%2',	NULL,	2,	1,	'http://mosciski.com/',	'2022-05-09 14:09:05',	'2022-05-05 09:53:32'),
+(7,	'Feest',	'Jarrod',	'',	0,	'armstrong.malika@example.net',	15162521201,	'B$!o_6GQ1B;6}\"m:',	NULL,	4,	1,	'http://stamm.com/dicta-vel-repudiandae-esse-magnam-autem-aliquid-et.html',	'2022-05-09 14:09:18',	'2022-05-05 09:53:32'),
+(8,	'Veum',	'Kaci',	'',	0,	'laura.jacobson@example.net',	18483089747,	'#l@[6zARm<q`a',	NULL,	1,	0,	'http://www.will.net/sit-qui-iusto-quae-sed-fugiat-ducimus-consectetur',	'2022-05-09 14:09:32',	'2022-05-05 09:53:32'),
+(9,	'Price',	'Elmer',	'',	0,	'wintheiser.dianna@example.org',	15184671678,	'@l|VQyoA-kyQ]uhx@l',	NULL,	3,	0,	'http://bashirian.org/qui-ratione-cum-totam-dolor',	'2022-05-09 14:09:41',	'2022-05-05 09:53:32'),
+(11,	'agatha',	'feeling',	'',	0,	'agatha@feeling.io',	64522887,	'feeling',	NULL,	NULL,	0,	'agat.png',	'2022-05-05 14:20:39',	'2022-05-05 14:20:39'),
+(14,	'toto alice modifie',	'toutou alice',	'',	0,	'aliciatoto@feeling.io',	6000555,	'meetdev',	NULL,	NULL,	9,	'toutoualice.png',	'2022-05-06 07:36:59',	'2022-05-06 07:36:59'),
+(15,	'henri',	'tenturier',	'',	0,	'henri@feeling.io',	60000000,	'meetdev',	NULL,	NULL,	9,	'henri.png',	'2022-05-06 13:13:55',	'2022-05-06 13:13:55'),
+(16,	'gneu',	'gneugneu',	'Calais',	62100,	'gneugneugneu@gneugneu',	12184258,	'gneugneu',	6,	NULL,	0,	'value.png',	'2022-05-09 14:10:05',	'2022-05-06 16:57:37'),
+(17,	'value',	'value',	'stgo',	78740,	'value@value',	15165564,	'value',	1,	1,	0,	'value',	'2022-05-09 14:12:22',	'2022-05-06 16:43:03'),
+(19,	'Dubois',	'Marie-Jeanne',	'Lyon',	69008,	'mjdubois@blabla.net',	800030287,	'blabla',	5,	NULL,	0,	NULL,	'2022-05-06 16:16:46',	'2022-05-06 16:16:46'),
+(21,	'coucou',	'tenturier',	'stgo',	78740,	'coucou@feeling.io',	60000000,	'$2y$10$.8Yz3/8eJR6oTU46QWTW1.2Tv.vpNA9D7gxsQiCWRRREg1AZ69PcK',	NULL,	6,	9,	'henri.png',	'2022-05-09 14:01:07',	'2022-05-09 14:01:07');
+
+-- 2022-05-09 14:15:36
