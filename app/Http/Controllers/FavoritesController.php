@@ -8,10 +8,31 @@ use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
 {
+    /**
+     * get all favorites
+     *
+     * @return void
+     */
     public function list(){
         return Favorites::all();
     }
 
+    /**
+     * get favorite by id
+     *
+     * @param [int] $id
+     * @return void
+     */
+    public function item($id){
+        return Favorites::whereId($id)->first();
+    }
+
+    /**
+     * create new
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request) {
         try {
             $favorite = new Favorites();
@@ -26,6 +47,13 @@ class FavoritesController extends Controller
         }
     }
 
+    /**
+     * update a specific favorite with id
+     *
+     * @param Request $request
+     * @param [int] $id
+     * @return void
+     */
     public function update(Request $request, $id) {
         try {
             $favorite = Favorites::findOrFail($id);
@@ -40,6 +68,12 @@ class FavoritesController extends Controller
         }
     }
 
+    /**
+     * delete a favorite using id
+     *
+     * @param [int] $id
+     * @return void
+     */
     public function delete($id) {
         try {
             $favorite = Favorites::findOrFail($id);
