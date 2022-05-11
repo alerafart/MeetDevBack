@@ -8,10 +8,31 @@ use Illuminate\Http\Request;
 
 class DevelopersController extends Controller
 {
+    /**
+     * Get all users list
+     *
+     * @return void
+     */
     public function list(){
         return Developers::all();
     }
 
+    /**
+     * get developer by id
+     *
+     * @param [int] $id
+     * @return void
+     */
+    public function item($id){
+        return Developers::whereId($id)->first();
+    }
+
+    /**
+     * Create new developper
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request) {
         try {
             $developers = new Developers();
@@ -34,6 +55,13 @@ class DevelopersController extends Controller
         }
     }
 
+    /**
+     * Update developper
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id) {
         try {
             $developer = Developers::findOrFail($id);
@@ -56,6 +84,12 @@ class DevelopersController extends Controller
         }
     }
 
+    /**
+     * Delete developer
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id) {
         try {
             $developer = Developers::findOrFail($id);

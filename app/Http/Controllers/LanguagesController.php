@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers;
@@ -13,6 +12,22 @@ class LanguagesController extends Controller
         return Languages::all();
     }
 
+    /**
+     * get a single language by id
+     *
+     * @param [int] $id
+     * @return void
+     */
+    public function item($id){
+        return Languages::whereId($id)->first();
+    }
+
+    /**
+     * Create new language
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request) {
         try {
             $language = new Languages();
@@ -27,6 +42,13 @@ class LanguagesController extends Controller
         }
     }
 
+    /**
+     * Update single language
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id) {
         try {
             $language = Languages::findOrFail($id);
@@ -41,6 +63,12 @@ class LanguagesController extends Controller
         }
     }
 
+    /**
+     * delete single language with id
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id) {
         try {
             $language = Languages::findOrFail($id);

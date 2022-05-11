@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Users extends Model
 {
     use HasFactory;
+
+    public function recruiters() {
+        return $this->hasOne( "App\Models\Recruiter" );
+    }
+
+    public function developers() {
+        return $this->hasOne( "App\Models\Developers" );
+    }
 }
