@@ -9,7 +9,20 @@ class Favorites extends Model
 {
     use HasFactory;
 
-    public function recruiters() {
-        return $this-> belongsTo('App\Models\Recuiters');
+     /**
+     * defining DB relationships
+     *
+     * @return void
+     */
+   /* public function recruiters() {
+        return $this-> HasMany('App\Models\Recuiters');
+    }
+
+    public function developers() {
+        return $this-> HasMany('App\Models\Developers');
+    }*/
+
+    public function users() {
+        return $this->HasMany('App\Models\Users');
     }
 }

@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Messages extends Model
 {
     use HasFactory;
+
+     /**
+     * defining DB relationships
+     *
+     * @return void
+     */
+    public function users() {
+        return $this->HasMany('App\Models\Users');
+    }
 }

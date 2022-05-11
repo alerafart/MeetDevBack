@@ -17,7 +17,7 @@ class CorsMiddleware
     {
         // Pre-Middleware Action
 
-        $response = $next($request);
+        //$response = $next($request);
 
         header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
         header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
@@ -25,6 +25,6 @@ class CorsMiddleware
 
         // Post-Middleware Action
 
-        return $response;
+        //return $response;
     }
 }

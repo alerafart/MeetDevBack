@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Favorites;
+use App\Models\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FavoritesController extends Controller
 {
@@ -86,5 +88,24 @@ class FavoritesController extends Controller
         }
     }
 
+    public function getAllFromOneUser($id) {
+        //$favorites = DB::join('users','developers')->where('users.dev_id', '=', 'developers.id')
+        /*$favorites = DB::table('favorites')
+        ->join('developers','developers.id', '=', 'developer_id')
+        ->join('users', 'users.dev_id', '=', 'developers.id')
+        ->where('favorites.recruiter_user_id', '=', $id)
+        ->get();*/
+
+        //$myid = Users::find('my_id');
+        $favorites = Favorites::with('users')
+        ->join('developers','developers.id', '=', 'users.developer_id')
+        ->join('users', 'users.dev_id', '=', 'developers.id')
+        ->where('favorites.recruiter_user_id', '=', $id)
+        ->get('users.*', 'developers.*');
+        //$myid->developers;
+
+        return $favorites;
+
+    }
 
 }

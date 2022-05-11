@@ -42,6 +42,8 @@ class RecruitersController extends Controller
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+
     public function delete($id) {
 
         try {
