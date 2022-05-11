@@ -12,4 +12,12 @@ class recruiters extends Model
     public function favorites() {
             return $this->hasMany( "App\Models\Favorites" );
     }
+
+    public function messages() {
+        return $this->hasMany( "App\Models\Messages" );
+    }
+
+    public function users() {
+        return $this->hasOne(Users::class);
+    }
 }
