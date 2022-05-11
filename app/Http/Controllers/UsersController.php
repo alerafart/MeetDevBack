@@ -293,4 +293,67 @@ class UsersController extends Controller
         }
 
     }
+
+
+    public function getDevSearchResults(Request $request) {
+        $user = new Users;
+        $language = $request->language;
+        $city = $request->city;
+        $exp = $request->exp;
+        //return response()->json([$language, $city, $exp]);
+        /*$queryResults = DB::table('users')
+        ->join("developers", function($join) use ($city, $exp, $language) {
+            $join->on("developers.id", "=", "users.dev_id")
+            ->where("users.city", "=", $city)
+            ->where("developers.years_of_experience", "=", $exp)
+            ->whereIn("users.dev_id", function($query) use ($language) {
+            $query->from("developers", "languages" , "dev_langs")
+            ->select("developers.id")
+            ->where("languages.id", "=", "dev_langs.language_id")
+            ->where("developers.id", "=", "dev_langs.developer_id")
+            ->where("languages.id", "=", $language);
+            //->where("$city", "=", $request->city);
+        });
+        })
+        ->get("users.*");*/
+
+
+
+        /*DB::table('users')
+        ->select('*')
+        ->join('developers',function($join) {
+            $join->on('developers.id','=','users.dev_id')
+            ->on('users.city','=','$city')
+            ->on('developers.years_of_experience','=','$exp')
+            ->whereNotIn('users.dev_id',(function ($query) {
+                $query->from('developers')
+                    ->crossJoin('languages'
+                    ->crossJoin('dev_langs'
+                    ->select('developers.id')
+                    ->where('languages.id','=',DB::raw('dev_langs.language_id'))
+                    ->where('developers.id','=',DB::raw('dev_langs.developer_id'))
+                    ->where('languages.language_name','=',DB::raw('$language'))
+            }
+        }
+        ->get();*/
+
+        $queryResults = DB::table('languages') ->join('dev_langs', 'dev_langs.language_id', '=', 'languages.id')->where('languages.language_name', '=', $language) ->get('dev_langs.developer_id');
+
+        return response()->json([$queryResults]);
+        //[ "users" => AppUser::findAll() ]
+    }
 }
+/*
+$query = DB::table('developers', 'languages')->where('developers.id', '=', '')
+
+'SELECT * FROM `users`
+        JOIN `developers`
+        ON `developers`.`id` = `users`.`dev_id`
+        AND `users`.`city` = $city
+        AND `developers`.`years_of_experience` = `$exp`
+        AND `users`.`dev_id` IN
+            (SELECT `developers`.`id` FROM  `developers`,  `languages` , `dev_langs`
+            WHERE  `languages`.`id` = `dev_langs`.`language_id`
+            AND `developers`.`id` = `dev_langs`.`developer_id`
+            AND `languages`.`language_name`= $language)'
+*/
