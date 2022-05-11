@@ -96,7 +96,6 @@ class FavoritesController extends Controller
         ->where('favorites.recruiter_user_id', '=', $id)
         ->get();*/
 
-        //$myid = Users::find('my_id');
         $favorites = Favorites::with('users')
         ->join('developers','developers.id', '=', 'users.developer_id')
         ->join('users', 'users.dev_id', '=', 'developers.id')
@@ -108,10 +107,6 @@ class FavoritesController extends Controller
 
     }
 
-    public function getAllFromOnUser($id) {
-        $favs=Favorites::where('recruiter_id', '=', $id)->get('developer_id');
-
-    }
 
 
 }

@@ -118,7 +118,7 @@ class UsersController extends Controller
                                 $dev_lang->save();
 
                                 if ($user->save() && $dev_lang->save()) {
-                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved']);
+                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer, 'lang' => $dev_lang]);
                                 } else {
                                     return response()->json(['status' => 'error', 'message' => 'Language not saved'], 400);
                                 }
@@ -184,7 +184,7 @@ class UsersController extends Controller
                             $user->recrut_id = $recruiterId;
 
                             if ($user->save()) {
-                                return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully']);
+                                return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter]);
                             }
                         }
                     } catch (\Exception $e) {
