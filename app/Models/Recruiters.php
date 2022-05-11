@@ -23,7 +23,4 @@ class recruiters extends Model
         return $this->hasMany( "App\Models\Messages" );
     }
 
-    public function users() {
-        return $this->hasOne(Users::class);
-    }
 }
