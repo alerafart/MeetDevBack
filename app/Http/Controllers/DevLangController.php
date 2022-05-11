@@ -7,10 +7,31 @@ use Illuminate\Http\Request;
 
 class DevLangController extends Controller
 {
+    /**
+     * Get all developers languages list
+     *
+     * @return void
+     */
     public function list(){
         return Dev_lang::all();
     }
 
+    /**
+     * get Developers language by id
+     *
+     * @param [int] $id
+     * @return void
+     */
+    public function item($id){
+        return Dev_lang::whereId($id)->first();
+    }
+
+    /**
+     * Create new developers language
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request) {
         try {
             $dev_lang = new Dev_lang();
@@ -25,6 +46,13 @@ class DevLangController extends Controller
         }
     }
 
+    /**
+     * Update a singledevelopers language
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id) {
         try {
             $dev_lang = Dev_lang::findOrFail($id);
@@ -39,6 +67,12 @@ class DevLangController extends Controller
         }
     }
 
+    /**
+     * Delete a single developers language
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id) {
         try {
             $dev_lang = Dev_lang::findOrFail($id);

@@ -8,10 +8,31 @@ use Symfony\Component\Mime\Message;
 
 class MessagesController extends Controller
 {
+    /**
+     * get all messages list
+     *
+     * @return void
+     */
     public function list() {
         return Messages::all();
     }
 
+    /**
+     * get message by id
+     *
+     * @param [int] $id
+     * @return void
+     */
+    public function item($id){
+        return Messages::whereId($id)->first();
+    }
+
+    /**
+     * Create new message
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request) {
 
         try {
@@ -29,6 +50,13 @@ class MessagesController extends Controller
         }
     }
 
+    /**
+     * Update single message
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id) {
         try {
             $messages =Messages::findOrFail($id);
@@ -45,6 +73,12 @@ class MessagesController extends Controller
         }
     }
 
+    /**
+     * Delete single message with id
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id) {
 
         try {
