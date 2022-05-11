@@ -18,4 +18,12 @@ class recruiters extends Model
     public function users() {
         return $this->hasOne(Users::class);
     }
+
+    public function messages() {
+        return $this->hasMany( "App\Models\Messages" );
+    }
+
+    public function users() {
+        return $this->hasOne(Users::class);
+    }
 }
