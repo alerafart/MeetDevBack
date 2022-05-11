@@ -262,9 +262,9 @@ class UsersController extends Controller
         $email_address = $request->email_address;
         $password = $request->password;
         $user = Users::where('email_address', '=', $email_address)->first();
-        if (!$user) {
-            return response()->json(['status' => 'success', 'message' => 'Login Fail, please check email id']);
-        }
+        //if (!$user) {
+        //    return response()->json(['status' => 'success', 'message' => 'Login Fail, please check email id']);
+       // }
 
         if((Hash::check($password, $user->password))){ //($password===$user->password) {
             if(!empty($user->dev_id)) {
