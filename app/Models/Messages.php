@@ -9,7 +9,12 @@ class Messages extends Model
 {
     use HasFactory;
 
-    public function recruiters() {
-        return $this->HasMany('App\Models\Recuiters');
+     /**
+     * defining DB relationships
+     *
+     * @return void
+     */
+    public function users() {
+        return $this->HasMany('App\Models\Users');
     }
 }

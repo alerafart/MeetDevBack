@@ -9,15 +9,18 @@ class recruiters extends Model
 {
     use HasFactory;
 
-    public function favorites() {
-            return $this->hasMany( "App\Models\Favorites" );
+     /**
+     * defining DB relationships
+     *
+     * @return void
+     */
+
+    public function users() {
+        return $this->hasOne(Users::class);
     }
 
     public function messages() {
         return $this->hasMany( "App\Models\Messages" );
     }
 
-    public function users() {
-        return $this->hasOne(Users::class);
-    }
 }

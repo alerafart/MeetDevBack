@@ -9,8 +9,18 @@ class developers extends Model
 {
     use hasFactory;
 
-    public function users()
-    {
+    /**
+     * defining DB relationships
+     *
+     * @return void
+     */
+    public function users() {
         return $this->hasOne(Users::class);
     }
+
+    public function languages() {
+        return $this->HasMany('App\Models\Languages', 'dev_lang');
+    }
+
+
 }
