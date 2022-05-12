@@ -55,8 +55,8 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->post('/', 'FavoritesController@create');
     $router->put('/{id}', 'FavoritesController@update');
     $router->delete('/{id}', 'FavoritesController@delete');
-    $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
-    $router->get('/recruiters/fav', 'FavoritesController@getOneFromOneUser');
+    $router->get('/recruiters-fav', 'FavoritesController@getAllFromOneUser');
+    $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
 });
 
 $router->group(['prefix'=>'api/languages'], function() use ($router){
