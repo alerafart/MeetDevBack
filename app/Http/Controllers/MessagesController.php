@@ -78,7 +78,7 @@ class MessagesController extends Controller
     /**
      * Delete single message with id
      *
-     * @param [type] $id
+     * @param [int] $id
      * @return void
      */
     public function delete($id) {
@@ -95,9 +95,9 @@ class MessagesController extends Controller
     }
 
     /**
-     * Retrieve all messages from One User with id
+     * Retrieve all messages from One User using id and correspondent prodile details
      *
-     * @param [type] $id
+     * @param [int] $id
      * @return void
      */
     public function getAllMessagesFromOneUser($id) {
@@ -110,7 +110,6 @@ class MessagesController extends Controller
         $senderDetail = Users::where('users.id', '=', $senderUser)->get();
 
         $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
-
         ->where('users.id', '=', $id)
         ->get('messages.*');
 
