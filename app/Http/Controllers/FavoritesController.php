@@ -88,7 +88,8 @@ class FavoritesController extends Controller
         }
     }
 
-    public function getAllFromOneUser($id) {
+    public function getAllFromOneUser(Request $request) {
+        $id = $request->id;
         $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
         ->where('recruiter_user_id', '=', $id)
         ->join('developers', 'users.dev_id', '=', 'developers.id')
