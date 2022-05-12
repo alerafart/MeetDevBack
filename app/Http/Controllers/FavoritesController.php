@@ -88,20 +88,18 @@ class FavoritesController extends Controller
         }
     }
 
+    /**
+     * Function that will retrieve all favorites from one user profile, using their id
+     *
+     * @param [int] $id
+     * @return void
+     */
     public function getAllFromOneUser($id) {
-        //$favorites = DB::join('users','developers')->where('users.dev_id', '=', 'developers.id')
-        /*$favorites = DB::table('favorites')
-        ->join('developers','developers.id', '=', 'developer_id')
-        ->join('users', 'users.dev_id', '=', 'developers.id')
-        ->where('favorites.recruiter_user_id', '=', $id)
-        ->get();*/
-
         $favorites = Favorites::with('users')
         ->join('developers','developers.id', '=', 'users.developer_id')
         ->join('users', 'users.dev_id', '=', 'developers.id')
         ->where('favorites.recruiter_user_id', '=', $id)
         ->get('users.*', 'developers.*');
-        //$myid->developers;
 
         return $favorites;
 
