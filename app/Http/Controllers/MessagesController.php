@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Users;
 use App\Models\Messages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\Mime\Message;
 
 class MessagesController extends Controller
@@ -90,5 +92,33 @@ class MessagesController extends Controller
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
+    }
+
+    /**
+     * Retrieve all messages from One User with id
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function getAllMessagesFromOneUser($id) {
+
+        $messageUserReceiver = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
+        ->where('users.id', '=', $id)
+        ->get('messages.*');
+
+        $senderUser = $messageUserReceiver->pluck('sender_user_id');
+        $senderDetail = Users::where('users.id', '=', $senderUser)->get();
+
+        $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
+
+        ->where('users.id', '=', $id)
+        ->get('messages.*');
+
+        $recieverUser = $messagesUserSender->pluck('receiver_user_id');
+        $recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
+
+        return response()->json(['status' => 'success', 'receiver' => $messageUserReceiver, 'sender_user' => $senderUser, 'sender_user_detail' => $senderDetail, 'recieverUser' => $recieverUser, 'reciever_user_Detail'=>$recieverDetail]);
+
+
     }
 }

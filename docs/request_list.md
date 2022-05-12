@@ -279,6 +279,7 @@ delete
 - Search query with 3 critera (experience, city, language),
 - Get all favorites from a recruiter profile;
 - Get one favorite with all user data from a recruiter profile,
+- Register new favorite in DB,
 - Get all messages from a user,
 - Get one message with details from a users profile,
-- 
+- Register new message in DB,
