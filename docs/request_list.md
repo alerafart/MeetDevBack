@@ -272,3 +272,13 @@ update
 
 ### DELETE queries
 delete
+
+
+# Missing requests in controllers
+
+- Search query with 3 critera (experience, city, language),
+- Get all favorites from a recruiter profile;
+- Get one favorite with all user data from a recruiter profile,
+- Get all messages from a user,
+- Get one message with details from a users profile,
+- 
