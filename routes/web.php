@@ -53,12 +53,12 @@ $router->group(['prefix' => 'api'], function() use ($router) {
 });
 
 $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
-    $router->get('/', 'FavoritesController@list');
-    $router->get('/{id}', 'FavoritesController@item');
+   // $router->get('/', 'FavoritesController@list');
+   // $router->get('/{id}', 'FavoritesController@item');
     $router->post('/', 'FavoritesController@create');
     $router->put('/{id}', 'FavoritesController@update');
     $router->delete('/{id}', 'FavoritesController@delete');
-    $router->get('/recruiters-fav', 'FavoritesController@getAllFromOneUser');
+    $router->get('/recruiters/fav', 'FavoritesController@getAllFromOneUser');
     $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
 });
 
