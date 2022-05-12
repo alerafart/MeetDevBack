@@ -296,7 +296,7 @@ class UsersController extends Controller
 
 
     public function getDevSearchResults(Request $request) {
-        $user = new Users;
+        //$user = new Users;
         $language = $request->language;
         $city = $request->city;
         $exp = $request->exp;
@@ -337,23 +337,39 @@ class UsersController extends Controller
         }
         ->get();*/
 
-        $queryResults = DB::table('languages') ->join('dev_langs', 'dev_langs.language_id', '=', 'languages.id')->where('languages.language_name', '=', $language) ->get('dev_langs.developer_id');
+        //$queryResults = DB::table('languages') ->join('dev_langs', 'dev_langs.language_id', '=', 'languages.id')->where('languages.language_name', '=', $language) ->get('dev_langs.developer_id');
 
-        return response()->json([$queryResults]);
-        //[ "users" => AppUser::findAll() ]
-    }
-}
-/*
-$query = DB::table('developers', 'languages')->where('developers.id', '=', '')
-
-'SELECT * FROM `users`
+        $results = DB::select('SELECT * FROM `users`
         JOIN `developers`
         ON `developers`.`id` = `users`.`dev_id`
-        AND `users`.`city` = $city
-        AND `developers`.`years_of_experience` = `$exp`
+        AND `users`.`city`= :city
+        AND `developers`.`years_of_experience` = :exp
         AND `users`.`dev_id` IN
             (SELECT `developers`.`id` FROM  `developers`,  `languages` , `dev_langs`
             WHERE  `languages`.`id` = `dev_langs`.`language_id`
             AND `developers`.`id` = `dev_langs`.`developer_id`
-            AND `languages`.`language_name`= $language)'
+            AND `languages`.`language_name`= :language)', ['exp' => $exp, 'city' => $city, 'language' => $language]);
+
+        $array = [];
+        foreach($results as $res) {
+            $dev = $res->dev_id;
+            $lan = DB::select('SELECT `language_name` FROM `languages` , `developers`, `dev_langs`
+            WHERE  `languages`.`id` = `dev_langs`.`language_id`
+            AND `developers`.`id` = `dev_langs`.`developer_id`
+            AND `developers`.`id`= :dev', ['dev' => $dev]);
+            $array += [$dev => $lan];
+        }
+
+       /* $array = DB::select('SELECT `language_name` FROM `languages` , `developers`, `dev_langs`
+            WHERE  `languages`.`id` = `dev_langs`.`language_id`
+            AND `developers`.`id` = `dev_langs`.`developer_id`
+            AND `developers`.`id`= :id', ['id' => $dev]);
 */
+       // $results = Users::join('developers', 'developers.id', '=', 'users.dev_id')
+        //->join('languages', )
+
+        return response()->json(['res' => $results, 'lang' => $array]);
+
+    }
+}
+
