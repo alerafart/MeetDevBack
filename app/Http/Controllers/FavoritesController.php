@@ -88,6 +88,13 @@ class FavoritesController extends Controller
         }
     }
 
+  
+    /**
+     * Function that will retrieve all favorites from one user profile, using their id
+     *
+     * @param [int] $id
+     * @return void
+     */
     public function getAllFromOneUser(Request $request) {
         $id = $request->id;
         $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
@@ -98,6 +105,13 @@ class FavoritesController extends Controller
         return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]);
     }
 
+  
+    /**
+     * Function that will retrieve one complete profile marked as favorite by one user, using their id
+     *
+     * @param Request $request
+     * @return void
+     */   
     public function getOneFromOneUser(Request $request) {
         $devId = $request->devId;
         $recrutId = $request->recrutId;
