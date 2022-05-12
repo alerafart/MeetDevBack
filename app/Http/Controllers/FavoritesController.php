@@ -102,8 +102,14 @@ class FavoritesController extends Controller
         ->get('users.*', 'developers.*');
 
         return $favorites;
-
     }
+
+    /**
+     * Function that will retrieve one complete profile marked as favorite by one user, using their id
+     *
+     * @param Request $request
+     * @return void
+     */
 
 
 
