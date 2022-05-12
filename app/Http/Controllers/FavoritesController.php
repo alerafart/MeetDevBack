@@ -89,24 +89,25 @@ class FavoritesController extends Controller
     }
 
     public function getAllFromOneUser($id) {
-        //$favorites = DB::join('users','developers')->where('users.dev_id', '=', 'developers.id')
-        /*$favorites = DB::table('favorites')
-        ->join('developers','developers.id', '=', 'developer_id')
-        ->join('users', 'users.dev_id', '=', 'developers.id')
-        ->where('favorites.recruiter_user_id', '=', $id)
-        ->get();*/
+        $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
+        ->where('recruiter_user_id', '=', $id)
+        ->join('developers', 'users.dev_id', '=', 'developers.id')
+        ->get();
 
-        $favorites = Favorites::with('users')
-        ->join('developers','developers.id', '=', 'users.developer_id')
-        ->join('users', 'users.dev_id', '=', 'developers.id')
-        ->where('favorites.recruiter_user_id', '=', $id)
-        ->get('users.*', 'developers.*');
-        //$myid->developers;
-
-        return $favorites;
-
+        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]);
     }
 
+    public function getOneFromOneUser(Request $request) {
+        $devId = $request->devId;
+        $recrutId = $request->recrutId;
 
+        $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
+        ->where('recruiter_user_id', '=', $recrutId)
+        ->where('developer_user_id', '=', $devId)
+        ->join('developers', 'users.dev_id', '=', 'developers.id')
+        ->get();
+
+        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]);
+    }
 
 }
