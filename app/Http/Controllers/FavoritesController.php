@@ -102,17 +102,18 @@ class FavoritesController extends Controller
         ->join('developers', 'users.dev_id', '=', 'developers.id')
         ->get();
 
-        foreach ($favoritesProfile as $favProfile) {
+        /*foreach ($favoritesProfile as $favProfile) {
             $devId = $favProfile->pluck("developer_user_id");
             $recrutId = $favProfile->pluck("recruiter_user_id");
 
             $favId = Favorites::where('developer_user_id', '=', $devId)
-        ->where('recruiter_user_id', '=', $recrutId)
-        ->get('id');
+            ->where('recruiter_user_id', '=', $recrutId)
+            ->get('id');
             return $favId;
         }
+        */
 
-        return response()->json(['status' => 'success', 'fav' => ['fav id' => $favId, 'fav user data' => $favoritesProfile]]);
+        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]); //'fav' => ['fav id' => $favId, 'fav user data' => $favoritesProfile]]);
     }
 
 
