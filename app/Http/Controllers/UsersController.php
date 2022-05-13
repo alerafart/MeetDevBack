@@ -366,7 +366,7 @@ class UsersController extends Controller
        // $results = Users::join('developers', 'developers.id', '=', 'users.dev_id')
         //->join('languages', )
 
-        return response()->json(['res' => $results, 'lang' => $array]);
+        return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $results, 'lang' => $array]);
 
     }
 }
