@@ -18,7 +18,7 @@ class DevelopersController extends Controller
     }
 
     /**
-     * get developer by id
+     * get single developer by id
      *
      * @param [int] $id
      * @return void

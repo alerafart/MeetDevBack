@@ -172,7 +172,7 @@ class MessagesController extends Controller
      * @param Request $request
      * @return void
      */
-    public function createMessageInDbFromUser(Request $request) {
+    public function createMessageInDb(Request $request) {
 
         try {
             $messages = new Messages();
