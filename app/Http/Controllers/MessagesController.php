@@ -105,7 +105,7 @@ class MessagesController extends Controller
         $messageUserReceiver = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
         ->where('users.id', '=', $id)
         ->get('messages.*');
-
+        // ->get('messages.*', 'users.*');
         $senderUser = $messageUserReceiver->pluck('sender_user_id');
         $senderDetail = Users::where('users.id', '=', $senderUser)->get();
 
