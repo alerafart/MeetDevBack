@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use App\Models\Messages;
+use App\Models\Developers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Mime\Message;
@@ -109,15 +110,68 @@ class MessagesController extends Controller
         $senderUser = $messageUserReceiver->pluck('sender_user_id');
         $senderDetail = Users::where('users.id', '=', $senderUser)->get();
 
+        // message envoyés par notre utilisateur en param de la route
         $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
         ->where('users.id', '=', $id)
         ->get('messages.*');
 
-        $recieverUser = $messagesUserSender->pluck('receiver_user_id');
-        $recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
+        $receivers = [];
+        foreach($messagesUserSender as $msgSender){
+            $recieverUser = $msgSender->receiver_user_id;
+            $recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
+            $receivers[] = $recieverDetail;
+        }
 
-        return response()->json(['status' => 'success', 'receiver' => $messageUserReceiver, 'sender_user' => $senderUser, 'sender_user_detail' => $senderDetail, 'recieverUser' => $recieverUser, 'reciever_user_Detail'=>$recieverDetail]);
+        return response()->json(['status' => 'success', 'messages receiver' => $messageUserReceiver, 'messages sender' => $messagesUserSender ,/*'sender_user' => $senderUser, 'sender_user_detail' => $senderDetail, 'recieverUser' => $recieverUser,*/ 'reciever_user_Detail'=>$receivers]);
+    }
+
+     /**
+     * Retrieve one message send of a user profile using id and correspondent profile details
+     *
+     * @param [int] $id
+     * @return void
+     */
+    public function getOneMessageFromAUser(Request $request) {
+        $userId = $request->userId;
+        $correspondantId = $request->correspondantId;
 
 
+        $messageUserReceiver = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
+        ->where('users.id', '=', $userId)
+        ->get('messages.*');
+
+        //$senderDetail = Users::where('users.id', '=', $correspondantId)->get();
+
+        $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
+        ->where('users.id', '=', $userId)
+        ->get('messages.*');
+
+        //$recieverUser = $messagesUserSender->pluck('receiver_user_id');
+        //$recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
+
+        return response()->json(['status' => 'success', 'receiver' => $messageUserReceiver ]);
+    }
+
+    /**
+     * Create new message from user
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function createMessageInDbFromUser(Request $request) {
+
+        try {
+            $messages = new Messages();
+            $messages->sender_user_id = $request->sender_user_id;
+            $messages->receiver_user_id = $request->receiver_user_id;
+            $messages->message_content = $request->message_content;
+            $messages->signature = $request->signature;
+
+            if ($messages->save()) {
+                return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'created message' => $messages]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 }

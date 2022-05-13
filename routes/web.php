@@ -49,6 +49,7 @@ $router->group(['prefix' => 'api'], function() use ($router) {
     $router->delete('/messages/{id}', 'MessagesController@delete');
     $router->get('/messages/{id}', 'MessagesController@item');
     $router->get('/messages/{id}', 'MessagesController@getAllMessagesFromOneUser');
+    $router->post('messagesUser', 'MessagesController@createMessageInDbFromUser');
 
 });
 
@@ -80,5 +81,5 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developer', 'UsersController@createNewDevUser');
     $router->post('/recruiter', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
-    $router->get('/search-results', 'UsersController@getDevSearchResults');
+    //$router->get('/search-results', 'UsersController@getDevSearchResults');
 });
