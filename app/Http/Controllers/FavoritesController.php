@@ -88,7 +88,7 @@ class FavoritesController extends Controller
         }
     }
 
-  
+
     /**
      * Function that will retrieve all favorites from one user profile, using their id
      *
@@ -102,16 +102,26 @@ class FavoritesController extends Controller
         ->join('developers', 'users.dev_id', '=', 'developers.id')
         ->get();
 
-        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]);
+        foreach ($favoritesProfile as $favProfile) {
+            $devId = $favProfile->pluck("developer_user_id");
+            $recrutId = $favProfile->pluck("recruiter_user_id");
+
+            $favId = Favorites::where('developer_user_id', '=', $devId)
+        ->where('recruiter_user_id', '=', $recrutId)
+        ->get('id');
+            return $favId;
+        }
+
+        return response()->json(['status' => 'success', 'fav' => ['fav id' => $favId, 'fav user data' => $favoritesProfile]]);
     }
 
-  
+
     /**
      * Function that will retrieve one complete profile marked as favorite by one user, using their id
      *
      * @param Request $request
      * @return void
-     */   
+     */
     public function getOneFromOneUser(Request $request) {
         $devId = $request->devId;
         $recrutId = $request->recrutId;
@@ -122,7 +132,14 @@ class FavoritesController extends Controller
         ->join('developers', 'users.dev_id', '=', 'developers.id')
         ->get();
 
-        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]);
+        $devId = $favoritesProfile->pluck("developer_user_id");
+        $recrutId = $favoritesProfile->pluck("recruiter_user_id");
+
+        $favId = Favorites::where('developer_user_id', '=', $devId)
+        ->where('recruiter_user_id', '=', $recrutId)
+        ->get('id');
+
+        return response()->json(['status' => 'success', 'fav id' => $favId, 'fav user data' => $favoritesProfile]);
     }
 
 }
