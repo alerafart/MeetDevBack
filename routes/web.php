@@ -59,7 +59,7 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->put('/{id}', 'FavoritesController@update');
     $router->delete('/{id}', 'FavoritesController@delete');
     $router->get('/recruiters/fav/{id}', 'FavoritesController@getAllFromOneUser');
-    $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
+    $router->get('/recruiters/{id}', 'FavoritesController@getOneFromOneUser');
 });
 
 $router->group(['prefix'=>'api/languages'], function() use ($router){
@@ -80,5 +80,5 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developer', 'UsersController@createNewDevUser');
     $router->post('/recruiter', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
-    //$router->get('/search-results', 'UsersController@getDevSearchResults');
+    $router->get('/search-results', 'UsersController@getDevSearchResults');
 });

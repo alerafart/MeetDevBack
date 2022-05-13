@@ -125,9 +125,9 @@ class FavoritesController extends Controller
      * @param Request $request
      * @return void
      */
-    public function getOneFromOneUser($id, $id2) {
-        $devId =$id;
-        $recrutId = $id2;
+    public function getOneFromOneUser(Request $request) {
+        $devId = $request->devId;
+        $recrutId = $request->recrutId;
 
         $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
         ->where('recruiter_user_id', '=', $recrutId)
