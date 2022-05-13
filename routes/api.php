@@ -36,6 +36,7 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
 $router->group(['prefix' => 'api/secure/messages'], function() use ($router) {
     $router->get('/users', 'MessagesController@getOneFromAUser');
     $router->get('/users/{id}', 'MessagesController@getAllMessagesFromOneUser');
+    $router->post('/users', 'MessagesController@createMessageInDb');
 });
 
 /**
