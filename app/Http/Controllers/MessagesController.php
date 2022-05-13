@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use App\Models\Messages;
 use App\Models\Developers;
+use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Mime\Message;
@@ -110,7 +111,7 @@ class MessagesController extends Controller
         $senderUser = $messageUserReceiver->pluck('sender_user_id');
         $senderDetail = Users::where('users.id', '=', $senderUser)->get();
 
-        // message envoyés par notre utilisateur en param de la route
+        // messages envoyés par notre utilisateur en param de la route
         $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
         ->where('users.id', '=', $id)
         ->get('messages.*');
@@ -119,10 +120,25 @@ class MessagesController extends Controller
         foreach($messagesUserSender as $msgSender){
             $recieverUser = $msgSender->receiver_user_id;
             $recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
+            $devId = $recieverDetail->pluck('dev_id');
+            $recrutId = $recieverDetail->pluck('recrut_id');
             $receivers[] = $recieverDetail;
+
+            /*if($devId) {
+                $receiverDevDetails = Developers::where('dev_id', '=', $devId)->first();
+                $receivers[] = $receiverDevDetails;
+                //return $receivers;
+            } elseif($recrutId){
+                $receiverRecrutDetails = Recruiters::where('recrut_id', '=', $recrutId)->get('*');
+                $receivers[] = $receiverRecrutDetails;
+                //return $receivers;
+            }*/
+
+            //return $receivers;
+            //return $recieverDetail;
         }
 
-        return response()->json(['status' => 'success', 'messages receiver' => $messageUserReceiver, 'messages sender' => $messagesUserSender ,/*'sender_user' => $senderUser, 'sender_user_detail' => $senderDetail, 'recieverUser' => $recieverUser,*/ 'reciever_user_Detail'=>$receivers]);
+        return response()->json(['status' => 'success', 'messages receiver' => $messageUserReceiver, 'messages sender' => $messagesUserSender ,'reciever_user_Detail'=>$receivers]);
     }
 
      /**
