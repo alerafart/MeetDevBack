@@ -95,13 +95,15 @@ class FavoritesController extends Controller
      * @param [int] $id
      * @return void
      */
-    public function getAllFromOneUser(Request $request) {
-        $id = $request->id;
+    public function getAllFromOneUser($id) {
+        //return response()->json(['status' => $request->params]);
+        //$id = $request->params->id;
         $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
         ->where('recruiter_user_id', '=', $id)
         ->join('developers', 'users.dev_id', '=', 'developers.id')
         ->get();
 
+        $devId = $favoritesProfile->pluck("developer_user_id");
         /*foreach ($favoritesProfile as $favProfile) {
             $devId = $favProfile->pluck("developer_user_id");
             $recrutId = $favProfile->pluck("recruiter_user_id");
@@ -110,10 +112,10 @@ class FavoritesController extends Controller
             ->where('recruiter_user_id', '=', $recrutId)
             ->get('id');
             return $favId;
-        }
-        */
+        }*/
 
-        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]); //'fav' => ['fav id' => $favId, 'fav user data' => $favoritesProfile]]);
+
+        return response()->json(['status' => 'success', 'dev' => $devId, 'fav user data' => $favoritesProfile]); //'fav' => ['fav id' => $favId, 'fav user data' => $favoritesProfile]]);
     }
 
 
@@ -123,9 +125,9 @@ class FavoritesController extends Controller
      * @param Request $request
      * @return void
      */
-    public function getOneFromOneUser(Request $request) {
-        $devId = $request->devId;
-        $recrutId = $request->recrutId;
+    public function getOneFromOneUser($id, $id2) {
+        $devId =$id;
+        $recrutId = $id2;
 
         $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
         ->where('recruiter_user_id', '=', $recrutId)
