@@ -80,5 +80,5 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developer', 'UsersController@createNewDevUser');
     $router->post('/recruiter', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
-    // $router->get('/search-results', 'UsersController@getDevSearchResults');
+    $router->get('/search-results', 'UsersController@getDevSearchResults');
 });
