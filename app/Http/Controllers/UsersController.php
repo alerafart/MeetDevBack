@@ -296,7 +296,6 @@ class UsersController extends Controller
 
 
     public function getDevSearchResults(Request $request) {
-        //$user = new Users;
         $language = $request->language;
         $city = $request->city;
         $exp = $request->exp;
@@ -316,8 +315,6 @@ class UsersController extends Controller
         });
         })
         ->get("users.*");*/
-
-
 
         /*DB::table('users')
         ->select('*')
@@ -353,7 +350,7 @@ class UsersController extends Controller
         $array = [];
         foreach($results as $res) {
             $dev = $res->dev_id;
-            $lan = DB::select('SELECT `language_name` FROM `languages` , `developers`, `dev_langs`
+            $lan = DB::select('SELECT `language_name`, `language_icon` FROM `languages`, `developers`, `dev_langs`
             WHERE  `languages`.`id` = `dev_langs`.`language_id`
             AND `developers`.`id` = `dev_langs`.`developer_id`
             AND `developers`.`id`= :dev', ['dev' => $dev]);
