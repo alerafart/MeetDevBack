@@ -22,7 +22,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * get message by id
+     * get single message by id
      *
      * @param [int] $id
      * @return void
