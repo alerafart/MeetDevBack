@@ -100,8 +100,8 @@
 //======== loading profiles search results =======//
 //================================================//
 **route**
-`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/search`
-`http://localhost:8080/api/users/search`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/secure/search`
+`http://localhost:8080/api/users/secure/search`
 
 **json test**
 ```json
