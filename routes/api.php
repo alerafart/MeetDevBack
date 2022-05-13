@@ -27,8 +27,12 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developers', 'UsersController@createNewDevUser');
     $router->post('/recruiters', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
-    $router->get('/secure/search', 'UsersController@getDevSearchResults');
 });
+
+/**
+ * API developers search route
+ */
+$router->get('api/secure/users/search', 'UsersController@getDevSearchResults');
 
 /**
  * API messages routes

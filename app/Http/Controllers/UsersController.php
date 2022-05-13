@@ -82,6 +82,7 @@ class UsersController extends Controller
                 $user->lastname = $request->lastname;
                 $user->firstname = $request->firstname;
                 $user->city = $request->city;
+                $user->department = $request->department;
                 $user->zip_code = $request->zip_code;
                 $user->email_address = $request->email_address;
                 $password = $request->password;
@@ -94,13 +95,16 @@ class UsersController extends Controller
                 if ($user->save()) {
                     try {
                         $developer = new Developers();
+                        $developer->label = $request->label;
                         $developer->description = $request->description;
                         $developer->available_for_recruiters = $request->available_for_recruiters;
                         $developer->available_for_developers = $request-> available_for_developers;
                         $developer->minimum_salary_requested = $request->minimum_salary_requested;
                         $developer->maximum_salary_requested = $request->maximum_salary_requested;
                         $developer->age = $request->age;
+                        $developer->languages = $request->languages;
                         $developer->years_of_experience = $request->years_of_experience;
+                        $developer->english_spoken = $request->english_spoken;
                         $developer->github_link = $request->github_link;
                         $developer->portfolio_link = $request->portfolio_link;
                         $developer->other_link = $request->other_link;
@@ -108,40 +112,41 @@ class UsersController extends Controller
                         if ($developer->save()) {
                             $devId = $developer->id;
                             $user->dev_id = $devId;
-                            $user->save();
+                            //$user->save();
 
-                            $language = Languages::where('language_name', '=', $request->language)->first();
+                            /*$language = Languages::where('language_name', '=', $request->language)->first();
                             if ($language) {
                                 $dev_lang = new Dev_lang();
                                 $dev_lang->language_id = $language->id;
                                 $dev_lang->developer_id	 = $devId;
                                 $dev_lang->save();
+                                */
 
-                                if ($user->save() && $dev_lang->save()) {
-                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer, 'lang' => $dev_lang]);
+                                if ($user->save()) { //&& $dev_lang->save()) {
+                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer]);//, 'lang' => $dev_lang]);
                                 } else {
                                     return response()->json(['status' => 'error', 'message' => 'Language not saved'], 400);
                                 }
-                            } elseif (!$language) {
+                            /*} elseif (!$language) {
                                 return response()->json(['status' => 'error', 'message' => 'Language does not exists, profile save'], 400);
-
+*/
                                 $request->language;
 
                                 if ($user->save()) {
                                     return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
                                 }
                             }
-                        }
                         }catch (\Exception $e) {
-                        $user->delete();
-                        return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+                            $user->delete();
+                            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+                        }
                     }
+                }catch (\Exception $e) {
+                    return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                 }
-            }catch (\Exception $e) {
-                return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
         }
-    }
+
 
     /**
      * create new recruiter user into DB which means: 1 new row in the Users tables, 1 other in the Recruiters table and the id of the recruiter newly created row being pushed into the Users recrut_id column.
@@ -163,6 +168,7 @@ class UsersController extends Controller
                 $user->lastname = $request->lastname;
                 $user->firstname = $request->firstname;
                 $user->city = $request->city;
+                $user->department = $request->department;
                 $user->zip_code = $request->zip_code;
                 $user->email_address = $request->email_address;
                 $password = $request->password;
@@ -212,6 +218,7 @@ class UsersController extends Controller
             $users->lastname = $request->lastname;
             $users->firstname = $request ->firstname;
             $users->city = $request ->city;
+            $users->department = $request->department;
             $users->zip_code = $request ->zip_code;
             $users->email_address = $request->email_address;
             $users->password = $request ->password;
@@ -341,8 +348,8 @@ class UsersController extends Controller
         JOIN `developers`
         ON `developers`.`id` = `users`.`dev_id`
         AND `users`.`city`= :city
-        AND `developers`.`years_of_experience` = :exp
-        AND `users`.`dev_id` IN
+        AND `developers`.`years_of_experience` = :exp', ['exp' => $exp, 'city' => $city,]);
+        /*AND `users`.`dev_id` IN
             (SELECT `developers`.`id` FROM  `developers`,  `languages` , `dev_langs`
             WHERE  `languages`.`id` = `dev_langs`.`language_id`
             AND `developers`.`id` = `dev_langs`.`developer_id`
@@ -358,7 +365,7 @@ class UsersController extends Controller
             $array += [$dev => $lan];
         }
 
-       /* $array = DB::select('SELECT `language_name` FROM `languages` , `developers`, `dev_langs`
+        $array = DB::select('SELECT `language_name` FROM `languages` , `developers`, `dev_langs`
             WHERE  `languages`.`id` = `dev_langs`.`language_id`
             AND `developers`.`id` = `dev_langs`.`developer_id`
             AND `developers`.`id`= :id', ['id' => $dev]);
@@ -366,7 +373,7 @@ class UsersController extends Controller
        // $results = Users::join('developers', 'developers.id', '=', 'users.dev_id')
         //->join('languages', )
 
-        return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $results, 'lang' => $array]);
+        return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $results]);//, 'lang' => $array]);
 
     }
 }
