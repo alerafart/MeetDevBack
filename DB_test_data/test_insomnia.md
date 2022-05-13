@@ -50,12 +50,12 @@
 	"phone": "060000000",
 	"subscribe_to_push_notif":0,
 	"profile_picture": "ale.png",
+
 	"label": "dev specialise react",
 	"description":"tttttttttjsfhjfhgjshgfjqskhghk",
 	"available_for_recruiters":1,
 	"available_for_developers":0,
 	"minimum_salary_requested":2000,
-
 	"age":42,
 	"languages":"react, php, css",
 	"years_of_experience":1,
@@ -81,6 +81,7 @@
 	"lastname":"Dubois",
 	"firstname":"Marie-Jeanne",
 	"city":"Caen",
+    "department":78,
 	"zip_code":14118,
 	"email_address":"mjdubois@dubois.be",
 	"phone":"949649649",
@@ -100,8 +101,8 @@
 //======== loading profiles search results =======//
 //================================================//
 **route**
-`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/secure/search`
-`http://localhost:8080/api/users/secure/search`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/users/search`
+`http://localhost:8080/api/secure/users/search`
 
 **json test**
 ```json
