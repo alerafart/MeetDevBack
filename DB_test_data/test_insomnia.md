@@ -78,3 +78,20 @@
 	"language":"php"
 }
 ```
+
+
+//================================================//
+//======== Create Message from User =======//
+//================================================//
+**route**
+`http://localhost:8080/api/messagesUser`
+
+**json test**
+```json
+{
+    "receiver_user_id": 17,
+    "sender_user_id": 4,
+    "message_content": "message du user 4 a reciever 17",
+    "signature": "Envoyé par user 4"
+  }
+```
