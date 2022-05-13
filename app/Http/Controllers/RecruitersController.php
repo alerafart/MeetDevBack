@@ -7,10 +7,32 @@ use Illuminate\Http\Request;
 
 class RecruitersController extends Controller
 {
+    /**
+     * get all recruiters list
+     *
+     * @return void
+     */
     public function list(){
         return Recruiters::all();
     }
 
+    /**
+     * get single recruiters by id
+     *
+     * @param [int] $id
+     * @return void
+     */
+
+    public function item($id){
+        return Recruiters::whereId($id)->first();
+    }
+
+    /**
+     * Create new recruiter
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request){
 
         try {
@@ -27,6 +49,13 @@ class RecruitersController extends Controller
         }
     }
 
+    /**
+     * Update single recruiter by id
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id){
         try {
             $recruiters = Recruiters::findOrFail($id);
@@ -43,7 +72,12 @@ class RecruitersController extends Controller
         }
     }
 
-
+    /**
+     * Delete single recruiter by id
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id) {
 
         try {

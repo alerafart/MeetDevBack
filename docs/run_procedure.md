@@ -18,3 +18,6 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 ### Serve the project on PHP development server
 `php -S localhost:8080 -t public`
 
+
+### Composer packages for CORS authorizations handling 
+`composer require nordsoftware/lumen-cors`

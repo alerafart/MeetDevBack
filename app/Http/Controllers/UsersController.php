@@ -295,6 +295,7 @@ class UsersController extends Controller
     }
 
 
+
     public function getDevSearchResults(Request $request) {
         $language = $request->language;
         $city = $request->city;
