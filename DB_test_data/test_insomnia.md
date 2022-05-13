@@ -1,5 +1,10 @@
 # Insomnia API testing
 
+## DB 
+
+`http://alerafart-server.eddi.cloud/adminer/?username=explorateur&db=meetdev&table=users`
+`http://aliciamv-server.eddi.cloud/adminer/?username=explorateur&db=meetdev&table=users`
+
 
 //===============================================//
 //================== test name ==================//
