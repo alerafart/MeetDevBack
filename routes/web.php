@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,5 +82,9 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developer', 'UsersController@createNewDevUser');
     $router->post('/recruiter', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
-    //$router->get('/search-results', 'UsersController@getDevSearchResults');
+    $router->get('/send/email', 'MailController@send');
+    $router->get('/send/hello', 'MailController@hello');
+   // $router->get('/search-results', 'UsersController@getDevSearchResults');
 });
+
+
