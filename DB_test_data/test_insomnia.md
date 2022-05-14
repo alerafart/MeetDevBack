@@ -163,6 +163,19 @@
   }
 ```
 
+//================================================//
+//============ Send Message to a User ============//
+//================================================//
+**route**
+`http://localhost:8080/api/users/send/email`
+
+**json test**
+```json
+{
+	"email":"maalejandrarafart@gmail.com"
+}
+```
+
 
 ## Favorites routes
 
