@@ -12,6 +12,4 @@ Button Text
 Thanks,<br>
 meetDev
 @endcomponent
-{
-	"email":"maalejandrarafart@gmail.com"
-}
+
