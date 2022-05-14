@@ -172,9 +172,10 @@
 **route**
 ``
 `http://localhost:8080/api/secure/favorites/recruiters/{id}`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/favorites/recruiters/{id}`
 
 **json test**
-`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/favorites/recruiters/{id}`
+``
 
 
 //===============================================//
@@ -189,3 +190,28 @@
 	"devId":5,
 	"recrutId":2
 }`
+
+//===============================================//
+//=========== add new fav to a profile ==========//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/favorites/recruiters`
+`http://localhost:8080/api/secure/favorites/recruiters`
+
+**json test**
+`{
+	"devUserId":6,
+	"recrutUserId":51
+}`
+
+//===============================================//
+//========= delete a fav from a profile =========//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/favorites/6`
+`http://localhost:8080/api/secure/favorites/11`
+
+**json test**
+``
+
+***takes favorite id as parameter***

@@ -72,7 +72,7 @@ $router->group(['prefix' => 'favorites'], function() use ($router){
     $router->get('/{id}', 'FavoritesController@item');
     $router->post('/', 'FavoritesController@create');
     $router->put('/{id}', 'FavoritesController@update');
-    $router->delete('/{id}', 'FavoritesController@delete');
+    //$router->delete('/{id}', 'FavoritesController@delete');
 });
 
 /**

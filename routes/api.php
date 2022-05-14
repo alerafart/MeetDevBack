@@ -50,4 +50,5 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
     $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
     $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
+    $router->delete('/{id}', 'FavoritesController@delete');
 });
