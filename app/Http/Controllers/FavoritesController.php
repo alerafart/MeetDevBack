@@ -13,9 +13,10 @@ class FavoritesController extends Controller
     /**
      * get all favorites
      *
-     * @return void
+     * @return object
      */
-    public function list(){
+    public function list()
+    {
         return Favorites::all();
     }
 
@@ -23,9 +24,10 @@ class FavoritesController extends Controller
      * get one favorite by id
      *
      * @param [int] $id
-     * @return void
+     * @return object
      */
-    public function item($id){
+    public function item($id)
+    {
         return Favorites::whereId($id)->first();
     }
 
@@ -33,9 +35,10 @@ class FavoritesController extends Controller
      * create new
      *
      * @param Request $request
-     * @return void
+     * @return object
      */
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         try {
             $favorite = new Favorites();
             $favorite->developer_id = $request->developer_id;
@@ -54,9 +57,10 @@ class FavoritesController extends Controller
      *
      * @param Request $request
      * @param [int] $id
-     * @return void
+     * @return object
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         try {
             $favorite = Favorites::findOrFail($id);
             $favorite->developer_id = $request->developer_id;
@@ -65,7 +69,7 @@ class FavoritesController extends Controller
             if ($favorite->save()) {
                 return response()->json(['status' => 'success', 'message' => 'Favorite updated successfully']);
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
@@ -74,16 +78,17 @@ class FavoritesController extends Controller
      * delete a favorite using id
      *
      * @param [int] $id
-     * @return void
+     * @return object
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         try {
             $favorite = Favorites::findOrFail($id);
 
-            if($favorite->delete()) {
+            if ($favorite->delete()) {
                 return response()->json(['status' => 'success', 'message' => 'Favorite deleted successfully']);
             }
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
@@ -93,15 +98,22 @@ class FavoritesController extends Controller
      * Function that will retrieve all favorites from one user profile, using their id
      *
      * @param [int] $id
-     * @return void
+     * @return objects
      */
-    public function getAllFromOneUser($id) {
-        $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
-        ->where('recruiter_user_id', '=', $id)
-        ->join('developers', 'users.dev_id', '=', 'developers.id')
-        ->get();
+    public function getAllFromOneUser($id)
+    {
+        $favs= Favorites::where('recruiter_user_id', '=', $id)->get();
 
-        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]);
+        $favUsers = [];
+        foreach ($favs as $fav) {
+            $devUserId = $fav->developer_user_id;
+            $favoriteProfile = Users::join('developers', 'users.dev_id', '=', 'developers.id')
+            ->where('users.id', '=', $devUserId)
+            ->get();
+            $favUsers[] = $favoriteProfile;
+        }
+
+        return response()->json(['status' => 'success', 'favorites details' => $favs, 'favorite users data' => $favUsers]);
     }
 
 
@@ -109,9 +121,10 @@ class FavoritesController extends Controller
      * Function that will retrieve one complete profile marked as favorite by one user, using their id
      *
      * @param Request $request
-     * @return void
+     * @return objects
      */
-    public function getOneFromOneUser(Request $request) {
+    public function getOneFromOneUser(Request $request)
+    {
         $devId = $request->devId;
         $recrutId = $request->recrutId;
 
@@ -121,7 +134,32 @@ class FavoritesController extends Controller
         ->join('developers', 'users.dev_id', '=', 'developers.id')
         ->get();
 
-        return response()->json(['status' => 'success', 'fav user data' => $favoritesProfile]);
+        $favId = Favorites::where('developer_user_id', '=', $devId)
+        ->where('recruiter_user_id', '=', $recrutId)
+        ->get('id');
+
+        return response()->json(['status' => 'success', 'favorite id' => $favId, 'favorite user details' => $favoritesProfile]);
     }
 
+
+    /**
+     * Add a new favorite to a recruiter profile, using said recruiter id and developer user id
+     *
+     * @param Request $request
+     * @return object
+     */
+    public function AddNewToProfile(Request $request)
+    {
+        try {
+            $favorite = new Favorites();
+            $favorite->developer_user_id = $request->devUserId;
+            $favorite->recruiter_user_id = $request->recrutUserId;
+
+            if ($favorite->save()) {
+                return response()->json(['status' => 'success', 'message' => 'Favorite created successfully', 'new favorite' => $favorite]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
 }
