@@ -7,20 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ContactUser extends Mailable implements ShouldQueue
+class SendEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $name;
+    public $email;
 
     /**
      * Create a new message instance.
      *
-     * @return $this
+     * @return void
      */
-    public function __construct($name)
+    public function __construct($email)
     {
-        $this->name = $name;
+        $this->email = $email;
     }
 
     /**
@@ -30,7 +30,7 @@ class ContactUser extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('example@example.com', 'Example')
-                    ->view('emails.name');
+        return $this->subject('test, test 1, 2, 1, 2')
+        ->markdown('mails.contactUser');
     }
 }
