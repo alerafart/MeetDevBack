@@ -60,6 +60,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('mail');
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +74,6 @@ $app->configure('app');
 */
 
 $app->middleware([
-    //App\Http\Middleware\CorsMiddleware::class,
     'Nord\Lumen\Cors\CorsMiddleware',
 ]);
 
@@ -101,6 +101,16 @@ $app->middleware([
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register('Nord\Lumen\Cors\CorsServiceProvider');
+$app->register(Illuminate\Mail\MailServiceProvider::class);
+
+
+$app->alias('mail.manager', Illuminate\Mail\MailManager::class);
+$app->alias('mail.manager', Illuminate\Contracts\Mail\Factory::class);
+
+$app->alias('mailer', Illuminate\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
+
 
 /*
 |--------------------------------------------------------------------------
