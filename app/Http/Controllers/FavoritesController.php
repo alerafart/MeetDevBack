@@ -134,4 +134,18 @@ class FavoritesController extends Controller
         return response()->json(['status' => 'success', 'favorite id' => $favId, 'favorite user details' => $favoritesProfile]);
     }
 
+
+    public function AddNewToProfile(Request $request) {
+        try {
+            $favorite = new Favorites();
+            $favorite->developer_user_id = $request->devUserId;
+            $favorite->recruiter_user_id = $request->recrutUserId;
+
+            if ($favorite->save()) {
+                return response()->json(['status' => 'success', 'message' => 'Favorite created successfully', 'new favorite' => $favorite]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
 }

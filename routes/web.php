@@ -60,6 +60,7 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->delete('/{id}', 'FavoritesController@delete');
     $router->get('/recruiters/fav/{id}', 'FavoritesController@getAllFromOneUser');
     $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
+    $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
 });
 
 $router->group(['prefix'=>'api/languages'], function() use ($router){
