@@ -21,3 +21,12 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 
 ### Composer packages for CORS authorizations handling 
 `composer require nordsoftware/lumen-cors`
+
+## Composer packages for email sending feature
+### Guzzle HTTP library
+`composer require guzzlehttp/guzzle`
+
+## Postmark Driver
+`composer require wildbit/swiftmailer-postmark`
+## Amazon SES driver
+`composer require aws/aws-sdk-php`
