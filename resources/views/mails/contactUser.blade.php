@@ -1,15 +1,16 @@
 @component('mail::message')
-# Introduction
+# Toc toc, on a du courrier pour toi !
 
-Hello <b>{{ $email }}</b>,
+Bonjour <b>{{ $receiverName }}</b>,
 
-The body of your message.
+{{$senderName}} t'a envoyé un message !
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::panel')
+{{$messageContent}}
 @endcomponent
 
-Thanks,<br>
-meetDev
-@endcomponent
+Tu peux lui répondre à l'adresse suivante: {{$senderMail}} .
 
+En te souhaitant une bonne journée, <br>
+L'équipe meetdev
+@endcomponent
