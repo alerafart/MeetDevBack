@@ -164,7 +164,7 @@
 ```
 
 //================================================//
-//============ Send Message to a User ============//
+//=========== Send a Message to a User ===========//
 //================================================//
 **route**
 `http://localhost:8080/api/users/send/email`
@@ -173,6 +173,22 @@
 ```json
 {
 	"email":"maalejandrarafart@gmail.com"
+}
+```
+
+//================================================//
+//===== Send a Message to a User & save in DB ====//
+//================================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/contact`
+`http://localhost:8080/api/users/contact`
+
+**json test**
+```json
+{
+	"sender_user_id": 1,
+    "receiver_user_id":7,
+    "message_content":"hola"
 }
 ```
 
