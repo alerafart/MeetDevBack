@@ -30,3 +30,12 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 `composer require wildbit/swiftmailer-postmark`
 ## Amazon SES driver
 `composer require aws/aws-sdk-php`
+
+## Dusterio lumen passport
+`composer require dusterio/lumen-passport`
+
+## Create new tables for Passport
+`php artisan migrate`
+
+## Install encryption keys and other necessary stuff for Passport
+`php artisan passport:install`
