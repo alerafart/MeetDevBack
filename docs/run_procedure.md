@@ -19,14 +19,19 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 `php -S localhost:8080 -t public`
 
 
-### Composer packages for CORS authorizations handling 
+## Composer packages for CORS authorizations handling 
 `composer require nordsoftware/lumen-cors`
 
+
 ## Composer packages for email sending feature
+`composer require illuminate/mail`
+
 ### Guzzle HTTP library
 `composer require guzzlehttp/guzzle`
+*required*
 
-## Postmark Driver
+#### Postmark Driver
 `composer require wildbit/swiftmailer-postmark`
-## Amazon SES driver
+#### Amazon SES driver
 `composer require aws/aws-sdk-php`
+

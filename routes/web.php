@@ -25,8 +25,8 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function() use ($router){
-    $router->get('/users', 'UsersController@list');
-    $router->get('/users/{id}', 'UsersController@item');
+   // $router->get('/users', 'UsersController@list');
+    //$router->get('/users/{id}', 'UsersController@item');
     $router->post('/users', 'UsersController@create');
     $router->put('/users/{id}', 'UsersController@update');
     $router->delete('/users/{id}', 'UsersController@delete');
@@ -85,8 +85,7 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developer', 'UsersController@createNewDevUser');
     $router->post('/recruiter', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
-    $router->get('/send/email', 'MailController@send');
-    $router->get('/send/hello', 'MailController@hello');
+   // $router->get('/send/email', 'MailController@send');
     $router->get('/contact', 'MailController@contactUser');
 
    // $router->get('/search-results', 'UsersController@getDevSearchResults');

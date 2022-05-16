@@ -6,6 +6,7 @@ Bonjour <b>{{ $receiverName }}</b>,
 {{$senderName}} t'a envoyé un message !
 
 @component('mail::panel')
+### {{$messageTitle}}
 {{$messageContent}}
 @endcomponent
 
