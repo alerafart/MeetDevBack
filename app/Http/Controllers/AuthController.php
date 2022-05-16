@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -15,14 +16,30 @@ class AuthController extends Controller
     }
 
 
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'email_address' => 'required|unique:users,email_address,1,id',
+            'password' => 'required|confirmed'
+        ]);
+
+        $email_address = $request->email_address;
+        $password = Hash::make($request->password);
+
+        $user = User::create(['email_address' => $email_address, 'password' => $password]);
+
+        return $user;
+        return response()->json(['status' => 'success', 'operation' => 'created']);
+    }
+
     /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $request->only(['email_address', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);

@@ -52,3 +52,19 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
     $router->delete('/{id}', 'FavoritesController@delete');
 });
+
+
+/**
+ *  JWT test routes
+ */
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->post('/login', 'AuthController@login');
+    $router->post('/register', 'AuthController@register');
+    $router->post('/logout', 'AuthController@logout');
+    $router->post('/refresh', 'AuthController@refresh');
+});
+
+
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router){
+    $router->get('/me', 'AuthController@me');
+});

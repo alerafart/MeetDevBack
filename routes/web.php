@@ -20,6 +20,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+
 /**
  *  Users CRUD methods routes
  */
@@ -97,13 +99,7 @@ $router->group(['prefix' => 'dev_langs'], function() use ($router){
     $router->delete('/{id}', 'DevLangController@delete');
 });
 
-/**
- *  Other routes
- */
-$router->group(['prefix' => 'api/'], function() use ($router){
-    $router->post('login', 'AuthController@login');
-    $router->post('logout', 'AuthController@logout');
-    $router->post('refresh', 'AuthController@refresh');
-    $router->post('user-profile', 'AuthController@me');
 
-});
+
+
+

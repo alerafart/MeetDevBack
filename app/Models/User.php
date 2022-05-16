@@ -10,9 +10,10 @@ use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements JWTSubject
+//class User extends Authenticatable implements JWTSubject
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
-    use Notifiable;
+    use Authenticatable, Authorizable; //Notifiable;
 
 
      /**
@@ -37,25 +38,22 @@ class User extends Authenticatable implements JWTSubject
 
 
 
-
-
-
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    /*protected $fillable = [
-        'name', 'email',
-    ];*/
+    protected $fillable = [
+        'email_address', 'password',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    /*protected $hidden = [
-        'password',
-    ];*/
+    protected $hidden = [
+       // 'password',
+    ];
+
 }
