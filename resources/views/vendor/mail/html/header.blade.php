@@ -1,5 +1,6 @@
 <tr>
 <td class="header-md">
+<div class="header-title-md">meetdev</div>
 <a href="{{ $url }}" style="display: inline-block;">
 
 @if (trim($slot) === 'Laravel')

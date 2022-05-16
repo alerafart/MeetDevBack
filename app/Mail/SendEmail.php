@@ -16,6 +16,7 @@ class SendEmail extends Mailable
     public $senderMail;
     public $receiverName;
     public $receiverMail;
+    public $messageTitle;
     public $messageContent;
 
     /**
@@ -23,13 +24,14 @@ class SendEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($email, $senderName, $senderMail, $receiverName, $receiverMail, $messageContent)
+    public function __construct($email, $senderName, $senderMail, $receiverName, $receiverMail, $messageTitle, $messageContent)
     {
         $this->email = $email;
         $this->senderName = $senderName;
         $this->senderMail = $senderMail;
         $this->receiverName = $receiverName;
         $this->receiverMail = $receiverMail;
+        $this->messageTitle = $messageTitle;
         $this->messageContent = $messageContent;
     }
 

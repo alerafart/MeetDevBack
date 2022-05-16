@@ -3,14 +3,14 @@
 
 Bonjour <b>{{ $receiverName }}</b>,
 
-{{$senderName}} t'a envoyé un message !
+{{$senderName}} t'a envoyé un message !<br>
 
 @component('mail::panel')
-### {{$messageTitle}}
+## {{$messageTitle}}
 {{$messageContent}}
 @endcomponent
 
-Tu peux lui répondre à l'adresse suivante: {{$senderMail}} .
+Tu peux lui répondre à l'adresse suivante: {{$senderMail}} .<br>
 
 En te souhaitant une bonne journée, <br>
 L'équipe meetdev

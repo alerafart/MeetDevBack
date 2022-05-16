@@ -66,33 +66,9 @@ class MailController extends Controller
         $testEmail = $request->testEmail ;
         Mail::to($testEmail)->send(new SendEmail($testEmail, $senderName, $senderMail, $receiverName, $receiverMail, $messageTitle, $messageContent));
 
-
        $msg = $msgCtrl->createMessageInDbFromUser($request);
-       if($msg){return $msg;}
-
-
-
-/*
-       try {
-        $messages =new Messages();
-        $messages->receiver_user_id = $request->receiver_user_id;
-        $messages->sender_user_id = $request->sender_user_id;
-        $messages->message_title = $request->title;
-        $messages->message_content = $request->message_content;
-        $messages->signature = $request->signature;
-
-        if ($messages->save()) {
-            return response()->json(['status' => 'success', 'message' => 'Message created successfully']);
-        }
-    } catch (\Exception $e) {
-        return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-    }
-}*/
-
-
-
-
-
+       if ($msg) {
         return response()->json(['status' => 'success', 'message' =>  'Email sent Successfully', 'data' => $testEmail]);
+       }
     }
 }
