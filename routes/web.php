@@ -5,6 +5,9 @@
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EmailController;
+use App\Mail\SendEmail;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +87,17 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/login', 'UsersController@login');
     $router->get('/send/email', 'MailController@send');
     $router->get('/send/hello', 'MailController@hello');
+    $router->get('/contact', 'MailController@contactUser');
+
    // $router->get('/search-results', 'UsersController@getDevSearchResults');
 });
 
+/*Route::get('/mailable', function () {
+    $email = "patate@patate.com";
+    $sm = new App\Mail\SendEmail($email);
+
+    $markdown = new \Illuminate\Mail\Markdown(View(), config('mail.markdown'));
+ //$data = "patate@patate.com";
+    return $markdown->render($sm->markdown);
+});*/
 

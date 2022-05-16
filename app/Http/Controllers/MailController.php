@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 //use App\Mail\ContactUser;
 use App\Mail\SendEmail;
+use App\Models\Users;
 //use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -36,8 +37,33 @@ class MailController extends Controller
 
 
 
-        public function hello()
-        {
-            return response()->json('hello');
+    public function hello()
+    {
+        return response()->json('hello');
+    }
+
+    public function contactUser(Request $request)
+    {
+        $senderId = $request->sender_user_id;
+        $receiverId = $request->receiver_user_id;
+        $messageContent = $request->message_content;
+
+        $senderInfo = Users::where('id', '=', $senderId)->select('firstname', 'email_address')->get();
+        $receiverInfo = Users::where('id', '=', $receiverId)->select('firstname', 'email_address')->get();
+
+        foreach ($senderInfo as $si) {
+            $senderName=$si->firstname;
+            $senderMail=$si->email_address;
         }
+        foreach ($receiverInfo as $ri) {
+            $receiverName=$ri->firstname;
+            $receiverMail=$ri->email_address;
+        }
+
+
+        $monEmail = 'milekic.alicia@gmail.com';
+        Mail::to($monEmail)->send(new SendEmail($monEmail, $senderName, $senderMail, $receiverName, $receiverMail, $messageContent));
+
+        return response()->json(['status' => 'success', 'message' =>  'Email sent Successfully', 'data' => $monEmail]);
+    }
 }

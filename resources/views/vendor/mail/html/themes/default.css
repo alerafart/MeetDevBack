@@ -109,12 +109,36 @@ img {
     text-decoration: none;
 }
 
+.header-md {
+    padding: 25px 0;
+    margin-left: 15px;
+    text-align: left;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+.header-title-md {
+    position: relative;
+    margin-left: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+
 /* Logo */
 
 .logo {
     height: 75px;
     max-height: 75px;
     width: 75px;
+}
+.logo-md {
+    height: 75px;
+    max-height: 75px;
+    width: 75px;
+    text-align: left;
 }
 
 /* Body */
@@ -283,8 +307,26 @@ img {
     padding-bottom: 0;
 }
 
+.panel-md {
+    margin: 21px 0;
+}
+.panel-content-md {
+    background-color: #f2f5f9;
+    color: #718096;
+    padding: 16px;
+}
+
 /* Utilities */
 
 .break-all {
     word-break: break-all;
+}
+
+
+/* Other */
+
+hr {
+    margin: 12px 0 0 -100px;
+    border-top: 0.5px solid #50c6b9;
+    width: 3000%;
 }

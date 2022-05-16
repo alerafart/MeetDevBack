@@ -1,6 +1,6 @@
-<table class="panel" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+<table class="panel-md" width="100%" cellpadding="0" cellspacing="0" role="presentation">
 <tr>
-<td class="panel-content">
+<td class="panel-content-md">
 <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
 <tr>
 <td class="panel-item">
