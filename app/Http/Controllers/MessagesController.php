@@ -182,7 +182,7 @@ class MessagesController extends Controller
             $messages->signature = $request->signature;
 
             if ($messages->save()) {
-                return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'created message' => $messages]);
+                return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'createdMessage' => $messages]);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
