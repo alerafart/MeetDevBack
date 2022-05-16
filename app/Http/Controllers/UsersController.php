@@ -7,6 +7,7 @@ use App\Models\Developers;
 use App\Models\Languages;
 use App\Models\Dev_lang;
 //use App\Http\Controllers\DevelopersController;
+use App\Http\Controllers\AuthController;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -70,7 +71,7 @@ class UsersController extends Controller
      * @return object
      */
     public function createNewDevUser(Request $request){
-        //$developersController = new DevelopersController();
+        $authCtrl = new AuthController;
 
         //check if user email address exists in DB, if not proceed to creation
         if (Users::where('email_address', '=', $request->email_address)->exists()) {
@@ -114,7 +115,8 @@ class UsersController extends Controller
                             $user->dev_id = $devId;
 
                                 if ($user->save()) {
-                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer]);//, 'lang' => $dev_lang]);
+                                    return $authCtrl->respondWithToken($token);
+                                    //return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer]);//, 'lang' => $dev_lang]);
                                 } else {
                                     return response()->json(['status' => 'error', 'message' => 'Language not saved'], 400);
                                 }
