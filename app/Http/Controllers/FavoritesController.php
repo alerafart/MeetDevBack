@@ -113,7 +113,7 @@ class FavoritesController extends Controller
             $favUsers[] = $favoriteProfile;
         }
 
-        return response()->json(['status' => 'success', 'favorites details' => $favs, 'favorite users data' => $favUsers]);
+        return response()->json(['status' => 'success', 'favoritesDetails' => $favs, 'favoriteUsersData' => $favUsers]);
     }
 
 
@@ -138,7 +138,7 @@ class FavoritesController extends Controller
         ->where('recruiter_user_id', '=', $recrutId)
         ->get('id');
 
-        return response()->json(['status' => 'success', 'favorite id' => $favId, 'favorite user details' => $favoritesProfile]);
+        return response()->json(['status' => 'success', 'favoriteId' => $favId, 'favoriteUserDetails' => $favoritesProfile]);
     }
 
 
@@ -156,7 +156,7 @@ class FavoritesController extends Controller
             $favorite->recruiter_user_id = $request->recrutUserId;
 
             if ($favorite->save()) {
-                return response()->json(['status' => 'success', 'message' => 'Favorite created successfully', 'new favorite' => $favorite]);
+                return response()->json(['status' => 'success', 'message' => 'Favorite created successfully', 'newFavorite' => $favorite]);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
