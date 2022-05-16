@@ -27,6 +27,8 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->post('/users', 'UsersController@create');
     $router->put('/users/{id}', 'UsersController@update');
     $router->delete('/users/{id}', 'UsersController@delete');
+    // $router->post('/register', 'AuthController@register');
+    $router->post('/login', 'AuthController@login');
 });
 
 $router->group(['prefix'=>'api/developers'], function() use ($router){

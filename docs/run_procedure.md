@@ -39,3 +39,5 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 
 ## Install encryption keys and other necessary stuff for Passport
 `php artisan passport:install`
+
+`composer require guzzlehttp/guzzle`
