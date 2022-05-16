@@ -43,6 +43,7 @@ class MessagesController extends Controller
             $messages =new Messages();
             $messages->receiver_user_id = $request->receiver_user_id;
             $messages->sender_user_id = $request->sender_user_id;
+            $messages->message_title = $request->title;
             $messages->message_content = $request->message_content;
             $messages->signature = $request->signature;
 
@@ -66,6 +67,7 @@ class MessagesController extends Controller
             $messages =Messages::findOrFail($id);
             $messages->receiver_user_id = $request->receiver_user_id;
             $messages->sender_user_id = $request->sender_user_id;
+            $messages->message_title = $request->title;
             $messages->message_content = $request->message_content;
             $messages->signature = $request->signature;
 
@@ -134,6 +136,8 @@ class MessagesController extends Controller
                 //return $receivers;
             }*/
 
+            //return $receivers;
+            //return $recieverDetail;
         }
 
         return response()->json(['status' => 'success', 'messages receiver' => $messageUserReceiver, 'messages sender' => $messagesUserSender ,'reciever_user_Detail'=>$receivers]);
@@ -178,11 +182,12 @@ class MessagesController extends Controller
             $messages = new Messages();
             $messages->sender_user_id = $request->sender_user_id;
             $messages->receiver_user_id = $request->receiver_user_id;
+            $messages->message_title = $request->message_title;
             $messages->message_content = $request->message_content;
-            $messages->signature = $request->signature;
+           // $messages->signature = $request->signature;
 
             if ($messages->save()) {
-                return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'createdMessage' => $messages]);
+                return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'created message' => $messages]);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
