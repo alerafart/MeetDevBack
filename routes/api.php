@@ -52,3 +52,29 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
     $router->delete('/{id}', 'FavoritesController@delete');
 });
+
+
+/* Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
+});
+ */
+$router->group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function() use ($router){
+    $router->post('/login', 'AuthController@login');
+    $router->post('logout', 'AuthController@logout');
+    $router->post('refresh', 'AuthController@refresh');
+    $router->post('me', 'AuthController@me');
+
+});

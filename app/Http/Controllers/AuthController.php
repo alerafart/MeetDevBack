@@ -2,20 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use illuminate\Support\Facades\Auth;
+//use Illuminate\Http\Request;
+//use App\Models\User;
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
+/**
+ * Undocumented class
+ */
 class AuthController extends Controller
 {
+     /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
+    public function register(Request $request){
+        $this->validate($request, [
+            'email_address' => 'required|unique:users, email_address,1, id',
+            'password' => 'required|confirmed'
+        ]);
 
-    /**
+        $email_address = $request->input('email_address');
+        $password = Hash::make($request->input('password'));
+        User::create(['email_address'=>$email_address, 'password'=>$password]);
+
+        return response()->json(['status'=>'succes', 'registration'=>'created']);
+    }
+     /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -23,7 +45,11 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
+        // Get some user from somewhere
+        $user = User::first();
 
+        // Get the token
+        $token = auth()->login($user);
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
@@ -62,6 +88,7 @@ class AuthController extends Controller
     {
         return $this->respondWithToken(auth()->refresh());
     }
+
 
     /**
      * Get the token array structure.

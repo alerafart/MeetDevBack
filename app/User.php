@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 // use Illuminate\Auth\Authenticatable;
-// use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-// use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 // use Illuminate\Database\Eloquent\Model;
-// use Laravel\Lumen\Auth\Authorizable;
+ use Laravel\Lumen\Auth\Authorizable;
+
+use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Notifiable;
 
@@ -21,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'email_address', 'password',
+        'username', 'password',
     ];
 
     /**
@@ -30,8 +32,9 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password',
+        // 'password',
     ];
+
 
      /**
      * Get the identifier that will be stored in the subject claim of the JWT.
