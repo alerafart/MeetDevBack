@@ -59,7 +59,7 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
  */
 $router->group(['prefix' => 'api'], function() use ($router){
     $router->post('/login', 'AuthController@login');
-    $router->post('/register', 'AuthController@register');
+   // $router->post('/register', 'AuthController@register');
     $router->post('/register/developers', 'AuthController@registerDev');
     $router->post('/register/recruiters', 'AuthController@registerRecrut');
     $router->post('/logout', 'AuthController@logout');
