@@ -152,22 +152,14 @@ class MessagesController extends Controller
     public function getOneFromAUser(Request $request) {
         $userId = $request->userId;
         $correspondantId = $request->correspondantId;
+        $messageId = $request->messagesId;
+
+        $message = Messages::where('id', '=', $messageId);
+
+        $correspondant =
 
 
-        $messageUserReceiver = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
-        ->where('users.id', '=', $userId)
-        ->get('messages.*');
-
-        //$senderDetail = Users::where('users.id', '=', $correspondantId)->get();
-
-        $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
-        ->where('users.id', '=', $userId)
-        ->get('messages.*');
-
-        //$recieverUser = $messagesUserSender->pluck('receiver_user_id');
-        //$recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
-
-        return response()->json(['status' => 'success', 'receiver' => $messageUserReceiver ]);
+        return response()->json(['status' => 'success', 'message' => $message, 'receiver' => $messageUserReceiver ]);
     }
 
     /**
