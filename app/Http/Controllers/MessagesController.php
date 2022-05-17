@@ -107,82 +107,141 @@ class MessagesController extends Controller
     public function getAllMessagesFromOneUser($id) {
 
         // case where our user is the receiver
-        $messagesUserReceiver = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
+        $messagesReceived = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
         ->where('users.id', '=', $id)
         ->get('messages.*');
 
-        $senders = [];
-        $senderUser = $messagesUserReceiver->pluck('sender_user_id')->unique();
-        foreach ($senderUser as $se) {
-            $senderData = Users::where('users.id', '=', $se)->get();
+        $senderId = $messagesReceived->pluck('sender_user_id')->unique();
+        //return $senderId;
+        $senderDetails = null;
+        foreach ($senderId as $si) {
 
-            if($id !== $se){
-                $spec = [];
-                foreach ($senderData as $sd){
-                    if(!isset($sd->dev_id)) {
-
-                        $senderDev = Developers::where('id', '=', $sd->dev_id);
-                        return $senderDev;
-                       // $senders['spec'] = $senderDev;
-                    }
-                    else{
-                        $sid =$sd->recrut_id;
-                        $senderRec = Recruiters::where('id', '=', $sid);
-                        //return $senderRec;
-                       //$spec[] = $senderRec;
-                    }
-                    //return $spec;
-                }
-
-                $senders['gen'] = $senderData;
-            }
-            //return $spec;
+            $devId = Users::where('id', '=', $si)->get('dev_id');
+            $query = Users::query()->where("users.id", "=", $si);
+            //return $devId;
+            if (isset($devId)) {
 
 
-            /*$senderId = $senderData->pluck('id');
-            if ($id !== $senderId) {
-                $senders[] = $senderData;*/
+                $query->where("users.recrut_id", "=", null)
+                    ->join("developers", function ($join) {
+                        $join->on("developers.id", "=", "users.dev_id");
+                    });
+
+                $sd = $query->get();
+
+
             }
 
-        //return $devsd;
-
-        // case in which our user is the sender
-        $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
-        ->where('users.id', '=', $id)
-        ->get('messages.*');
-
-        $receivers = [];
-        $senderUser = $messagesUserSender->pluck('receiver_user_id')->unique();
-        foreach($senderUser as $su){
-            $receiverData = Users::where('users.id', '=', $su)->get();
-            $receiverId = $receiverData->pluck('id');
-            if ($id !== $receiverId) {
-                $receivers[] = $receiverData;
-            }
-
-
-
-            /*   $recieverUser = $msgSender->receiver_user_id;
-            $recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
-            $devId = $recieverDetail->pluck('dev_id');
-            $recrutId = $recieverDetail->pluck('recrut_id');
-            $receivers[] = $recieverDetail;
-
-            if($devId) {
-                $receiverDevDetails = Developers::where('dev_id', '=', $devId)->first();
-                $receivers[] = $receiverDevDetails;
-                //return $receivers;
-            } elseif($recrutId){
-                $receiverRecrutDetails = Recruiters::where('recrut_id', '=', $recrutId)->get('*');
-                $receivers[] = $receiverRecrutDetails;
-                //return $receivers;
-            }*/
-
-            //return $receivers;
-            //return $recieverDetail;
+            $senderDetails = $sd;
+            //return $sd;
         }
 
-        return response()->json(['status' => 'success', 'receivedMessages' => $messagesUserReceiver, 'sentMessages' => $messagesUserSender ,'recieverUserDetail'=>$receivers, 'senderUsersDetails' => $senders]);
+
+
+
+
+       /* $senderUser = $messagesUserReceiver->pluck('sender_user_id')->unique();
+        foreach ($senderUser as $se) {
+            /*$senderData = Users::join("developers", function($join) {
+                $join->on("developers.id", "=", "users.dev_id");
+            })
+                ->whereNotNull("users.dev_id")
+                ->where('users.id', '=', $se)
+                ->get();*/
+
+
+
+            /*$query = Users::query()->where("users.id", "=", $se);
+
+            $query->where("users.recrut_id", "=", NULL)
+                ->join("developers", function ($join){
+                    $join->on("developers.id", "=", "users.dev_id");
+                });
+
+
+            $query->where("users.dev_id", "=", NULL)
+            ->join("recruiters", function ($join){
+                $join->on("recruiters.id", "=", "users.recrut_id");
+            });
+
+            $senderData = $query->get();
+            return $senderData;
+
+
+            $query->when("users.dev_id", "<>", "", function($join) {
+                $join->on("developers.id", "=", "users.dev_id");
+               // return $q->where("developers.id", "=", "users.dev_id")
+            })
+            ->where('users.id', '=', $se);
+
+            $senderData = $query->get();
+
+            return $senderData;
+            }
+            //->when('users.dev_id')
+            return $senderData;
+
+
+
+
+
+        $senderUser = $messagesUserReceiver->pluck('sender_user_id')->unique();
+        foreach ($senderUser as $se) {
+            $senderData = Users::join('developers', 'develop.id', '=', $se)->get();
+
+        }
+
+*/
+
+       /* $senderData = [];
+        $senderSpec = [];
+
+        $senderUser = $messagesReceived->pluck('sender_user_id')->unique();
+        foreach ($senderUser as $se) {
+            $senderData = Users::where('id', '=', $se)->get();
+
+            if (isset($senderData)) {
+                $isDev = $senderData->pluck('dev_id');
+                $isRecrut = $senderData->pluck('recrut_id');
+
+                if (isset($isRecrut)) {
+                    $recData = Recruiters::where('id', '=', $isRecrut)->get();
+                    $senderSpec[] = $recData;
+                } elseif (isset($isDev)) {
+                    $devData = Developers::where('id', '=', $isDev)->get();
+                    $senderSpec[] = $devData;
+                }
+            }
+        }
+
+        // case in which our user is the sender
+        $messagesSent = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
+        ->where('users.id', '=', $id)
+        ->get('messages.*');
+
+        $receiverUser = $messagesSent->pluck('receiver_user_id')->unique();
+        foreach($receiverUser as $re){
+            $receiverData = Users::where('users.id', '=', $re)->get();
+
+            $isDev = $receiverData->pluck('dev_id');
+            $isRecrut = $receiverData->pluck('recrut_id');
+
+            $receiverSpec = [];
+           // if ($id !== $receiverId) {
+                if(isset($isRecrut)) {
+                $recData = Recruiters::where('id', '=', $isRecrut)->get();
+                $receiverSpec[] = $recData;
+                }
+                elseif (isset($isDev)) {
+                    $devData = Developers::where('id', '=', $isDev)->get();
+                    $receiverSpec[] = $devData;
+                    return $receiverSpec;
+                }
+                //return $receiverData;
+            //}
+        }*/
+
+    return response()->json(['status' => 'success', 'receivedMessages' => $messagesReceived, 'senderDetails' => $senderDetails /*'sentMessages' => $messagesSent ,'receiverUsersDetails' => $receiverData, 'senderSpec' =>  $receiverSpec, 'senderUsersDetails' => $senderData, 'senderSpec' => $senderSpec*/]);
     }
 
      /**
