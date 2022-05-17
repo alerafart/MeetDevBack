@@ -9,6 +9,7 @@ use App\Models\Users;
 use App\Models\Developers;
 use App\Http\Controllers\Controller;
 use App\Models\Recruiters;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -44,7 +45,7 @@ class AuthController extends Controller
         $credentials = $request->only(['email_address', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized', 'cred' => $credentials], 401);
+        return response()->json(['error' => 'Unauthorized', 'credentials' => $credentials], 401);
         }
 
         return $this->respondWithToken($token);

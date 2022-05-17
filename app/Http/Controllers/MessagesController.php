@@ -99,34 +99,76 @@ class MessagesController extends Controller
     }
 
     /**
-     * Retrieve all messages from One User using id and correspondent prodile details
+     * Retrieve all messages from One User using id and correspondent profiles details
      *
      * @param [int] $id
      * @return void
      */
     public function getAllMessagesFromOneUser($id) {
 
-        $messageUserReceiver = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
+        // case where our user is the receiver
+        $messagesUserReceiver = Messages::join('users', 'messages.receiver_user_id','=', 'users.id')
         ->where('users.id', '=', $id)
         ->get('messages.*');
 
-        $senderUser = $messageUserReceiver->pluck('sender_user_id');
-        $senderDetail = Users::where('users.id', '=', $senderUser)->get();
+        $senders = [];
+        $senderUser = $messagesUserReceiver->pluck('sender_user_id')->unique();
+        foreach ($senderUser as $se) {
+            $senderData = Users::where('users.id', '=', $se)->get();
 
-        // messages envoyés par notre utilisateur en param de la route
+            if($id !== $se){
+                $spec = [];
+                foreach ($senderData as $sd){
+                    if(!isset($sd->dev_id)) {
+
+                        $senderDev = Developers::where('id', '=', $sd->dev_id);
+                        return $senderDev;
+                       // $senders['spec'] = $senderDev;
+                    }
+                    else{
+                        $sid =$sd->recrut_id;
+                        $senderRec = Recruiters::where('id', '=', $sid);
+                        //return $senderRec;
+                       //$spec[] = $senderRec;
+                    }
+                    //return $spec;
+                }
+
+                $senders['gen'] = $senderData;
+            }
+            //return $spec;
+
+
+            /*$senderId = $senderData->pluck('id');
+            if ($id !== $senderId) {
+                $senders[] = $senderData;*/
+            }
+
+        //return $devsd;
+
+        // case in which our user is the sender
         $messagesUserSender = Messages::join('users', 'messages.sender_user_id','=', 'users.id')
         ->where('users.id', '=', $id)
         ->get('messages.*');
 
         $receivers = [];
-        foreach($messagesUserSender as $msgSender){
-            $recieverUser = $msgSender->receiver_user_id;
+        $senderUser = $messagesUserSender->pluck('receiver_user_id')->unique();
+        foreach($senderUser as $su){
+            $receiverData = Users::where('users.id', '=', $su)->get();
+            $receiverId = $receiverData->pluck('id');
+            if ($id !== $receiverId) {
+                $receivers[] = $receiverData;
+            }
+
+
+
+            /*   $recieverUser = $msgSender->receiver_user_id;
             $recieverDetail = Users::where('users.id', '=', $recieverUser)->get();
             $devId = $recieverDetail->pluck('dev_id');
             $recrutId = $recieverDetail->pluck('recrut_id');
             $receivers[] = $recieverDetail;
 
-            /*if($devId) {
+            if($devId) {
                 $receiverDevDetails = Developers::where('dev_id', '=', $devId)->first();
                 $receivers[] = $receiverDevDetails;
                 //return $receivers;
@@ -140,7 +182,7 @@ class MessagesController extends Controller
             //return $recieverDetail;
         }
 
-        return response()->json(['status' => 'success', 'messages receiver' => $messageUserReceiver, 'messages sender' => $messagesUserSender ,'reciever_user_Detail'=>$receivers]);
+        return response()->json(['status' => 'success', 'receivedMessages' => $messagesUserReceiver, 'sentMessages' => $messagesUserSender ,'recieverUserDetail'=>$receivers, 'senderUsersDetails' => $senders]);
     }
 
      /**
@@ -187,7 +229,7 @@ class MessagesController extends Controller
            // $messages->signature = $request->signature;
 
             if ($messages->save()) {
-                return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'created message' => $messages]);
+                return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'createdMessage' => $messages]);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
