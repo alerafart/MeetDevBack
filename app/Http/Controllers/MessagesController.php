@@ -149,7 +149,7 @@ class MessagesController extends Controller
      * @param [int] $id
      * @return void
      */
-    public function getOneMessageFromAUser(Request $request) {
+    public function getOneFromAUser(Request $request) {
         $userId = $request->userId;
         $correspondantId = $request->correspondantId;
 
