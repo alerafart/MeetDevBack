@@ -297,13 +297,11 @@ class UsersController extends Controller
      */
     public function getDevSearchResults(Request $request) {
         $city = $request->city;
-        $exp = $request->exp;
 
         $results = DB::select('SELECT * FROM `users`
             JOIN `developers`
             ON `developers`.`id` = `users`.`dev_id`
-            AND `users`.`city`= :city
-            AND `developers`.`years_of_experience` = :exp', ['exp' => $exp, 'city' => $city,]);
+            AND `users`.`city`= :city', ['city' => $city]);
 
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $results]);
 
