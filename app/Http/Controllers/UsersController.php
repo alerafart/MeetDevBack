@@ -70,8 +70,6 @@ class UsersController extends Controller
      * @return object
      */
     public function createNewDevUser(Request $request){
-        //$developersController = new DevelopersController();
-
         //check if user email address exists in DB, if not proceed to creation
         if (Users::where('email_address', '=', $request->email_address)->exists()) {
             return response()->json(['status' => 'error', 'message' => 'email address already existing in database'], 400);
@@ -143,8 +141,6 @@ class UsersController extends Controller
      */
 
     public function createNewRecruiterUser(Request $request){
-        //$developersController = new DevelopersController();
-
         //check if user email address exists in DB, if not proceed to creation
         if (Users::where('email_address', '=', $request->email_address)->exists()) {
             return response()->json(['status' => 'error', 'message' => 'email address already existing in database'], 400);

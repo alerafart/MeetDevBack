@@ -24,6 +24,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+
 /**
  *  Users CRUD methods routes
  */
