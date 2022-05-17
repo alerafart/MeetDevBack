@@ -8,7 +8,8 @@ use App\Models\Developers;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\Mime\Message;
+use Symfony\Component\Console\Input\Input;
+
 
 class MessagesController extends Controller
 {
@@ -150,16 +151,29 @@ class MessagesController extends Controller
      * @return void
      */
     public function getOneFromAUser(Request $request) {
-        $userId = $request->userId;
+        $currentUserId = $request->userId;
         $correspondantId = $request->correspondantId;
-        $messageId = $request->messagesId;
+        $messageId = $request->messageId;
 
-        $message = Messages::where('id', '=', $messageId);
+      //  $ms = $this->item($messageId);
+        $message = Messages::findOrFail($messageId);
 
-        $correspondant =
+        //if($message->receiver_user_id === $currentUserId){
+
+        $corres = Users::where("users.id", "=", $correspondantId)->first();
+        $query = Users::query()->where("users.id", "=", $correspondantId);
+
+        if (isset($corres->dev_id)) {
+            $query->join("developers", "developers.id", "=", "users.dev_id");
+        }
+        if (isset($corres->recrut_id)) {
+            $query->join("recruiters", "recruiters.id", "=", "users.recrut_id");
+        }
+
+        $sd = $query->get();
 
 
-        return response()->json(['status' => 'success', 'message' => $message, 'receiver' => $messageUserReceiver ]);
+        return response()->json(['status' => 'success', 'message' => $message, 'receiver' => $sd]);
     }
 
     /**
