@@ -103,6 +103,45 @@
 ```
 
 //================================================//
+//================= Update user ==================//
+//================================================//
+**route**
+`http://localhost:8080/api/secure/users/11`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/users/11`
+
+**json test**
+```json
+{
+	"lastname":"updatetestupdate",
+	"firstname":"testupdate",
+	"city":"update",
+	"department":91,
+	"zip_code":14118,
+	"phone":"9496496494545",
+	"subscribe_to_push_notif":0,
+	"profile_picture":"pic.png",
+	
+	"label":"poodle",
+	"description":"test test test test", 
+	"available_for_recruiters":1,
+	"available_for_developers":0,
+	"minimum_salary_requested":40000,
+	"age":14,
+	"languages":"rubyyyyy, CCCCC",
+	"years_of_experience":2,
+	"english_spoken":"updateee test",
+	"github_link":"github.git.com",
+	"portfolio_link":"portfolio.com",
+	"other_link":"",
+	"language": "PHP",
+		
+	"company_name": "fifi",
+	"needs_description": "hjksqdf"
+}
+```
+
+
+//================================================//
 //======== loading profiles search results =======//
 //================================================//
 **route**
@@ -205,7 +244,6 @@
 
 **json test**
 ``
-
 
 //===============================================//
 //======= retrieve one fav from a profile =======//
