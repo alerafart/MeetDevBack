@@ -63,6 +63,7 @@ $app->configure('app');
 $app->configure('auth');
 $app->configure('jwt');
 $app->configure('mail');
+$app->configure('services');
 
 
 /*
@@ -116,6 +117,12 @@ $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
+$app->register(App\Providers\AppServiceProvider::class);
+
+$app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(Illuminate\Auth\Passwords\PasswordResetServiceProvider::class);
+$app->register(Illuminate\Notifications\NotificationServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -138,6 +145,12 @@ $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/api.php';
+});
+
+$app->router->group([
+    'namespace' => 'App\Http\Controllers',
+], function ($router) {
+    require __DIR__.'/../routes/password.php';
 });
 
 return $app;

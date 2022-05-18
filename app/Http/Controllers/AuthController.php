@@ -81,7 +81,20 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        try {
+            $token = Auth::refresh();
+        } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $e) {
+            return response()->json([
+                'message' => 'Session expired'
+            ], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+        return $this->respondWithToken($token);
+
+        // return $this->respondWithToken(auth()->refresh());
     }
 
     /**

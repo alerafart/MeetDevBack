@@ -43,3 +43,4 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 
 ## implementation of all of Laravel's authentication features
 `composer require laravel/breeze --dev`
+`composer require breeze`
