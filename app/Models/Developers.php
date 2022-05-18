@@ -15,15 +15,11 @@ class developers extends Model
      * @return void
      */
     public function usersRelationship() {
-        return $this->hasOne(Users::class);
+        return $this->belongsTo(Users::class, 'dev_id');
     }
 
     public function languages() {
         return $this->HasMany('App\Models\Languages', 'dev_lang');
-    }
-
-    public function getUsersAttribute() {
-        return $this->usersRelationship->dev_id;
     }
 
 }

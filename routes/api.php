@@ -21,13 +21,20 @@ use App\Http\Controllers\EmailController;
 });*/
 
 /**
- * API users routes
+ * API global users routes
  */
 $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developers', 'UsersController@createNewDevUser');
     $router->post('/recruiters', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
-    $router->put('/{id}', 'UsersController@update');
+});
+
+/**
+ * API secure users routes
+ */
+$router->group(['prefix' => 'api/secure/users'], function() use ($router){
+    $router->put('/developers/{id}', 'UsersController@updateDev');
+    $router->put('/recruiters/{id}', 'UsersController@updateRecrut');
 });
 
 /**

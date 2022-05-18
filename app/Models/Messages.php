@@ -15,6 +15,6 @@ class Messages extends Model
      * @return void
      */
     public function users() {
-        return $this->HasMany('App\Models\Users');
+        return $this->belongsToMany( Users::class, 'receiver_user_id', 'sender_user_id' );
     }
 }
