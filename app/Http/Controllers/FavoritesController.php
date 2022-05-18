@@ -113,7 +113,7 @@ class FavoritesController extends Controller
             //$favUsers[] = $favoriteProfile;
         }
 
-    return response()->json(['status' => 'success', 'favoritesDetails' => $favs /*, 'favoriteUsersData' => $favUsers*/]);
+    return response()->json(['status' => 'success', 'favoritesDetails' => $favs , 'favoriteUsersData' => $favUsers]);
     }
 
 
