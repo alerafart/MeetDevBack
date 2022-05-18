@@ -125,17 +125,17 @@ class FavoritesController extends Controller
      */
     public function getOneFromOneUser(Request $request)
     {
-        $devId = $request->devId;
-        $recrutId = $request->recrutId;
+        $devUserId = $request->devId;
+        $recrutUserId = $request->recrutId;
 
         $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
-        ->where('recruiter_user_id', '=', $recrutId)
-        ->where('developer_user_id', '=', $devId)
+        ->where('recruiter_user_id', '=', $recrutUserId)
+        ->where('developer_user_id', '=', $devUserId)
         ->join('developers', 'users.dev_id', '=', 'developers.id')
         ->get();
 
-        $favId = Favorites::where('developer_user_id', '=', $devId)
-        ->where('recruiter_user_id', '=', $recrutId)
+        $favId = Favorites::where('developer_user_id', '=', $devUserId)
+        ->where('recruiter_user_id', '=', $recrutUserId)
         ->get('id');
 
         return response()->json(['status' => 'success', 'favoriteId' => $favId, 'favoriteUserDetails' => $favoritesProfile]);
