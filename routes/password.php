@@ -7,12 +7,19 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+/* $router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router){
+    $router->get('/me', 'AuthController@me');
+}); */
 
-Route::get('/forgot-password', function () {
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router){
+    $router->get('/forgot-password', 'AuthController@forgotpsx');
+});
+
+/* Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
-})->middleware('guest')->name('password.request');
+})->middleware('auth')->name('password.request'); */
 
-Route::post('/forgot-password', function (Request $request) {
+/* Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email_address' => 'required|email_address']);
 
     $status = Password::sendResetLink(
@@ -26,13 +33,13 @@ Route::post('/forgot-password', function (Request $request) {
 
 Route::get('/reset-password/{token}', function ($token) {
     return view('auth.reset-password', ['token' => $token]);
-})->middleware('guest')->name('password.reset');
+})->middleware('guest')->name('password.reset'); */
 
 
-Route::post('/reset-password', function (Request $request) {
+/* Route::post('/reset-password', function (Request $request) {
     $request->validate([
         'token' => 'required',
-        'email' => 'required|email',
+        'email_address' => 'required|email',
         'password' => 'required|min:8|confirmed',
     ]);
 
@@ -52,4 +59,4 @@ Route::post('/reset-password', function (Request $request) {
     return $status === Password::PASSWORD_RESET
                 ? redirect()->route('login')->with('status', __($status))
                 : back()->withErrors(['email' => [__($status)]]);
-})->middleware('guest')->name('password.update');
+})->middleware('guest')->name('password.update'); */

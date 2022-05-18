@@ -81,6 +81,9 @@ class AuthController extends Controller
      */
     public function refresh()
     {
+        /* $credentials = $request->only(['email_address', 'password']);
+        $token =auth()->attempt($credentials);
+        return $credentials; */
         try {
             $token = Auth::refresh();
         } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $e) {
