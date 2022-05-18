@@ -14,7 +14,7 @@ class developers extends Model
      *
      * @return void
      */
-    public function users() {
+    public function usersRelationship() {
         return $this->hasOne(Users::class);
     }
 
@@ -22,5 +22,8 @@ class developers extends Model
         return $this->HasMany('App\Models\Languages', 'dev_lang');
     }
 
+    public function getUsersAttribute() {
+        return $this->usersRelationship->dev_id;
+    }
 
 }
