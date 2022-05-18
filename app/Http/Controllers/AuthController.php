@@ -45,7 +45,6 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email_address', 'password']);
 
-        //return $credentials['email_address'];
         $user = Users::where('email_address', '=', $credentials['email_address'])->first();
         $isDev = false;
         $isRecruiter = false;
@@ -53,7 +52,6 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
         return response()->json(['error' => 'Unauthorized', 'credentials' => $credentials], 401);
         }
-
 
         if(!empty($user->dev_id)) {
             $isDev = true;
@@ -64,7 +62,7 @@ class AuthController extends Controller
             ->where('id', '=', $dev_id)
             ->get();
 
-            return response()->json(['status' => 'success', 'message' => 'Login successfull', 'isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $dev]);
+            return response()->json(['status' => 'success', 'message' => 'Login successfull', 'isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $dev, 'token' => $this->respondWithToken($token)]);
         } else if(!empty($user->recrut_id)) {
             $isRecruiter = true;
 
@@ -73,19 +71,8 @@ class AuthController extends Controller
             ->select('*')
             ->where('id', '=', $recrut_id)
             ->get();
-            return response()->json(['status' => 'success', 'message' => 'Login successfull','isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $recrut]);
+            return response()->json(['status' => 'success', 'message' => 'Login successfull','isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $recrut,  'token' => $this->respondWithToken($token)]);
         }
-
-        return $this->respondWithToken($token);
-
-
-
-
-
-
-
-
-
 
     }
 
