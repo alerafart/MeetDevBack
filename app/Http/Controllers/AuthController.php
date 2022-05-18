@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Users;
 use App\Models\Developers;
-use App\Http\Controllers\Controller;
 use App\Models\Recruiters;
-use Illuminate\Http\Client\Request as ClientRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Passwords\PasswordBrokerManager;
+use Illuminate\Http\Client\Request as ClientRequest;
 
 class AuthController extends Controller
 {
@@ -246,6 +248,43 @@ class AuthController extends Controller
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
         }
+    }
+
+    /**
+     * Request a password reset email.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetPasswordRequest(Request $request) {
+        $this->validate($request, [
+            'email_address' => 'required|email_address'
+        ]);
+
+        $user = User::withDeactivated()->where('email_address', $request->email_address)->first();
+        if(!$user) {
+            return response()->json([
+                'message' => 'Email address is not registered'
+            ], 404);
+        }
+        $response = $this->broker()->sendResetLink($request->only('email_address'));
+        if($response !== Password::RESET_LINK_SENT) {
+            return response()->json([
+                'message' => 'There was an error sending password reset email'
+            ], 500);
+        }
+        return response()->json([
+            'message' => 'Password reset email has been sent'
+        ], 200);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    private function broker() {
+        $passwordBrokerManager = new PasswordBrokerManager(app());
+        return $passwordBrokerManager->broker();
     }
 }
 

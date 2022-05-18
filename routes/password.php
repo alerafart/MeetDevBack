@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 }); */
 
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router){
-    $router->get('/forgot-password', 'AuthController@forgotpsx');
+    $router->get('/forgot-password', 'AuthController@resetPasswordRequest');
 });
 
 /* Route::get('/forgot-password', function () {
