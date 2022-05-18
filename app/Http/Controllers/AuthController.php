@@ -10,6 +10,7 @@ use App\Models\Developers;
 use App\Http\Controllers\Controller;
 use App\Models\Recruiters;
 use Illuminate\Http\Client\Request as ClientRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -44,11 +45,48 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email_address', 'password']);
 
+        //return $credentials['email_address'];
+        $user = Users::where('email_address', '=', $credentials['email_address'])->first();
+        $isDev = false;
+        $isRecruiter = false;
+
         if (! $token = auth()->attempt($credentials)) {
         return response()->json(['error' => 'Unauthorized', 'credentials' => $credentials], 401);
         }
 
+
+        if(!empty($user->dev_id)) {
+            $isDev = true;
+
+            $dev_id = $user->dev_id;
+            $dev = DB::table('developers')
+            ->select('*')
+            ->where('id', '=', $dev_id)
+            ->get();
+
+            return response()->json(['status' => 'success', 'message' => 'Login successfull', 'isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $dev]);
+        } else if(!empty($user->recrut_id)) {
+            $isRecruiter = true;
+
+            $recrut_id = $user->recrut_id;
+            $recrut = DB::table('recruiters')
+            ->select('*')
+            ->where('id', '=', $recrut_id)
+            ->get();
+            return response()->json(['status' => 'success', 'message' => 'Login successfull','isDev' => $isDev, 'isRecruiter' => $isRecruiter, 'general' => $user, 'spec' => $recrut]);
+        }
+
         return $this->respondWithToken($token);
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
