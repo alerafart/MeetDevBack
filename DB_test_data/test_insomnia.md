@@ -309,7 +309,7 @@
 }`
 
 //===============================================//
-//========= JWT registration recruiters =========//
+//========= JWT login recruiters =========//
 //===============================================//
 **route**
 `http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`
