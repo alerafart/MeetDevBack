@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use App\Models\Developers;
-use App\Models\Languages;
-use App\Models\Dev_lang;
 //use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
@@ -282,22 +280,33 @@ class UsersController extends Controller
 
 
     /**
-     * Method that will handle search results for developers profil
+     * Method that will handle search results for developer profiles depending on city
      *
      * @param Request $request
      * @return objects array
      */
     public function getDevSearchResults(Request $request) {
         $city = $request->city;
-        $exp = $request->exp;
 
-        $results = DB::select('SELECT * FROM `users`
-            JOIN `developers`
-            ON `developers`.`id` = `users`.`dev_id`
-            AND `users`.`city`= :city
-            AND `developers`.`years_of_experience` = :exp', ['exp' => $exp, 'city' => $city,]);
+        $results = Users::where('city', '=', $city)
+            ->whereNotNull('dev_id')
+            ->join('developers', 'users.dev_id', '=', 'developers.id')
+            ->get('users.id');
 
-        return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $results]);
+        $dev =[];
+        $devs = $results->map(function($item){
+
+            $dev['userId'] = $item->id;
+
+            $devDetails = Users::join('developers', 'users.dev_id', '=', 'developers.id')
+                ->where('users.id', '=', $item->id)
+                ->get();
+
+            $dev['userDetails'] = $devDetails;
+            return $dev;
+        });
+
+        return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
 
     }
 }
