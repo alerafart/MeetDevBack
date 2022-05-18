@@ -142,7 +142,7 @@
 ```json
 {
     "correspondantId": 8,
-    "devId": 11
+    "messageId": 11
   }
 ```
 
@@ -216,9 +216,10 @@
 
 **json test**
 `{
-	"devId":5,
-	"recrutId":2
+	"devUserId":5,
+	"recrutUserId":2
 }`
+*ids are from the **users** entity*
 
 //===============================================//
 //=========== add new fav to a profile ==========//
@@ -308,7 +309,7 @@
 }`
 
 //===============================================//
-//========= JWT registration recruiters =========//
+//========= JWT login recruiters =========//
 //===============================================//
 **route**
 `http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`
