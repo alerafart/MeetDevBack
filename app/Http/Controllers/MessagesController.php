@@ -129,8 +129,6 @@ class MessagesController extends Controller
         // and the same process here for the $messagesSent receivers
         $receiver = [];
         $receivers = $messagesSent->map(function($item) {
-            //if($item->receiver_user_id == $id){break;}
-
             $query = Users::query()->where("users.id", "=", $item->receiver_user_id);
             $receiverInfo = Users::where("users.id", "=", $item->receiver_user_id)->first();
             $receiver['userId'] = $receiverInfo->id;

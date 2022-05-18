@@ -19,12 +19,16 @@ class Users extends Model
         return $this->hasOne( "App\Models\Recruiter" );
     }
 
-    public function developers() {
+    public function developersRelationship() {
         return $this->hasOne( "App\Models\Developers" );
     }
 
+    public function getDevelopersAttribute(){
+        return $this->developersRelationship()->dev_id;
+    }
+
     public function favorites() {
-        return $this->hasMany( "App\Models\Favorites" );
+        return $this->beslongsToMany( "App\Models\Favorites" );
     }
 
     public function messages() {
