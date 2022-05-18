@@ -134,22 +134,28 @@ class FavoritesController extends Controller
         $devUserId = $request->devId;
         $recrutUserId = $request->recrutId;
 
-        $favoriteProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
+       /* $favoriteProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
         ->where('recruiter_user_id', '=', $recrutUserId)
         ->where('developer_user_id', '=', $devUserId)
         ->join('developers', 'users.dev_id', '=', 'developers.id')
-        ->first();
-        //return $favoriteProfile;
+        ->first();*/
 
-        /*$user = Users::find($devId)->dev_id;
+        $favorite = Favorites::where('developer_user_id', '=', $devUserId)
+            ->where('recruiter_user_id', '=', $recrutUserId)
+            ->first();
+        $favorite->users;
+        return $favorite;
+        $user = Users::find($devUserId)->developers;
+        return $user;
         //return $user;
         //$user->load('developers');
         $dev = Developers::find($user);
-        $dev->users;
+        //return $dev;
+        $dev->load('users');
         return $dev;
         $fav = new Favorites();
         $fav->developers();
-        return $fav;------*/
+        return $fav;
        /* $fav = Favorites::where('recruiter_user_id', '=', $recrutId)
             ->where('developer_user_id', '=', $devId)
             ->get();

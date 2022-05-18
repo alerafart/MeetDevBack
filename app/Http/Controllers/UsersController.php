@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use App\Models\Developers;
-//use App\Http\Controllers\DevelopersController;
+use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -197,20 +197,57 @@ class UsersController extends Controller
             $users->city = $request ->city;
             $users->department = $request->department;
             $users->zip_code = $request ->zip_code;
-            $users->email_address = $request->email_address;
-            $users->password = $request ->password;
+           // $users->email_address = $request->email_address;
+           // $users->password = $request ->password;
             $users->phone = $request ->phone;
             $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
-                return response()->json(['status' => 'success', 'message' =>'User updated successfully' ]);
+                return response()->json(['status' => 'success', 'message' =>'User updated successfully'], 200);
             }
 
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+
+    /**
+     * update a user profile and corresponding specificities table, using id for identification
+     *
+     * @param Request $request
+     * @param [int] $id
+     * @return void
+     */
+    public function updateUser(Request $request, $id){
+        try {
+             $this->update($request, $id);
+
+            if(response()->json(["success"])){
+                $profile = Users::where('id', '=', $id)->first();
+                $profileRec = $profile->recrut_id;
+                $profileDev = $profile->dev_id;
+
+                if (isset($profileDev)) {
+                    $devCtrl = new DevelopersController;
+                    return $devCtrl->update($request, $profileDev);
+                } elseif (isset($profileRec)) {
+                    $recrtCtrl = new RecruitersController;
+                    return $recrtCtrl->update($request, $profileRec);
+                }
+
+                if(response()->json(["success"])){
+                    return response()->json(["success"]);
+                    return response()->json(['status' => 'success', 'message' =>'User updated successfully'], 200);
+                }else {
+                    return response()->json(['status' => 'error', 'message' => 'A problem occurred while saving user-specific data'], 400);
+                }
+            }
+        } catch(\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+       }
 
 
     /**
