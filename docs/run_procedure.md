@@ -35,3 +35,11 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 #### Amazon SES driver
 `composer require aws/aws-sdk-php`
 
+## Composer packages for email notification
+`composer require illuminate/notifications`
+
+## Composer packages PHP library for generating and working with universally unique identifiers (UUIDs)
+`composer require ramsey/uuid`
+
+## implementation of all of Laravel's authentication features
+`composer require laravel/breeze --dev`
