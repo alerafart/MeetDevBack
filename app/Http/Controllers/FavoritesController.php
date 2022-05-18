@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Favorites;
 use App\Models\Users;
+use App\Models\Developers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -105,15 +106,20 @@ class FavoritesController extends Controller
         $favs= Favorites::where('recruiter_user_id', '=', $id)->get();
 
         $favUsers = [];
-        foreach ($favs as $fav) {
+        //foreach ($favs as $fav) {
+        $favoriteUsers = $favs->map(function($fav) {
             $devUserId = $fav->developer_user_id;
+            //return $devUserId;
+            $favUsers['UserId'] = $devUserId;
+
             $favoriteProfile = Users::join('developers', 'users.dev_id', '=', 'developers.id')
             ->where('users.id', '=', $devUserId)
-            ->get();
-            //$favUsers[] = $favoriteProfile;
-        }
+            ->first();
+            $favUsers['UserData'] = $favoriteProfile;
+            return $favUsers;
+        });
 
-    return response()->json(['status' => 'success', 'favoritesDetails' => $favs , 'favoriteUsersData' => $favUsers]);
+    return response()->json(['status' => 'success', 'favoritesDetails' => $favs , 'favoriteUsersData' => $favoriteUsers]);
     }
 
 
@@ -128,17 +134,42 @@ class FavoritesController extends Controller
         $devId = $request->devId;
         $recrutId = $request->recrutId;
 
+        $favoriteProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
+        ->where('recruiter_user_id', '=', $recrutId)
+        ->where('developer_user_id', '=', $devId)
+        ->join('developers', 'users.dev_id', '=', 'developers.id')
+        ->first();
+        //return $favoriteProfile;
+
+        /*$user = Users::find($devId)->dev_id;
+        //return $user;
+        //$user->load('developers');
+        $dev = Developers::find($user);
+        $dev->users;
+        return $dev;
+        $fav = new Favorites();
+        $fav->developers();
+        return $fav;------*/
+       /* $fav = Favorites::where('recruiter_user_id', '=', $recrutId)
+            ->where('developer_user_id', '=', $devId)
+            ->get();
+        //$favs = $fav->developers();
+        //return $fav;
+        return $fav->developers;
+
         $favoritesProfile = Favorites::join('users', 'favorites.developer_user_id', '=', 'users.id')
         ->where('recruiter_user_id', '=', $recrutId)
         ->where('developer_user_id', '=', $devId)
         ->join('developers', 'users.dev_id', '=', 'developers.id')
-        ->get();
+        ->first();
+        return $favoritesProfile;
+
 
         $favId = Favorites::where('developer_user_id', '=', $devId)
         ->where('recruiter_user_id', '=', $recrutId)
-        ->get('id');
+        ->get('id');*/
 
-        return response()->json(['status' => 'success', 'favoriteId' => $favId, 'favoriteUserDetails' => $favoritesProfile]);
+        return response()->json(['status' => 'success', 'userId' => $devId, 'favoriteUserDetails' => $favoriteProfile]);
     }
 
 

@@ -307,7 +307,6 @@ class UsersController extends Controller
         });
 
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
-
     }
 }
 
