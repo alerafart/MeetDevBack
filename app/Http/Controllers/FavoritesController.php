@@ -110,10 +110,10 @@ class FavoritesController extends Controller
             $favoriteProfile = Users::join('developers', 'users.dev_id', '=', 'developers.id')
             ->where('users.id', '=', $devUserId)
             ->get();
-            $favUsers[] = $favoriteProfile;
+            //$favUsers[] = $favoriteProfile;
         }
 
-        return response()->json(['status' => 'success', 'favoritesDetails' => $favs, 'favoriteUsersData' => $favUsers]);
+    return response()->json(['status' => 'success', 'favoritesDetails' => $favs /*, 'favoriteUsersData' => $favUsers*/]);
     }
 
 

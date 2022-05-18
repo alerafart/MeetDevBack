@@ -60,9 +60,10 @@ $app->singleton(
 */
 
 $app->configure('app');
-$app->configure('mail');
 $app->configure('auth');
 $app->configure('jwt');
+$app->configure('mail');
+
 
 /*
 |--------------------------------------------------------------------------
