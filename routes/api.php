@@ -33,8 +33,7 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
  * API secure users routes
  */
 $router->group(['prefix' => 'api/secure/users'], function() use ($router){
-    $router->put('/developers/{id}', 'UsersController@updateDev');
-    $router->put('/recruiters/{id}', 'UsersController@updateRecrut');
+    $router->put('/{id}', 'UsersController@updateUser');
 });
 
 /**
