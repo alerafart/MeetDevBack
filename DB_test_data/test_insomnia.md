@@ -244,3 +244,89 @@
 ``
 
 ***takes favorite id as parameter***
+
+
+## JWT test routes
+
+//===============================================//
+//========= JWT registration recruiters =========//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/recruiters`
+`http://localhost:8080/api/register/recruiters`
+
+**json test**
+`{
+	"lastname":"Dubois",
+	"firstname":"Jacquemort",
+	"city":"Caen",
+	"department":78,
+	"zip_code":14118,
+	"email_address":"dubois.jacques@blabla.com",
+	"phone":"949649649",
+	"password":"blabla",
+	"subscribe_to_push_notif":0,
+	"profile_picture":"pic.png",
+	
+	"company_name": "fifi",
+	"needs_description": "hjksqdf"
+}`
+
+//===============================================//
+//========= JWT registration developers =========//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/developers`
+`http://localhost:8080/api/register/developers`
+
+**json test**
+`{
+	"lastname":"Vyzva",
+	"firstname":"Janine",
+	"city":"Caen",
+	"department":78,
+	"zip_code":14118,
+	"email_address":"test@test.blabla",
+	"phone":"949649649",
+	"password":"test",
+	"subscribe_to_push_notif":0,
+	"profile_picture":"pic.png",
+	
+	"label":"poodle",
+	"description":"hello", 
+	"available_for_recruiters":1,
+	"available_for_developers":0,
+	"minimum_salary_requested":40000,
+	"age":48,
+	"languages":"ruby, C",
+	"years_of_experience":2,
+	"english_spoken":"very well indeed",
+	"github_link":"github.git.com",
+	"portfolio_link":"portfolio.com",
+	"other_link":"",
+	"language": "PHP"
+}`
+
+//===============================================//
+//========= JWT registration recruiters =========//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`
+`http://localhost:8080/api/login`
+
+**json test**
+`{
+	"email_address":"ldlc@gmail.com",
+	"password":"ldlc"
+}`
+
+//===============================================//
+//=========== JWT displaying profile ============//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/me`
+`http://localhost:8080/api/me`
+
+**json test**
+*authentification -> Bearer Token*
+`Bearer Q1lDUmDvfl5ymWG9AFU2jWL9iY7nsioeaTDcq3ni5FE`

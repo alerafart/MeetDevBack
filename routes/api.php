@@ -27,6 +27,7 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developers', 'UsersController@createNewDevUser');
     $router->post('/recruiters', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
+    $router->put('/{id}', 'UsersController@update');
 });
 
 /**
