@@ -47,9 +47,9 @@ class UsersController extends Controller
             $users->email_address = $request->email_address;
             $users->password = $request->password;
             $users->phone = $request->phone;
-            // $users->dev_id = $request->dev_id;
-            // $users->recrut_id = $request ->recrut_id;
-            $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+            if ($request->subscribe_to_push_notif !== null) {
+                $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+            }
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
@@ -85,7 +85,9 @@ class UsersController extends Controller
                 $hashedPassword = Hash::make($password);
                 $user->password = $hashedPassword;
                 $user->phone = $request->phone;
-                $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                if ($request->subscribe_to_push_notif !== null) {
+                    $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                }
                 $user->profile_picture = $request->profile_picture;
 
                 if ($user->save()) {
@@ -152,7 +154,9 @@ class UsersController extends Controller
                 $hashedPassword = Hash::make($password);
                 $user->password = $hashedPassword;
                 $user->phone = $request->phone;
-                $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                if ($request->subscribe_to_push_notif !== null) {
+                    $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                }
                 $user->profile_picture = $request->profile_picture;
 
                 if ($user->save()) {
@@ -197,8 +201,6 @@ class UsersController extends Controller
             $users->city = $request ->city;
             $users->department = $request->department;
             $users->zip_code = $request ->zip_code;
-           // $users->email_address = $request->email_address;
-           // $users->password = $request ->password;
             $users->phone = $request ->phone;
             $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
             $users->profile_picture = $request ->profile_picture;
