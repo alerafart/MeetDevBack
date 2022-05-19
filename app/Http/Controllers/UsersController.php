@@ -327,95 +327,35 @@ class UsersController extends Controller
         $citySearch = $request->city;
         $deptSearch = $request->department;
 
-        $query = Users::where('users.dev_id', '!=', 'null');
-
         if(isset($citySearch)) {
-            $query->where('city', '=', $citySearch);
-        } elseif (isset($deptSearch)) {
-            $query->where('department', '=', $deptSearch);
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("city", "=", $citySearch)
+            ->get();
         }
 
-        elseif (isset($city, $department)) {
-            return isset($city, $departement)// && isset($department)) {
-            // $query->where([['city', '=', $citySearch], ['department', '=', $deptSearch]])
-            /* $query->where('city', '=', $citySearch)
-            ->orWhere('department', '=', $deptSearch) */
-
-            //$query->where(function ($query)) {
-                $query->where('city', '=', $citySearch)
-                      ->Where('department', '=', $deptSearch);
-
+        if(isset($deptSearch)){
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("department", "=", $deptSearch)
+            ->get();
         }
 
-
-        $results = $query->get();
-        // var_dump($results);
-
-        /* $results = Users::select(Users::raw("*"))
-        ->where('city', '=', $citySearch)
-        ->orWhere('department', '=', $deptSearch)
-        ->join('developers', 'users.dev_id', '=', 'developers.id')
-        ->get();
-        return $results; */
-
-        //$results =
-        /* $citySearch = Users::where('city', '=', $citySearch)->first();
-        $deptSearch = Users::where('department', '=', $deptSearch)->first();
-        // $query = Users::query()->where('city', '=', $citySearch)
-        $query = Users::query()->where([['city', '=', $citySearch], ['department', '=', $deptSearch]]); */
-
-        // ->where("city", "=", $citySearch)
-        //->orWhere('department', '=', $deptSearch);
-
-
-
-        /* if (isset($citySearch->city)) {
-            $query->join('developers', 'users.dev_id', '=', 'developers.id');
-            //return dump($query);
-        }
-        if (isset($deptSearch->department)) {
-            $query->join('developers', 'users.dev_id', '=', 'developers.id');
+        if(isset($citySearch, $deptSearch)){
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("department", "=", $deptSearch)
+            ->where("city", "=", $citySearch)
+            ->get();
         }
 
-        $results = $query->get(); */
-
-        /* $results = Users::where('city', '=', $city)
-            //->where('department', '=', $department)
-            ->whereNotNull('dev_id')
-            ->join('developers', 'users.dev_id', '=', 'developers.id')
-            ->get('users.id'); */
-
-        /* $results =Users::get('users.id');
-        if(isset($city)){
-            $results =
-            Users::where('city', '=', $city)
-            ->whereNotNull('dev_id')
-            ->join('developers', 'users.dev_id', '=', 'developers.id')
-            ->get('users.id');
+        if($citySearch === null AND $deptSearch === null) {
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->get();
         }
-        elseif(isset($department)){
-            $results =
-            Users::where('department', '=', $department)
-            ->whereNotNull('dev_id')
-            ->join('developers', 'users.dev_id', '=', 'developers.id')
-            ->get('users.id');
-        }
-        elseif (isset($city) && isset($department)) {
-            $results =
-            Users::where('department', '=', $department)
-            ->where('department', '=', $department)
-            ->whereNotNull('dev_id')
-            ->join('developers', 'users.dev_id', '=', 'developers.id')
-            ->get('users.id');
-        } */
 
-        /* $results =
-
-        Users::where('city', '=', $city)
-            ->where('department', '=', $department)
-            ->whereNotNull('dev_id')
-            ->join('developers', 'users.dev_id', '=', 'developers.id')
-            ->get('users.id'); */
+        return $results;
 
         $dev =[];
         $devs = $results->map(function($item){
@@ -433,4 +373,3 @@ class UsersController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
     }
 }
-
