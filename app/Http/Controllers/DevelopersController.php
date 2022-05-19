@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Developers;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 class DevelopersController extends Controller
@@ -37,8 +38,12 @@ class DevelopersController extends Controller
         try {
             $developers = new Developers();
             $developers->description = $request->description;
-            $developers->available_for_recruiters = $request->available_for_recruiters;
-            $developers->available_for_developers = $request-> available_for_developers;
+            if ($request->available_for_recruiters !== null) {
+                $developers->available_for_recruiters = $request->available_for_recruiters;
+            }
+            if ($request->available_for_developers !== null) {
+                $developers->available_for_developers = $request->available_for_developers;
+            }
             $developers->minimum_salary_requested = $request->minimum_salary_requested;
             $developers->maximum_salary_requested = $request->maximum_salary_requested;
             $developers->age = $request->age;
@@ -67,8 +72,12 @@ class DevelopersController extends Controller
             $developer = Developers::findOrFail($id);
             $developer->label = $request->label;
             $developer->description = $request->description;
-            $developer->available_for_recruiters = $request->available_for_recruiters;
-            $developer->available_for_developers = $request-> available_for_developers;
+            if ($request->available_for_recruiters !== null) {
+                $developer->available_for_recruiters = $request->available_for_recruiters;
+            }
+            if ($request->available_for_developers !== null) {
+                $developer->available_for_developers = $request->available_for_developers;
+            }
             $developer->minimum_salary_requested = $request->minimum_salary_requested;
             $developer->maximum_salary_requested = $request->maximum_salary_requested;
             $developer->age = $request->age;
@@ -79,8 +88,9 @@ class DevelopersController extends Controller
             $developer->portfolio_link = $request->portfolio_link;
             $developer->other_link = $request->other_link;
 
+            $userProfile = Users::join('developers', 'users.dev_id', '=', 'developers.id')->where('users.dev_id', '=', $id)->first();
             if ($developer->save()) {
-                return response()->json(['status' => 'success', 'message' => 'Developer updated successfully']);
+                return response()->json(['status' => 'success', 'message' => 'Developer updated successfully', 'userProfile' => $userProfile]);
             }
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

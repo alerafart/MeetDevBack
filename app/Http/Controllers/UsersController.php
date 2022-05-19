@@ -47,9 +47,9 @@ class UsersController extends Controller
             $users->email_address = $request->email_address;
             $users->password = $request->password;
             $users->phone = $request->phone;
-            // $users->dev_id = $request->dev_id;
-            // $users->recrut_id = $request ->recrut_id;
-            $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+            if ($request->subscribe_to_push_notif !== null) {
+                $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+            }
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
@@ -85,7 +85,9 @@ class UsersController extends Controller
                 $hashedPassword = Hash::make($password);
                 $user->password = $hashedPassword;
                 $user->phone = $request->phone;
-                $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                if ($request->subscribe_to_push_notif !== null) {
+                    $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                }
                 $user->profile_picture = $request->profile_picture;
 
                 if ($user->save()) {
@@ -152,7 +154,9 @@ class UsersController extends Controller
                 $hashedPassword = Hash::make($password);
                 $user->password = $hashedPassword;
                 $user->phone = $request->phone;
-                $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                if ($request->subscribe_to_push_notif !== null) {
+                    $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+                }
                 $user->profile_picture = $request->profile_picture;
 
                 if ($user->save()) {
@@ -197,8 +201,6 @@ class UsersController extends Controller
             $users->city = $request ->city;
             $users->department = $request->department;
             $users->zip_code = $request ->zip_code;
-           // $users->email_address = $request->email_address;
-           // $users->password = $request ->password;
             $users->phone = $request ->phone;
             $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
             $users->profile_picture = $request ->profile_picture;
@@ -222,7 +224,7 @@ class UsersController extends Controller
      */
     public function updateUser(Request $request, $id){
         try {
-             $this->update($request, $id);
+            $this->update($request, $id);
 
             if(response()->json(["success"])){
                 $profile = Users::where('id', '=', $id)->first();
@@ -237,12 +239,7 @@ class UsersController extends Controller
                     return $recrtCtrl->update($request, $profileRec);
                 }
 
-                if(response()->json(["success"])){
-                    return response()->json(["success"]);
-                    return response()->json(['status' => 'success', 'message' =>'User updated successfully'], 200);
-                }else {
-                    return response()->json(['status' => 'error', 'message' => 'A problem occurred while saving user-specific data'], 400);
-                }
+                //the response status is handle in the update() method used above
             }
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

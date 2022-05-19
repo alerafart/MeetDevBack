@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recruiters;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 class RecruitersController extends Controller
@@ -63,8 +64,9 @@ class RecruitersController extends Controller
             $recruiters->needs_description = $request ->needs_description;
             $recruiters->web_site_link = $request->web_site_link;
 
+            $userProfile = Users::join('recruiters', 'users.dev_id', '=', 'recruiters.id')->where('users.dev_id', '=', $id)->first();
             if ($recruiters->update()) {
-                return response()->json(['status' => 'success', 'message' =>'Recruiter updated successfully' ]);
+                return response()->json(['status' => 'success', 'message' =>'Recruiter updated successfully', 'userProfile' => $userProfile]);
             }
 
         } catch(\Exception $e) {
