@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Developers;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 class DevelopersController extends Controller
@@ -79,8 +80,9 @@ class DevelopersController extends Controller
             $developer->portfolio_link = $request->portfolio_link;
             $developer->other_link = $request->other_link;
 
+            $userProfile = Users::join('developers', 'users.dev_id', '=', 'developers.id')->where('users.dev_id', '=', $id)->first();
             if ($developer->save()) {
-                return response()->json(['status' => 'success', 'message' => 'Developer updated successfully']);
+                return response()->json(['status' => 'success', 'message' => 'Developer updated successfully', 'userProfile' => $userProfile]);
             }
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

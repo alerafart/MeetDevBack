@@ -9,7 +9,7 @@ class Users extends Model
 {
     use HasFactory;
 
-     /**
+    /**
      * defining DB relationships
      *
      * @return void
@@ -33,4 +33,24 @@ class Users extends Model
     public function messages() {
         return $this->hasMany( Messages::class );
     }
+
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'subscribe_to_push_notif' => 0,
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'lastname', 'firstname', 'city', 'department', 'zip_code', 'email_address', 'phone', 'password', 'subscribe_to_push_notif', 'profile_picture'
+    ];
+
 }

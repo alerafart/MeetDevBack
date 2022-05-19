@@ -222,7 +222,7 @@ class UsersController extends Controller
      */
     public function updateUser(Request $request, $id){
         try {
-             $this->update($request, $id);
+            $this->update($request, $id);
 
             if(response()->json(["success"])){
                 $profile = Users::where('id', '=', $id)->first();
@@ -237,12 +237,7 @@ class UsersController extends Controller
                     return $recrtCtrl->update($request, $profileRec);
                 }
 
-                if(response()->json(["success"])){
-                    return response()->json(["success"]);
-                    return response()->json(['status' => 'success', 'message' =>'User updated successfully'], 200);
-                }else {
-                    return response()->json(['status' => 'error', 'message' => 'A problem occurred while saving user-specific data'], 400);
-                }
+                //the response status is handle in the update() method used above
             }
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
