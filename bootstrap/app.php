@@ -116,6 +116,7 @@ $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
