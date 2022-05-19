@@ -38,8 +38,12 @@ class DevelopersController extends Controller
         try {
             $developers = new Developers();
             $developers->description = $request->description;
-            $developers->available_for_recruiters = $request->available_for_recruiters;
-            $developers->available_for_developers = $request-> available_for_developers;
+            if ($request->available_for_recruiters !== null) {
+                $developers->available_for_recruiters = $request->available_for_recruiters;
+            }
+            if ($request->available_for_developers !== null) {
+                $developers->available_for_developers = $request->available_for_developers;
+            }
             $developers->minimum_salary_requested = $request->minimum_salary_requested;
             $developers->maximum_salary_requested = $request->maximum_salary_requested;
             $developers->age = $request->age;
@@ -68,8 +72,12 @@ class DevelopersController extends Controller
             $developer = Developers::findOrFail($id);
             $developer->label = $request->label;
             $developer->description = $request->description;
-            $developer->available_for_recruiters = $request->available_for_recruiters;
-            $developer->available_for_developers = $request-> available_for_developers;
+            if ($request->available_for_recruiters !== null) {
+                $developer->available_for_recruiters = $request->available_for_recruiters;
+            }
+            if ($request->available_for_developers !== null) {
+                $developer->available_for_developers = $request->available_for_developers;
+            }
             $developer->minimum_salary_requested = $request->minimum_salary_requested;
             $developer->maximum_salary_requested = $request->maximum_salary_requested;
             $developer->age = $request->age;
