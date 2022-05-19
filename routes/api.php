@@ -29,22 +29,28 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/login', 'UsersController@login');
 });
 
-/**
- * API secure users routes
- */
-$router->group(['prefix' => 'api/secure/users'], function() use ($router){
-    //$router->put('/{id}', 'UsersController@updateUser');
-});
+
 
 /**
- * API developers search route
+ * API JWT secured routes group
  */
-//$router->get('api/secure/users/search', 'UsersController@getDevSearchResults');
+$router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() use ($router){
+
+    /**
+     * API secure users routes
+     */
+    $router->group(['prefix' => '/users'], function () use ($router) {
+        $router->put('/{id}', 'UsersController@updateUser');
+        $router->get('/search', 'UsersController@getDevSearchResults');
+    });
+
+
+};
 
 /**
  * API messages routes
  */
-$router->group(['prefix' => 'api/secure/messages'], function() use ($router) {
+$router->group(['prefix' => 'api/secure/messages', 'middleware' => 'auth'], function() use ($router) {
     $router->get('/users', 'MessagesController@getOneFromAUser');
     $router->get('/users/{id}', 'MessagesController@getAllMessagesFromOneUser');
     $router->post('/users', 'MessagesController@createMessageInDb');
@@ -53,11 +59,11 @@ $router->group(['prefix' => 'api/secure/messages'], function() use ($router) {
 /**
  * API favorites routes
  */
-$router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
-    /*$router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
+$router->group(['prefix' => 'api/secure/favorites', 'middleware' => 'auth'], function() use ($router){
+    $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
     $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
     $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
-    $router->delete('/{id}', 'FavoritesController@delete');*/
+    $router->delete('/{id}', 'FavoritesController@delete');
 });
 
 
@@ -73,15 +79,7 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->post('/refresh', 'AuthController@refresh');
 });
 
-/**
- * routes de test JWT
- */
+
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router){
-    $router->get('/secure/users/search', 'UsersController@getDevSearchResults');
-    $router->put('/secure/users/{id}', 'UsersController@updateUser');
-    $router->get('/secure/favorites/recruiters', 'FavoritesController@getOneFromOneUser');
-    $router->get('/secure/favorites/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
-    $router->post('/secure/favorites/recruiters', 'FavoritesController@AddNewToProfile');
-    $router->delete('/secure/favorites/{id}', 'FavoritesController@delete');
     $router->get('/me', 'AuthController@me');
 });
