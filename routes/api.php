@@ -22,10 +22,10 @@ use Illuminate\Mail\Markdown;
  */
 $router->group(['prefix' => 'api'], function() use ($router){
     //$router->post('/users/developers', 'UsersController@createNewDevUser');
-    //$router->post('/users/recruiters', 'UsersController@createNewRecruiterUser');
+    $router->post('/users/recruiters', 'UsersController@createNewRecruiterUser');
     $router->post('/register/users/developers', 'AuthController@registerDev');
     $router->post('/register/users/recruiters', 'AuthController@registerRecrut');
-    $router->post('/login', 'AuthController@login');
+  //  $router->post('/login', 'AuthController@login');
     $router->post('/logout', 'AuthController@logout');
     $router->post('/refresh', 'AuthController@refresh');
 });
@@ -43,14 +43,6 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() us
         $router->get('/search', 'UsersController@getDevSearchResults');
         $router->get('/contact', 'MailController@contactUser');
     });
-
-    // Route::get('mail-preview', function () {
-    //     //$invoice = App\Mail\SendEmail::find(1);
-
-    //     return (new App\Mail\SendEmail);
-    //         //->toMail(null);
-    // });
-
 
     /**
      * API messages related routes
@@ -99,3 +91,26 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
 });
 
 
+
+
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    Route::get('/email/verify', ['as' => 'verification.notice', 'uses' => 'VerificationController@show']);
+    $router->get('/email/verify/{id}/{hash}', ['as' => 'verification.verify', 'uses' => 'VerificationController@verify', 'middleware' =>'signed']);
+    Route::post('/email/resend', ['as' => 'verification.resend', 'uses' => 'VerificationController@resend']);
+});
+
+$router->group(['middleware' => 'verified'], function () use ($router) {
+    $router->post('/login', 'AuthController@login');
+});
+
+
+/*use App\Mail\JustTesting;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/send-mail', function () {
+
+    Mail::to('newuser@example.com')->send(new JustTesting());
+
+    return 'A message has been sent to Mailtrap!';
+
+});*/

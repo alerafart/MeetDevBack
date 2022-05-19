@@ -6,6 +6,7 @@ use App\Models\Users;
 use App\Models\Developers;
 use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -175,6 +176,8 @@ class UsersController extends Controller
                             $user->recrut_id = $recruiterId;
 
                             if ($user->save()) {
+                                event(new Registered($user));
+
                                 return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter]);
                             }
                         }
