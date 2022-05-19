@@ -139,6 +139,7 @@
 	"needs_description": "hjksqdf"
 }
 ```
+*requête unique pour recrut ou dev, le filtrage se fait en back. Mpd + adresse email à ne pas envoyer*
 
 
 //================================================//
@@ -225,9 +226,11 @@
 **json test**
 ```json
 {
+    "testEmail":"milekic.alicia@gmail.com", 
 	"sender_user_id": 1,
-    "receiver_user_id":7,
-    "message_content":"hola"
+    "receiver_user_id":32,
+    "message_title":"Ahoj",
+    "message_content":"Lorem ipsum dolor sit amet, conse"
 }
 ```
 
@@ -347,7 +350,7 @@
 }`
 
 //===============================================//
-//========= JWT login recruiters =========//
+//============= JWT login recruiters ============//
 //===============================================//
 **route**
 `http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`
