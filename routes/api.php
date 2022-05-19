@@ -33,7 +33,7 @@ $router->group(['prefix' => 'api/users'], function() use ($router){
  * API secure users routes
  */
 $router->group(['prefix' => 'api/secure/users'], function() use ($router){
-    $router->put('/{id}', 'UsersController@updateUser');
+//    $router->put('/{id}', 'UsersController@updateUser');
 });
 
 /**
@@ -76,4 +76,5 @@ $router->group(['prefix' => 'api'], function() use ($router){
 
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router){
     $router->get('/me', 'AuthController@me');
+    $router->put('/secure/users/{id}', 'UsersController@updateUser');
 });
