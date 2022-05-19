@@ -108,7 +108,7 @@ $router->group(['prefix' => 'dev_langs'], function() use ($router){
  */
 $router->group(['prefix' => 'api/users'], function() use ($router){
        // $router->get('/send/email', 'MailController@send');
-       $router->get('/contact', 'MailController@contactUser');
+//       $router->get('/contact', 'MailController@contactUser');
 });
 
 /*Route::get('/mailable', function () {
