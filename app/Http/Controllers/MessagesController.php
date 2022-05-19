@@ -174,7 +174,7 @@ class MessagesController extends Controller
 
         $sd = $query->get();
 
-        return response()->json(['status' => 'success', 'message' => $message, 'receiver' => $sd]);
+        return response()->json(['status' => 'success', 'message' => $message, 'userId' => $correspondantId, 'receiver' => $sd]);
     }
 
     /**

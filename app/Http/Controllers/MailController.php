@@ -13,29 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class MailController extends Controller
 {
-    public function send(Request $request)
-    {
-        //public function mail()
-
-        /*$name = 'Cloudways';
-        Mail::to('Cloudways@Cloudways.com')->send(new SendMailable($name));*/
-
-        /*$to_name = 'georges';
-        $to_email = 'milekic.alicia@gmail.com';
-        $data = array('name'=>"Cloudways (sender_name)", "body" => "A test mail");
-
-        Mail::send('mail', $data, function($message) use ($to_name, $to_email) {
-        $message->to($to_email, $to_name)
-        ->subject('Laravel Test Mail');
-        $message->from('meetdev.apollo22@gmail.com','Test Mail');
-        });*/
-        $email = $request->email;
-        Mail::to($email)->send(new SendEmail($email));
-
-        return response()->json(['status' => 'success', 'message' =>  'Email sent Successfully', 'data' => $email]);
-    }
-
-
     /**
      * This function will be called when a user will send a message to another user. This will trigger a new email to be send and stock the message in the database
      *

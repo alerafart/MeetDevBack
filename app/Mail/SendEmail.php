@@ -42,7 +42,6 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        //"\u{1F913}"
         return $this->subject('Tu as reçu un nouveau message !')
         ->markdown('mails.contactUser');
     }

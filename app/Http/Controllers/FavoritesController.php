@@ -106,7 +106,6 @@ class FavoritesController extends Controller
         $favs= Favorites::where('recruiter_user_id', '=', $id)->get();
 
         $favUsers = [];
-        //foreach ($favs as $fav) {
         $favoriteUsers = $favs->map(function($fav) {
             $devUserId = $fav->developer_user_id;
             //return $devUserId;
