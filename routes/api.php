@@ -26,30 +26,22 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->post('/register/users/developers', 'AuthController@registerDev');
     $router->post('/register/users/recruiters', 'AuthController@registerRecrut');
     $router->post('/login', 'AuthController@login');
-    $router->post('/logout', 'AuthController@logout');
-    $router->post('/refresh', 'AuthController@refresh');
 });
 
 /**
  * API JWT secured routes group
  */
-$router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() use ($router){
+$router->group(['prefix' => 'api/secure', 'middleware' => 'jwt.auth', 'jwt.refresh'], function() use ($router){
     /**
      * API secure users related routes
      */
     $router->group(['prefix' => '/users'], function () use ($router) {
+        $router->post('/logout', 'AuthController@logout');
         $router->put('/{id}', 'UsersController@updateUser');
+        $router->get('/me', 'AuthController@me');
         $router->get('/search', 'UsersController@getDevSearchResults');
         $router->get('/contact', 'MailController@contactUser');
     });
-
-    // Route::get('mail-preview', function () {
-    //     //$invoice = App\Mail\SendEmail::find(1);
-
-    //     return (new App\Mail\SendEmail);
-    //         //->toMail(null);
-    // });
-
 
     /**
      * API messages related routes
@@ -70,22 +62,12 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() us
         $router->delete('/{id}', 'FavoritesController@delete');
     });
 
-});
-/**
- *  JWT test routes
- */
-$router->group(['prefix' => 'api'], function () use ($router) {
-    // $router->post('/register', 'AuthController@register');
-//$router->post('/register/developers', 'AuthController@registerDev');
-//$router->post('/register/recruiters', 'AuthController@registerRecrut');
-//$router->post('/logout', 'AuthController@logout');
-//$router->post('/refresh', 'AuthController@refresh');
+    /**
+     * JWT other route
+     */
+    $router->post('/refresh', 'AuthController@refresh');
+
 });
 
-$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
-    $router->get('/me', 'AuthController@me');
-    $router->put('/secure/users/{id}', 'UsersController@updateUser');
-    $router->get('secure/users/contact', 'MailController@contactUser');
-});
 
 

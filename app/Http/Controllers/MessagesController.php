@@ -155,10 +155,7 @@ class MessagesController extends Controller
         $correspondantId = $request->correspondantId;
         $messageId = $request->messageId;
 
-      //  $ms = $this->item($messageId);
         $message = Messages::findOrFail($messageId);
-
-        //if($message->receiver_user_id === $currentUserId){
 
         $corres = Users::where("users.id", "=", $correspondantId)->first();
         $query = Users::query()->where("users.id", "=", $correspondantId);

@@ -354,9 +354,20 @@
 //=========== JWT displaying profile ============//
 //===============================================//
 **route**
-`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/me`
-`http://localhost:8080/api/me`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/users/me`
+`http://localhost:8080/api/secure/users/me`
 
 **json test**
 *authentification -> Bearer Token*
 `Bearer Q1lDUmDvfl5ymWG9AFU2jWL9iY7nsioeaTDcq3ni5FE`
+
+
+//===============================================//
+//=================== JWT logout =================//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/users/logout`
+`http://localhost:8080/api/secure/users/logout`
+
+**json test**
+``
