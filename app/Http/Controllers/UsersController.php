@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use App\Models\Developers;
-use App\Models\Languages;
-use App\Models\Dev_lang;
-//use App\Http\Controllers\DevelopersController;
+use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -70,8 +68,6 @@ class UsersController extends Controller
      * @return object
      */
     public function createNewDevUser(Request $request){
-        //$developersController = new DevelopersController();
-
         //check if user email address exists in DB, if not proceed to creation
         if (Users::where('email_address', '=', $request->email_address)->exists()) {
             return response()->json(['status' => 'error', 'message' => 'email address already existing in database'], 400);
@@ -114,13 +110,9 @@ class UsersController extends Controller
                             $user->dev_id = $devId;
 
                                 if ($user->save()) {
-                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer]);//, 'lang' => $dev_lang]);
+                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer]);
                                 } else {
-                                    return response()->json(['status' => 'error', 'message' => 'Language not saved'], 400);
-                                }
-
-                                if ($user->save()) {
-                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully']);
+                                    return response()->json(['status' => 'error', 'message' => 'dev_id not saved'], 400);
                                 }
                             }
                         }catch (\Exception $e) {
@@ -143,8 +135,6 @@ class UsersController extends Controller
      */
 
     public function createNewRecruiterUser(Request $request){
-        //$developersController = new DevelopersController();
-
         //check if user email address exists in DB, if not proceed to creation
         if (Users::where('email_address', '=', $request->email_address)->exists()) {
             return response()->json(['status' => 'error', 'message' => 'email address already existing in database'], 400);
@@ -207,20 +197,57 @@ class UsersController extends Controller
             $users->city = $request ->city;
             $users->department = $request->department;
             $users->zip_code = $request ->zip_code;
-            $users->email_address = $request->email_address;
-            $users->password = $request ->password;
+           // $users->email_address = $request->email_address;
+           // $users->password = $request ->password;
             $users->phone = $request ->phone;
             $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
-                return response()->json(['status' => 'success', 'message' =>'User updated successfully' ]);
+                return response()->json(['status' => 'success', 'message' =>'User updated successfully'], 200);
             }
 
         } catch(\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+
+    /**
+     * update a user profile and corresponding specificities table, using id for identification
+     *
+     * @param Request $request
+     * @param [int] $id
+     * @return void
+     */
+    public function updateUser(Request $request, $id){
+        try {
+             $this->update($request, $id);
+
+            if(response()->json(["success"])){
+                $profile = Users::where('id', '=', $id)->first();
+                $profileRec = $profile->recrut_id;
+                $profileDev = $profile->dev_id;
+
+                if (isset($profileDev)) {
+                    $devCtrl = new DevelopersController;
+                    return $devCtrl->update($request, $profileDev);
+                } elseif (isset($profileRec)) {
+                    $recrtCtrl = new RecruitersController;
+                    return $recrtCtrl->update($request, $profileRec);
+                }
+
+                if(response()->json(["success"])){
+                    return response()->json(["success"]);
+                    return response()->json(['status' => 'success', 'message' =>'User updated successfully'], 200);
+                }else {
+                    return response()->json(['status' => 'error', 'message' => 'A problem occurred while saving user-specific data'], 400);
+                }
+            }
+        } catch(\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+       }
 
 
     /**
@@ -290,21 +317,59 @@ class UsersController extends Controller
 
 
     /**
-     * Method that will handle search results for developers profil
+     * Method that will handle search results for developer profiles depending on city
      *
      * @param Request $request
      * @return objects array
      */
     public function getDevSearchResults(Request $request) {
-        $city = $request->city;
 
-        $results = DB::select('SELECT * FROM `users`
-            JOIN `developers`
-            ON `developers`.`id` = `users`.`dev_id`
-            AND `users`.`city`= :city', ['city' => $city]);
+        $citySearch = $request->city;
+        $deptSearch = $request->department;
 
-        return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $results]);
+        if(isset($citySearch)) {
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("city", "=", $citySearch)
+            ->get();
+        }
 
+        if(isset($deptSearch)){
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("department", "=", $deptSearch)
+            ->get();
+        }
+
+        if(isset($citySearch, $deptSearch)){
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("department", "=", $deptSearch)
+            ->where("city", "=", $citySearch)
+            ->get();
+        }
+
+        if($citySearch === null AND $deptSearch === null) {
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->get();
+        }
+
+        return $results;
+
+        $dev =[];
+        $devs = $results->map(function($item){
+
+            $dev['userId'] = $item->id;
+
+            $devDetails = Users::join('developers', 'users.dev_id', '=', 'developers.id')
+                ->where('users.id', '=', $item->id)
+                ->get();
+
+            $dev['userDetails'] = $devDetails;
+            return $dev;
+        });
+
+        return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
     }
 }
-

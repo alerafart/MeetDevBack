@@ -65,13 +65,16 @@ class DevelopersController extends Controller
     public function update(Request $request, $id) {
         try {
             $developer = Developers::findOrFail($id);
+            $developer->label = $request->label;
             $developer->description = $request->description;
             $developer->available_for_recruiters = $request->available_for_recruiters;
             $developer->available_for_developers = $request-> available_for_developers;
             $developer->minimum_salary_requested = $request->minimum_salary_requested;
             $developer->maximum_salary_requested = $request->maximum_salary_requested;
             $developer->age = $request->age;
+            $developer->languages = $request->languages;
             $developer->years_of_experience = $request->years_of_experience;
+            $developer->english_spoken = $request->english_spoken;
             $developer->github_link = $request->github_link;
             $developer->portfolio_link = $request->portfolio_link;
             $developer->other_link = $request->other_link;

@@ -14,13 +14,12 @@ class developers extends Model
      *
      * @return void
      */
-    public function users() {
-        return $this->hasOne(Users::class);
+    public function usersRelationship() {
+        return $this->belongsTo(Users::class, 'dev_id');
     }
 
     public function languages() {
         return $this->HasMany('App\Models\Languages', 'dev_lang');
     }
-
 
 }

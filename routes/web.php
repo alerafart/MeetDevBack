@@ -4,6 +4,10 @@
 
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\EmailController;
+use App\Mail\SendEmail;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +24,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+
 /**
  *  Users CRUD methods routes
  */
@@ -27,7 +33,7 @@ $router->group(['prefix' => 'users'], function() use ($router){
     $router->get('/', 'UsersController@list');
     $router->get('/{id}', 'UsersController@item');
     $router->post('/', 'UsersController@create');
-    $router->put('/{id}', 'UsersController@update');
+    //$router->put('/{id}', 'UsersController@update');
     $router->delete('/{id}', 'UsersController@delete');
 });
 
@@ -100,6 +106,17 @@ $router->group(['prefix' => 'dev_langs'], function() use ($router){
 /**
  *  Other routes
  */
-$router->group(['prefix' => 'api/'], function() use ($router){
-
+$router->group(['prefix' => 'api/users'], function() use ($router){
+       // $router->get('/send/email', 'MailController@send');
+//       $router->get('/contact', 'MailController@contactUser');
 });
+
+/*Route::get('/mailable', function () {
+    $email = "patate@patate.com";
+    $sm = new App\Mail\SendEmail($email);
+
+    $markdown = new \Illuminate\Mail\Markdown(View(), config('mail.markdown'));
+ //$data = "patate@patate.com";
+    return $markdown->render($sm->markdown);
+});*/
+

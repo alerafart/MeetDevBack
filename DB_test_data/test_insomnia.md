@@ -103,6 +103,46 @@
 ```
 
 //================================================//
+//================= Update user ==================//
+//================================================//
+**route**
+`http://localhost:8080/api/secure/users/11`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/secure/users/11`
+
+**json test**
+```json
+{
+	"lastname":"updatetestupdate",
+	"firstname":"testupdate",
+	"city":"update",
+	"department":91,
+	"zip_code":14118,
+	"phone":"9496496494545",
+	"subscribe_to_push_notif":0,
+	"profile_picture":"pic.png",
+	
+	"label":"poodle",
+	"description":"test test test test", 
+	"available_for_recruiters":1,
+	"available_for_developers":0,
+	"minimum_salary_requested":40000,
+	"age":14,
+	"languages":"rubyyyyy, CCCCC",
+	"years_of_experience":2,
+	"english_spoken":"updateee test",
+	"github_link":"github.git.com",
+	"portfolio_link":"portfolio.com",
+	"other_link":"",
+	"language": "PHP",
+		
+	"company_name": "fifi",
+	"needs_description": "hjksqdf"
+}
+```
+*requête unique pour recrut ou dev, le filtrage se fait en back. Mpd + adresse email à ne pas envoyer*
+
+
+//================================================//
 //======== loading profiles search results =======//
 //================================================//
 **route**
@@ -142,7 +182,7 @@
 ```json
 {
     "correspondantId": 8,
-    "devId": 11
+    "messageId": 11
   }
 ```
 
@@ -186,9 +226,11 @@
 **json test**
 ```json
 {
+    "testEmail":"milekic.alicia@gmail.com", 
 	"sender_user_id": 1,
-    "receiver_user_id":7,
-    "message_content":"hola"
+    "receiver_user_id":32,
+    "message_title":"Ahoj",
+    "message_content":"Lorem ipsum dolor sit amet, conse"
 }
 ```
 
@@ -206,7 +248,6 @@
 **json test**
 ``
 
-
 //===============================================//
 //======= retrieve one fav from a profile =======//
 //===============================================//
@@ -216,9 +257,10 @@
 
 **json test**
 `{
-	"devId":5,
-	"recrutId":2
+	"devUserId":5,
+	"recrutUserId":2
 }`
+*ids are from the **users** entity*
 
 //===============================================//
 //=========== add new fav to a profile ==========//
@@ -244,3 +286,89 @@
 ``
 
 ***takes favorite id as parameter***
+
+
+## JWT test routes
+
+//===============================================//
+//========= JWT registration recruiters =========//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/recruiters`
+`http://localhost:8080/api/register/recruiters`
+
+**json test**
+`{
+	"lastname":"Dubois",
+	"firstname":"Jacquemort",
+	"city":"Caen",
+	"department":78,
+	"zip_code":14118,
+	"email_address":"dubois.jacques@blabla.com",
+	"phone":"949649649",
+	"password":"blabla",
+	"subscribe_to_push_notif":0,
+	"profile_picture":"pic.png",
+	
+	"company_name": "fifi",
+	"needs_description": "hjksqdf"
+}`
+
+//===============================================//
+//========= JWT registration developers =========//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/developers`
+`http://localhost:8080/api/register/developers`
+
+**json test**
+`{
+	"lastname":"Vyzva",
+	"firstname":"Janine",
+	"city":"Caen",
+	"department":78,
+	"zip_code":14118,
+	"email_address":"test@test.blabla",
+	"phone":"949649649",
+	"password":"test",
+	"subscribe_to_push_notif":0,
+	"profile_picture":"pic.png",
+	
+	"label":"poodle",
+	"description":"hello", 
+	"available_for_recruiters":1,
+	"available_for_developers":0,
+	"minimum_salary_requested":40000,
+	"age":48,
+	"languages":"ruby, C",
+	"years_of_experience":2,
+	"english_spoken":"very well indeed",
+	"github_link":"github.git.com",
+	"portfolio_link":"portfolio.com",
+	"other_link":"",
+	"language": "PHP"
+}`
+
+//===============================================//
+//============= JWT login recruiters ============//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`
+`http://localhost:8080/api/login`
+
+**json test**
+`{
+	"email_address":"ldlc@gmail.com",
+	"password":"ldlc"
+}`
+
+//===============================================//
+//=========== JWT displaying profile ============//
+//===============================================//
+**route**
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/me`
+`http://localhost:8080/api/me`
+
+**json test**
+*authentification -> Bearer Token*
+`Bearer Q1lDUmDvfl5ymWG9AFU2jWL9iY7nsioeaTDcq3ni5FE`

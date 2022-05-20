@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use PDO;
 
 class Users extends Model
 {
@@ -17,18 +15,22 @@ class Users extends Model
      * @return void
      */
     public function recruiters() {
-        return $this->hasOne( "App\Models\Recruiter" );
+        return $this->hasOne( Recruiters::class );
     }
 
     public function developers() {
-        return $this->hasOne( "App\Models\Developers" );
+        return $this->hasOne( Developers::class, 'id' );
     }
 
+    /*public function getDevelopersAttribute(){
+        return $this->developersRelationship()->dev_id;
+    }*/
+
     public function favorites() {
-        return $this->hasMany( "App\Models\Favorites" );
+        return $this->belongsToMany( Favorites::class, 'developer_user_id', 'recruiter_user_id' );
     }
 
     public function messages() {
-        return $this->hasMany( "App\Models\Messages" );
+        return $this->hasMany( Messages::class );
     }
 }

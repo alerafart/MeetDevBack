@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +21,19 @@ use Illuminate\Http\Request;
 });*/
 
 /**
- * API users routes
+ * API global users routes
  */
 $router->group(['prefix' => 'api/users'], function() use ($router){
     $router->post('/developers', 'UsersController@createNewDevUser');
     $router->post('/recruiters', 'UsersController@createNewRecruiterUser');
     $router->post('/login', 'UsersController@login');
+});
+
+/**
+ * API secure users routes
+ */
+$router->group(['prefix' => 'api/secure/users'], function() use ($router){
+//    $router->put('/{id}', 'UsersController@updateUser');
 });
 
 /**
@@ -51,4 +58,24 @@ $router->group(['prefix' => 'api/secure/favorites'], function() use ($router){
     $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
     $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
     $router->delete('/{id}', 'FavoritesController@delete');
+});
+
+
+/**
+ *  JWT test routes
+ */
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->post('/login', 'AuthController@login');
+   // $router->post('/register', 'AuthController@register');
+    $router->post('/register/developers', 'AuthController@registerDev');
+    $router->post('/register/recruiters', 'AuthController@registerRecrut');
+    $router->post('/logout', 'AuthController@logout');
+    $router->post('/refresh', 'AuthController@refresh');
+});
+
+
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router){
+    $router->get('/me', 'AuthController@me');
+    $router->put('/secure/users/{id}', 'UsersController@updateUser');
+    $router->get('secure/users/contact', 'MailController@contactUser');
 });
