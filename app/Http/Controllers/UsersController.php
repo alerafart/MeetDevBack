@@ -6,6 +6,7 @@ use App\Models\Users;
 use App\Models\Developers;
 use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -349,5 +350,44 @@ class UsersController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
     }
+
+
+
+
+
+ /**
+  * TEST EMAIL USER MODEL
+  */
+  /**
+     * insert new user into entity
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function simpleCreate(Request $request){
+        try {
+            $users = new User();
+            $users->lastname = $request->lastname;
+            $users->firstname = $request->firstname;
+            $users->city = $request->city;
+            $users->zip_code = $request->zip_code;
+            $users->email_address = $request->email_address;
+            $users->password = $request->password;
+            $users->phone = $request->phone;
+            if ($request->subscribe_to_push_notif !== null) {
+                $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
+            }
+            $users->profile_picture = $request ->profile_picture;
+
+            if ($users->save()) {
+                event(new Registered($users));
+                return response()->json(['status' => 'success', 'message' => 'User created successfully']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+
 }
 

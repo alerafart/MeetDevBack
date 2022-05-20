@@ -14,6 +14,8 @@
         "illuminate/mail": "^8.83",
         "illuminate/notifications": "^8.83",
         "illuminate/view": "^8.83",
+        "laravel-foundation/auth": "^5.7",
+        "laravel-zero/foundation": "^8.81",
         "laravel/lumen-framework": "^8.3.1",
         "laravelista/lumen-vendor-publish": "^8.0",
         "nordsoftware/lumen-cors": "^3.5",

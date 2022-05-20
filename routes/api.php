@@ -22,7 +22,8 @@ use Illuminate\Mail\Markdown;
  */
 $router->group(['prefix' => 'api'], function() use ($router){
     //$router->post('/users/developers', 'UsersController@createNewDevUser');
-    $router->post('/users/recruiters', 'UsersController@createNewRecruiterUser');
+    //$router->post('/users/recruiters', 'UsersController@createNewRecruiterUser');
+/*  TEST TEST ==> */ $router->post('/users/recruiters', 'UsersController@simpleCreate');  // <=== TEST TEST
     $router->post('/register/users/developers', 'AuthController@registerDev');
     $router->post('/register/users/recruiters', 'AuthController@registerRecrut');
   //  $router->post('/login', 'AuthController@login');

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d211e93c93e6504c3a114731f8bb6b1",
+    "content-hash": "360edb408f46f10f7de95fb69059caa8",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2633,6 +2633,100 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2022-04-14T13:47:10+00:00"
+        },
+        {
+            "name": "laravel-foundation/auth",
+            "version": "v5.7.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-foundation/auth.git",
+                "reference": "f09414bd9ad95db28c257fcaea7c2a0ed35d78da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-foundation/auth/zipball/f09414bd9ad95db28c257fcaea7c2a0ed35d78da",
+                "reference": "f09414bd9ad95db28c257fcaea7c2a0ed35d78da",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Foundation\\Auth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ashley Clarke",
+                    "email": "me@ashleyclarke.me"
+                },
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Auth component from Laravel Foundation.",
+            "keywords": [
+                "auth",
+                "foundation",
+                "framework",
+                "illuminate",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-foundation/auth/issues",
+                "source": "https://github.com/laravel-foundation/auth/tree/v5.7.11"
+            },
+            "abandoned": true,
+            "time": "2018-10-26T18:15:44+00:00"
+        },
+        {
+            "name": "laravel-zero/foundation",
+            "version": "v8.81.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-zero/foundation.git",
+                "reference": "a50fb07d04f01296424e2369b48bf94fdc4267b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-zero/foundation/zipball/a50fb07d04f01296424e2369b48bf94fdc4267b0",
+                "reference": "a50fb07d04f01296424e2369b48bf94fdc4267b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-8.x": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Illuminate/Foundation/helpers.php"
+                ],
+                "psr-4": {
+                    "Illuminate\\": "src/Illuminate/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This is a mirror from illuminate/foundation.",
+            "keywords": [
+                "framework",
+                "laravel"
+            ],
+            "support": {
+                "source": "https://github.com/laravel-zero/foundation/tree/v8.81.0"
+            },
+            "time": "2022-01-26T13:11:46+00:00"
         },
         {
             "name": "laravel/lumen-framework",
