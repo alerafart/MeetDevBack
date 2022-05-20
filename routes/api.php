@@ -55,7 +55,7 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() us
     /**
      * API messages related routes
      */
-    $router->group(['prefix' => '/messages/users', 'middleware' => 'auth'], function () use ($router) {
+    $router->group(['prefix' => '/messages/users'], function () use ($router) {
         $router->get('/', 'MessagesController@getOneFromAUser');
         $router->get('/{id}', 'MessagesController@getAllMessagesFromOneUser');
         $router->post('/', 'MessagesController@createMessageInDb');
@@ -64,7 +64,7 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() us
     /**
      * API favorites related routes
      */
-    $router->group(['prefix' => 'api/secure/favorites', 'middleware' => 'auth'], function () use ($router) {
+    $router->group(['prefix' => 'api/secure/favorites'], function () use ($router) {
         $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
         $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
         $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
@@ -74,7 +74,7 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() us
     /**
      * API favorites routes
      */
-    $router->group(['prefix' => 'api/secure/favorites', 'middleware' => 'auth'], function () use ($router) {
+    $router->group(['prefix' => 'api/secure/favorites'], function () use ($router) {
         $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
         $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
         $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
