@@ -203,21 +203,9 @@
   }
 ```
 
-//================================================//
-//=========== Send a Message to a User ===========//
-//================================================//
-**route**
-`http://localhost:8080/api/users/send/email`
-
-**json test**
-```json
-{
-	"email":"maalejandrarafart@gmail.com"
-}
-```
 
 //================================================//
-//===== Send a Message to a User & save in DB ====//
+//===== Send a Mail to a User & save in DB ====//
 //================================================//
 **route**
 `http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/contact`
@@ -233,6 +221,7 @@
     "message_content":"Lorem ipsum dolor sit amet, conse"
 }
 ```
+
 
 
 ## Favorites routes
@@ -350,7 +339,7 @@
 }`
 
 //===============================================//
-//============= JWT login recruiters ============//
+//=================== JWT login =================//
 //===============================================//
 **route**
 `http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`

@@ -102,20 +102,4 @@ $router->group(['prefix' => 'dev_langs'], function() use ($router){
     $router->delete('/{id}', 'DevLangController@delete');
 });
 
-/**
- *  Other routes
- */
-$router->group(['prefix' => 'api/users'], function() use ($router){
-       // $router->get('/send/email', 'MailController@send');
-//       $router->get('/contact', 'MailController@contactUser');
-});
-
-/*Route::get('/mailable', function () {
-    $email = "patate@patate.com";
-    $sm = new App\Mail\SendEmail($email);
-
-    $markdown = new \Illuminate\Mail\Markdown(View(), config('mail.markdown'));
- //$data = "patate@patate.com";
-    return $markdown->render($sm->markdown);
-});*/
 
