@@ -44,7 +44,6 @@ class MessagesController extends Controller
             $messages->sender_user_id = $request->sender_user_id;
             $messages->message_title = $request->title;
             $messages->message_content = $request->message_content;
-            $messages->signature = $request->signature;
 
             if ($messages->save()) {
                 return response()->json(['status' => 'success', 'message' => 'Message created successfully']);
@@ -68,7 +67,6 @@ class MessagesController extends Controller
             $messages->sender_user_id = $request->sender_user_id;
             $messages->message_title = $request->title;
             $messages->message_content = $request->message_content;
-            $messages->signature = $request->signature;
 
             if ($messages->save()) {
                 return response()->json(['status' => 'success', 'message' => 'Message updated successfully']);
@@ -191,7 +189,6 @@ class MessagesController extends Controller
             $messages->receiver_user_id = $request->receiver_user_id;
             $messages->message_title = $request->message_title;
             $messages->message_content = $request->message_content;
-           // $messages->signature = $request->signature;
 
             if ($messages->save()) {
                 return response()->json(['status' => 'success', 'message' => 'Message created successfully', 'createdMessage' => $messages]);

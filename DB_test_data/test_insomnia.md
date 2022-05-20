@@ -199,7 +199,6 @@
     "sender_user_id": 11,
 	"title": "holaaaa",
     "message_content": "message du user 11 a reciever 8",
-    "signature": "Envoyé par user 11"
   }
 ```
 
