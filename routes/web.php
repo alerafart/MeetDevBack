@@ -7,8 +7,6 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EmailController;
 use App\Mail\SendEmail;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -76,6 +74,7 @@ $router->group(['prefix' => 'messages'], function() use ($router) {
 $router->group(['prefix' => 'favorites'], function() use ($router){
     $router->get('/', 'FavoritesController@list');
     $router->get('/{id}', 'FavoritesController@item');
+
     $router->post('/', 'FavoritesController@create');
     $router->put('/{id}', 'FavoritesController@update');
     //$router->delete('/{id}', 'FavoritesController@delete');
