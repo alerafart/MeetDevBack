@@ -71,7 +71,7 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() us
         $router->delete('/{id}', 'FavoritesController@delete');
     });
 
-
+});
 /**
  *  JWT test routes
  */
