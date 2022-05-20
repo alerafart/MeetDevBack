@@ -355,8 +355,6 @@ class UsersController extends Controller
             ->get();
         }
 
-        return $results;
-
         $dev =[];
         $devs = $results->map(function($item){
 
