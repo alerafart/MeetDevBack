@@ -22,7 +22,18 @@ class Favorites extends Model
         return $this-> HasMany('App\Models\Developers');
     }*/
 
+
     public function users() {
-        return $this->HasMany('App\Models\Users');
+        return $this->belongsToMany(Users::class, 'id');
+    }
+
+    public function developers() {
+        return $this->hasManyThrough(
+            Developers::class,
+            Users::class,
+            'developer_user_id',
+            'id',
+            'id',
+            'id');
     }
 }

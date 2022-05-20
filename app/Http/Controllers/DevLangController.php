@@ -17,7 +17,7 @@ class DevLangController extends Controller
     }
 
     /**
-     * get Developers language by id
+     * get developers language by id
      *
      * @param [int] $id
      * @return void
