@@ -30,7 +30,6 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->post('/refresh', 'AuthController@refresh');
 });
 
-
 /**
  * API JWT secured routes group
  */
@@ -85,6 +84,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->get('/me', 'AuthController@me');
+    $router->put('/secure/users/{id}', 'UsersController@updateUser');
+    $router->get('secure/users/contact', 'MailController@contactUser');
 });
 
 

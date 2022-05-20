@@ -324,12 +324,39 @@ class UsersController extends Controller
      * @return objects array
      */
     public function getDevSearchResults(Request $request) {
-        $city = $request->city;
 
-        $results = Users::where('city', '=', $city)
-            ->whereNotNull('dev_id')
-            ->join('developers', 'users.dev_id', '=', 'developers.id')
-            ->get('users.id');
+        $citySearch = $request->city;
+        $deptSearch = $request->department;
+
+        if(isset($citySearch)) {
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("city", "=", $citySearch)
+            ->get();
+        }
+
+        if(isset($deptSearch)){
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("department", "=", $deptSearch)
+            ->get();
+        }
+
+        if(isset($citySearch, $deptSearch)){
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->where("department", "=", $deptSearch)
+            ->where("city", "=", $citySearch)
+            ->get();
+        }
+
+        if($citySearch === null AND $deptSearch === null) {
+            $results = DB::table("users")
+            ->where('users.dev_id', '!=', 'null')
+            ->get();
+        }
+
+        return $results;
 
         $dev =[];
         $devs = $results->map(function($item){
@@ -347,4 +374,3 @@ class UsersController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
     }
 }
-

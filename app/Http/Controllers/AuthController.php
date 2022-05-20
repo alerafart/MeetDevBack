@@ -43,6 +43,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        // $credentials = $request->only(['email_address', 'password', 'access_token','token_type']);
         $credentials = $request->only(['email_address', 'password']);
 
         $user = Users::where('email_address', '=', $credentials['email_address'])->first();
