@@ -96,7 +96,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
 
 $router->group(['middleware' => 'auth'], function () use ($router) {
     Route::get('/email/verify', ['as' => 'verification.notice', 'uses' => 'VerificationController@show']);
-    $router->get('/email/verify/{id}/{hash}', ['as' => 'verification.verify', 'uses' => 'VerificationController@verify', 'middleware' =>'signed']);
+    Route::get('/email/verify/{id}/{hash}', ['as' => 'verification.verify', 'uses' => 'VerificationController@verify', 'middleware' =>'signed']);
     Route::post('/email/resend', ['as' => 'verification.resend', 'uses' => 'VerificationController@resend']);
 });
 

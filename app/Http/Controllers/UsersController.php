@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 
 class UsersController extends Controller
 {
@@ -380,8 +381,13 @@ class UsersController extends Controller
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
-                event(new Registered($users));
-                return response()->json(['status' => 'success', 'message' => 'User created successfully']);
+                //$users->sendEmailVerificationNotification();
+               // return "yolo";
+                //if (Event::dispatch(new Registered($users))) {return "yolo";}
+                Event::dispatch(new Registered($users));
+                return "yolo";
+
+                //return response()->json(['status' => 'success', 'message' => 'User created successfully']);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements AuthenticatableContract, AuthorizableContract, JWTSubject, MustVerifyEmailContract
 {
-    use Authorizable; //Notifiable;
+    use Authorizable, Notifiable;
 
 
      /**

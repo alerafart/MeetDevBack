@@ -104,8 +104,9 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register('Nord\Lumen\Cors\CorsServiceProvider');
-$app->register(Illuminate\Mail\MailServiceProvider::class);
 
+//Mail related services providers
+$app->register(Illuminate\Mail\MailServiceProvider::class);
 
 $app->alias('mail.manager', Illuminate\Mail\MailManager::class);
 $app->alias('mail.manager', Illuminate\Contracts\Mail\Factory::class);
@@ -114,7 +115,11 @@ $app->alias('mailer', Illuminate\Mail\Mailer::class);
 $app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
 $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
+// JWT
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+$app->register(Illuminate\Notifications\NotificationServiceProvider::class);
+$app->alias('Notification', Illuminate\Support\Facades\Notification::class);
 
 /*
 |--------------------------------------------------------------------------

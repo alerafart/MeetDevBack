@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "aws/aws-sdk-php": "^3.222",
         "flipbox/lumen-generator": "^9.1",
+        "grosv/laravel-passwordless-login": "^1.8",
         "guzzlehttp/guzzle": "^7.4",
         "illuminate/auth": "^8.83",
         "illuminate/contracts": "^8.83",
