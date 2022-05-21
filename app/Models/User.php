@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
-//use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+use App\Http\Traits\MustVerifyEmail as MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+//use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements AuthenticatableContract, AuthorizableContract, JWTSubject, MustVerifyEmailContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
-    use Authorizable, Notifiable;
+    use Authorizable, Notifiable, Authenticatable, MustVerifyEmail;
 
 
      /**
@@ -39,6 +39,22 @@ class User extends Authenticatable implements AuthenticatableContract, Authoriza
 
 
     /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return array|string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        // Return email address only...
+        return $this->email_address;
+
+        // Return email address and name...
+       // return [$this->email_address => $this->name];
+    }
+
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -55,5 +71,30 @@ class User extends Authenticatable implements AuthenticatableContract, Authoriza
     protected $hidden = [
        // 'password',
     ];
+
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($model) {/**
+        * If user email have changed email verification is required
+        */
+        if( $model->isDirty('email') ) {
+            $model->setAttribute('email_verified_at', null);
+            $model->sendEmailVerificationNotification();
+        }});
+    }
 
 }

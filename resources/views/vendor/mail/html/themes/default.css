@@ -16,7 +16,7 @@ body {
     line-height: 1.4;
     margin: 0;
     padding: 0;
-    width: 100% !important;
+    width: 90% !important;
 }
 
 p,
@@ -79,20 +79,20 @@ img {
 .wrapper {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 100%;
+    -premailer-width: 90%;
     background-color: #ffffff;
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: 90%;
 }
 
 .content {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 100%;
+    -premailer-width: 90%;
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: 90%;
 }
 
 /* Header */
@@ -120,7 +120,8 @@ img {
 .header-title-md {
     position: relative;
     margin-left: 20px;
-    font-size: 22px;
+    margin-bottom: 10px;
+    font-size: 26px;
     font-weight: bold;
     text-decoration: none;
     color: #50c6b9;
@@ -149,7 +150,7 @@ img {
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
     background-color: #ffffff;
-    border-bottom: 1px solid #edf2f7;
+    border-bottom: 1px solid #50c6b9;
     border-top: 1px solid #edf2f7;
     margin: 0;
     padding: 0;
@@ -159,7 +160,7 @@ img {
 .inner-body {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 570px;
+    -premailer-width: 650px;
     background-color: #ffffff;
     border-color: #e8e5ef;
     border-radius: 2px;
@@ -167,13 +168,13 @@ img {
     box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015);
     margin: 0 auto;
     padding: 0;
-    width: 690px;
+    width: 750px;
 }
 
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #e8e5ef;
+    border-top: 1px solid #50c6b9;
     margin-top: 25px;
     padding-top: 25px;
 }
@@ -253,6 +254,16 @@ img {
     display: inline-block;
     overflow: hidden;
     text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.button-md {
+    background-color: #f2f5f9;
+    color: #718096;
+    border-bottom: 8px solid #f2f5f9;
+    border-left: 19px solid #f2f5f9;
+    border-right: 19px solid #f2f5f9;
+    border-top: 8px solid #f2f5f9;
 }
 
 .button-blue,
@@ -281,6 +292,7 @@ img {
     border-right: 18px solid #e53e3e;
     border-top: 8px solid #e53e3e;
 }
+
 
 /* Panels */
 

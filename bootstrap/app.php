@@ -118,6 +118,7 @@ $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 // JWT
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
+//Notification mail
 $app->register(Illuminate\Notifications\NotificationServiceProvider::class);
 $app->alias('Notification', Illuminate\Support\Facades\Notification::class);
 

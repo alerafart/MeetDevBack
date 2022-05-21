@@ -11,7 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
+use Tymon\JWTAuth\Contracts\Providers\Auth;
 
 class UsersController extends Controller
 {
@@ -337,8 +337,7 @@ class UsersController extends Controller
             ->get('users.id');
 
         $dev =[];
-        $devs = $results->map(function($item){
-
+        $devs = $results->map(function ($item) {
             $dev['userId'] = $item->id;
 
             $devDetails = Users::join('developers', 'users.dev_id', '=', 'developers.id')
@@ -351,49 +350,6 @@ class UsersController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
     }
-
-
-
-
-
- /**
-  * TEST EMAIL USER MODEL
-  */
-  /**
-     * insert new user into entity
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function simpleCreate(Request $request){
-        try {
-            $users = new User();
-            $users->lastname = $request->lastname;
-            $users->firstname = $request->firstname;
-            $users->city = $request->city;
-            $users->zip_code = $request->zip_code;
-            $users->email_address = $request->email_address;
-            $users->password = $request->password;
-            $users->phone = $request->phone;
-            if ($request->subscribe_to_push_notif !== null) {
-                $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
-            }
-            $users->profile_picture = $request ->profile_picture;
-
-            if ($users->save()) {
-                //$users->sendEmailVerificationNotification();
-               // return "yolo";
-                //if (Event::dispatch(new Registered($users))) {return "yolo";}
-                Event::dispatch(new Registered($users));
-                return "yolo";
-
-                //return response()->json(['status' => 'success', 'message' => 'User created successfully']);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-        }
-    }
-
 
 }
 

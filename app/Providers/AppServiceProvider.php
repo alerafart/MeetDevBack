@@ -15,15 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(App\Services\UrlGenerator::class, function () {
-            $urlGeneratorWithSignedRoutes = new UrlGenerator($this->app);
+        //
 
-            $urlGeneratorWithSignedRoutes->setKeyResolver(function () {
-                return $this->app->make('config')->get('app.key');
-            });
-
-            return $urlGeneratorWithSignedRoutes;
-        });
     }
 
 }
