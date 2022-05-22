@@ -183,8 +183,7 @@ class AuthController extends Controller
                             if ($user->save()) {
                                 //if the user has been created in DB, then we create a new JWT token for them and send a verification email
                                 $token = auth()->login($user);
-                                $user->sendEmailVerificationNotification();
-                                //$this->emailRequestVerification($request);
+                                $this->emailRequestVerification($request);
 
                                 return response()->json(['status' => 'success', 'confimationEmail' => 'Email request verification sent to '.($request->user()->email_address), 'message' =>'Developer user created successfully', 'general' => $user, 'spec' => $developer]);//, 'token' => $this->respondWithToken($token)]);
                             } else {
@@ -246,7 +245,9 @@ class AuthController extends Controller
                             $user->recrut_id = $recruiterId;
 
                             if ($user->save()) {
+                                //if the user has been created in DB, then we create a new JWT token for them and send a verification email
                                 $token = auth()->login($user);
+                                $this->emailRequestVerification($request);
 
                                 return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter, 'token' => $this->respondWithToken($token)]);
                             }
@@ -264,12 +265,11 @@ class AuthController extends Controller
 
 
 
-    /**
-    * Email verification related functions
-    */
+
+    // Email verification related functions
 
     /**
-    * Request an email verification email to be sent.
+    * Request an email address verification mail to be sent.
     *
     * @param  Request  $request
     * @return Response
@@ -281,7 +281,7 @@ class AuthController extends Controller
     }
 
     /**
-    * Verify an email using email and token from email.
+    * Verify an email address using token in the notification link clicked by the user.
     *
     * @param  Request  $request
     * @return Response
@@ -300,10 +300,21 @@ class AuthController extends Controller
         }
 
         if ( $request->user()->hasVerifiedEmail() ) {
-            return response()->json('Email address '.$request->user()->getEmailForVerification().' is already verified.');
+            return response()->json(['status' => 'failed', 'message' => 'Email address '.$request->user()->getEmailForVerification().' is already verified.']);
         }$request->user()->markEmailAsVerified();
 
-        return response()->json('Email address '. $request->user()->email.' successfully verified.');
+
+        $userInfo = $request->user();
+        $query = Users::query()->where("users.id", "=", $userInfo->id);
+
+        if (isset($userInfo->dev_id)) {
+            $query->join("developers", "developers.id", "=", "users.dev_id");
+        }elseif (isset($userInfo->recrut_id)) {
+            $query->join("recruiters", "recruiters.id", "=", "users.recrut_id");
+        }
+        $user = $query->get();
+
+        return response()->json(['status' => 'success','message' => 'Email address '. $request->user()->email.' successfully verified.', 'user' => $user ], 200);
     }
 
 }

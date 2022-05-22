@@ -16,7 +16,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authorizable, Notifiable, Authenticatable, MustVerifyEmail;
 
-
      /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

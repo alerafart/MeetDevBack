@@ -23,12 +23,13 @@ use Illuminate\Mail\Markdown;
 $router->group(['prefix' => 'api'], function() use ($router){
     //$router->post('/users/developers', 'UsersController@createNewDevUser');
     //$router->post('/users/recruiters', 'UsersController@createNewRecruiterUser');
-/*  TEST TEST ==> */ //$router->post('/users/recruiters', 'UsersController@simpleCreate');  // <=== TEST TEST
     $router->post('/register/users/developers', 'AuthController@registerDev');
     $router->post('/register/users/recruiters', 'AuthController@registerRecrut');
   //  $router->post('/login', 'AuthController@login');
     $router->post('/logout', 'AuthController@logout');
     $router->post('/refresh', 'AuthController@refresh');
+    //Verify user email address
+    $router->post('/email/verify', ['as' => 'email.verify', 'uses' => 'AuthController@emailVerify']);
 });
 
 
@@ -36,6 +37,9 @@ $router->group(['prefix' => 'api'], function() use ($router){
  * API JWT secured routes group
  */
 $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() use ($router){
+    // Send email address verification link
+    $router->post('/email/request-verification', ['as' => 'email.request.verification', 'uses' => 'AuthController@emailRequestVerification']);
+
     /**
      * API secure users related routes
      */
@@ -94,35 +98,14 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
 
 
 
-/*$router->group(['middleware' => 'auth'], function () use ($router) {
-    Route::get('/email/verify', ['as' => 'verification.notice', 'uses' => 'VerificationController@show']);
-    Route::get('/email/verify/{id}/{hash}', ['as' => 'verification.verify', 'uses' => 'VerificationController@verify', 'middleware' =>'signed']);
-    Route::post('/email/resend', ['as' => 'verification.resend', 'uses' => 'VerificationController@resend']);
-});*/
-
 $router->group(['middleware' => 'auth'], function () use ($router) {
-    $router->post('/email/request-verification', ['as' => 'email.request.verification', 'uses' => 'AuthController@emailRequestVerification']);
-    //$router->post('/users/recruiters', 'UsersController@simpleCreate');
 
-    $router->post('/email/verify', ['as' => 'email.verify', 'uses' => 'AuthController@emailVerify']);
 
     //$router->post('/password/reset-request', 'RequestPasswordController@sendResetLinkEmail');
 
 });
-//$router->post('/email/verify', ['as' => 'email.verify', 'uses' => 'AuthController@emailVerify']);
+
 
 //$router->group(['middleware' => 'verified'], function () use ($router) {
     $router->post('/login', 'AuthController@login');
 //});
-
-
-/*use App\Mail\JustTesting;
-use Illuminate\Support\Facades\Mail;
-
-Route::get('/send-mail', function () {
-
-    Mail::to('newuser@example.com')->send(new JustTesting());
-
-    return 'A message has been sent to Mailtrap!';
-
-});*/
