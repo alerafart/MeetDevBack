@@ -40,42 +40,45 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'auth'], function() us
     // Send email address verification link
     $router->post('/email/request-verification', ['as' => 'email.request.verification', 'uses' => 'AuthController@emailRequestVerification']);
 
-    /**
-     * API secure users related routes
-     */
-    $router->group(['prefix' => '/users'], function () use ($router) {
-        $router->put('/{id}', 'UsersController@updateUser');
-        $router->get('/search', 'UsersController@getDevSearchResults');
-        $router->get('/contact', 'MailController@contactUser');
-    });
+    //verified email address routes
+    $router->group(['middleware' => 'verified'], function() use ($router){
+        /**
+         * API secure users related routes
+         */
+        $router->group(['prefix' => '/users'], function () use ($router) {
+            $router->put('/{id}', 'UsersController@updateUser');
+            $router->get('/search', 'UsersController@getDevSearchResults');
+            $router->get('/contact', 'MailController@contactUser');
+        });
 
-    /**
-     * API messages related routes
-     */
-    $router->group(['prefix' => '/messages/users', 'middleware' => 'auth'], function () use ($router) {
-        $router->get('/', 'MessagesController@getOneFromAUser');
-        $router->get('/{id}', 'MessagesController@getAllMessagesFromOneUser');
-        $router->post('/', 'MessagesController@createMessageInDb');
-    });
+        /**
+         * API messages related routes
+         */
+        $router->group(['prefix' => '/messages/users', 'middleware' => 'auth'], function () use ($router) {
+            $router->get('/', 'MessagesController@getOneFromAUser');
+            $router->get('/{id}', 'MessagesController@getAllMessagesFromOneUser');
+            $router->post('/', 'MessagesController@createMessageInDb');
+        });
 
-    /**
-     * API favorites related routes
-     */
-    $router->group(['prefix' => 'api/secure/favorites', 'middleware' => 'auth'], function () use ($router) {
-        $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
-        $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
-        $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
-        $router->delete('/{id}', 'FavoritesController@delete');
-    });
+        /**
+         * API favorites related routes
+         */
+        $router->group(['prefix' => 'api/secure/favorites', 'middleware' => 'auth'], function () use ($router) {
+            $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
+            $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
+            $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
+            $router->delete('/{id}', 'FavoritesController@delete');
+        });
 
-    /**
-     * API favorites routes
-     */
-    $router->group(['prefix' => 'api/secure/favorites', 'middleware' => 'auth'], function () use ($router) {
-        $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
-        $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
-        $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
-        $router->delete('/{id}', 'FavoritesController@delete');
+        /**
+         * API favorites routes
+         */
+        $router->group(['prefix' => 'api/secure/favorites', 'middleware' => 'auth'], function () use ($router) {
+            $router->get('/recruiters', 'FavoritesController@getOneFromOneUser');
+            $router->get('/recruiters/{id}', 'FavoritesController@getAllFromOneUser');
+            $router->post('/recruiters', 'FavoritesController@AddNewToProfile');
+            $router->delete('/{id}', 'FavoritesController@delete');
+        });
     });
 });
 
@@ -106,6 +109,6 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
 });
 
 
-//$router->group(['middleware' => 'verified'], function () use ($router) {
+$router->group(['middleware' => 'verified'], function () use ($router) {
     $router->post('/login', 'AuthController@login');
-//});
+});

@@ -2,11 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
+use App\Http\Traits\MustVerifyEmail;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class EnsureEmailIsVerified
-{
+{   use MustVerifyEmail;
     /**
      * Handle an incoming request.
      *
@@ -17,10 +19,12 @@ class EnsureEmailIsVerified
      */
     public function handle($request, Closure $next)
     {
+        $user = User::where('email_address', '=', $request->email_address)->first();
+
         if ( $request->fullUrl() != route('email.request.verification') &&
-           ( ! $request->user() || ! $request->user()->hasVerifiedEmail() ) )
+           ( ! $user || ! $user->hasVerifiedEmail() ) )
         {
-            throw new AuthorizationException('Unauthorized, your email address '.$request->user()->email.' is not verified.');
+            throw new AuthorizationException('Unauthorized, your email address '.$user->email_address.' is not verified.');
         }return $next($request);
     }
 }
