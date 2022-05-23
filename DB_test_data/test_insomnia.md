@@ -22,9 +22,9 @@
 //=================== users login ================//
 //================================================//
 **route**
-`http://localhost:8080/api/users/login`
-`http://alerafart-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/login`
-`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/login`
+`http://localhost:8080/api/login`
+`http://alerafart-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/login`
 
 **json test**
 ```json
@@ -38,29 +38,29 @@
 //================ create user dev ===============//
 //================================================//
 **route**
-`http://localhost:8080/api/users/developers`
-`http://alerafart-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/developers`
-`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/developers`
+`http://localhost:8080/api/register/users/developers`
+`http://alerafart-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/users/developers`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/users/developers`
 
 **json test**
 ```json
 {
-	"lastname": "ale",
-	"firstname": "rrrr",
+	"lastname": "coco",
+	"firstname": "coco",
 	"city": "stgo",
 	"zip_code": 78740,
 	"department":78,
-	"email_address": "ale@feeling.io",
-	"password": "ale",
+	"email_address": "coco@coco.io",
+	"password": "coco",
 	"phone": "060000000",
 	"subscribe_to_push_notif":0,
-	"profile_picture": "ale.png",
-
+	"profile_picture": "coco.png",
 	"label": "dev specialise react",
 	"description":"tttttttttjsfhjfhgjshgfjqskhghk",
 	"available_for_recruiters":1,
 	"available_for_developers":0,
 	"minimum_salary_requested":2000,
+
 	"age":42,
 	"languages":"react, php, css",
 	"years_of_experience":1,
@@ -76,29 +76,29 @@
 //============== create user recrut ==============//
 //================================================//
 **route**
-`http://localhost:8080/api/users/recruiters`
-`http://alerafart-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/recruiters`
-`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/users/recruiters`
+`http://localhost:8080/api/register/users/recruiters`
+`http://alerafart-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/users/recruiters`
+`http://aliciamv-server.eddi.cloud/projet-10-meet-dev-back/public/api/register/users/recruiters`
 
 **json test**
 ```json
 {
-	"lastname":"Dubois",
-	"firstname":"Marie-Jeanne",
-	"city":"Caen",
-    "department":78,
+	
+	"lastname":"new",
+	"firstname":"new",
+	"city":"new",
+	"department":78,
 	"zip_code":14118,
-	"email_address":"mjdubois@dubois.be",
+	"email_address":"new@new.de",
 	"phone":"949649649",
-	"password":"aaaa",
+	"password":"new",
 	"subscribe_to_push_notif":0,
-	"profile_picture":"pic.png",
-	"description":"hello", 
+	"profile_picture":"new.png",
+	"description":"new", 
 	"available_for_recruiters":1,
 	"available_for_developers":0,
-	"minimum_salary_requested":40000,
-	
-	"company_name": "blabla"
+
+	"company_name": "new"
 }
 ```
 
@@ -195,10 +195,10 @@
 **json test**
 ```json
 {
-    "receiver_user_id": 8,
-    "sender_user_id": 11,
-	"title": "holaaaa",
-    "message_content": "message du user 11 a reciever 8",
+    "sender_user_id": 3,
+    "receiver_user_id": 2,    
+	"message_title": "holaaaa",
+    "message_content": "message du user 3 a reciever 2"
   }
 ```
 
