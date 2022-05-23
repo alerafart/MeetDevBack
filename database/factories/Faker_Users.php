@@ -3,27 +3,21 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use Faker\Generator;
-use Faker\Provider\Lorem;
 use Faker\Provider\fr_FR\Person;
 use Faker\Provider\fr_FR\Address;
 use Faker\Provider\fr_FR\PhoneNumber;
-use Tymon\JWTAuth\Providers\JWT\Provider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
+$faker = new Faker\Generator();
+$faker->addProvider(new Faker\Provider\en_US\Person($faker));
+$faker->addProvider(new Faker\Provider\en_US\Address($faker));
+$faker->addProvider(new Faker\Provider\en_US\PhoneNumber($faker));
+$faker->addProvider(new Faker\Provider\en_US\Company($faker));
+$faker->addProvider(new Faker\Provider\Lorem($faker));
+$faker->addProvider(new Faker\Provider\Internet($faker));
 
 class UserFactory extends Factory
 {
-
-    /* $faker = new Faker\Generator();
-    $faker->addProvider(new Faker\Provider\en_US\Person($faker));
-    $faker->addProvider(new Faker\Provider\en_US\Address($faker));
-    $faker->addProvider(new Faker\Provider\en_US\PhoneNumber($faker));
-    // $faker->addProvider(new Faker\Provider\en_US\Company($faker));
-    $faker->addProvider(new Faker\Provider\Lorem($faker));
-    $faker->addProvider(new Faker\Provider\Internet($faker)); */
-
     /**
      * The name of the factory's corresponding model.
      *
@@ -38,7 +32,6 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-
         return [
             // 'name' => $this->faker->name,
             // 'email' => $this->faker->unique()->safeEmail,

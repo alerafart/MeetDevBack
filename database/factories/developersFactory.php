@@ -18,7 +18,7 @@ class DevelopersFactory extends Factory
             'minimum_salary_requested' => $this->faker->randomNumber,
             'maximum_salary_requested' => $this->faker->randomNumber,
             'age' => $this->faker->randomDigit,
-            'years_of_experience' => $this->faker->randomDigit,
+            'years_of_experience' => $this->faker->randomDigit([1, 2, 3, 5, 7, 9, 11, 15]),
             'github_link' => $this->faker->url,
             'portfolio_link' => $this->faker->url,
             'other_link' => $this->faker->url,
