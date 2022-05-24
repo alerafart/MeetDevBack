@@ -14,9 +14,9 @@ trait MustVerifyEmail
      *
      * @return bool
      */
-    public function hasVerifiedEmail()
+    public function hasVerifiedEmail($user)
     {
-        return ! is_null($this->email_verified_at);
+        return ! isset($user->email_verified_at);
     }
 
     /**

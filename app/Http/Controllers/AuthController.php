@@ -103,6 +103,28 @@ class AuthController extends Controller
     }
 
     /**
+     * Get the authenticated User (full profile) to reuse data in back-end.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function meNoJson()
+    {
+        $user = auth()->user();
+        $query = Users::query()->where("users.id", "=", $user->id);
+
+        if (isset($user->dev_id)) {
+            $query->join("developers", "developers.id", "=", "users.dev_id");
+        }
+        if (isset($user->recrut_id)) {
+            $query->join("recruiters", "recruiters.id", "=", "users.recrut_id");
+        }
+
+        $userDetails = $query->get();
+
+        return $userDetails;
+    }
+
+    /**
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
@@ -309,6 +331,7 @@ class AuthController extends Controller
         \Tymon\JWTAuth\Facades\JWTAuth::parseToken()->authenticate();
 
         if ( ! $request->user() ) {
+           // return $request->user();
             return response()->json('Invalid token', 401);
         }
 
