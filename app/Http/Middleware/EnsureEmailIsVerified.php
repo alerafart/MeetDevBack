@@ -24,12 +24,12 @@ class EnsureEmailIsVerified
         $user = $auth->meNoJson();
 
         //$user = User::where('email_address', '=', $userComp->pluck('email_address'))->first();
-        //return $user;
+        return $user;
 
         if ( $request->fullUrl() != route('email.request.verification') &&
            ( ! $user || ! $this->hasVerifiedEmail($user) ) )
         {
-            return $user->hasVerifiedEmail();
+            return $$this->hasVerifiedEmail($user);
             throw new AuthorizationException('Unauthorized, your email address '.$user->pluck('email_address').' is not verified.');
         }return $next($request);
     }

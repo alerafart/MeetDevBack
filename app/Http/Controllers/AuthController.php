@@ -330,17 +330,18 @@ class AuthController extends Controller
         \Tymon\JWTAuth\Facades\JWTAuth::getToken();
         \Tymon\JWTAuth\Facades\JWTAuth::parseToken()->authenticate();
 
-        if ( ! $request->user() ) {
+        $userInfo = $request->user();
+        if ( ! $userInfo ) {
            // return $request->user();
             return response()->json('Invalid token', 401);
         }
 
-        if ( $request->user()->hasVerifiedEmail() ) {
+        if ( $this->hasVerifiedEmail($userInfo) ) {
             return response()->json(['status' => 'failed', 'message' => 'Email address '.$request->user()->getEmailForVerification().' is already verified.']);
         }$request->user()->markEmailAsVerified();
 
 
-        $userInfo = $request->user();
+       // $userInfo = $request->user();
         $query = Users::query()->where("users.id", "=", $userInfo->id);
 
         if (isset($userInfo->dev_id)) {
