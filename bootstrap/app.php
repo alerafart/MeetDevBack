@@ -123,6 +123,7 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Illuminate\Notifications\NotificationServiceProvider::class);
 $app->alias('Notification', Illuminate\Support\Facades\Notification::class);
 
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

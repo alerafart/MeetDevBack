@@ -46,6 +46,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        // $credentials = $request->only(['email_address', 'password', 'access_token','token_type']);
         $credentials = $request->only(['email_address', 'password']);
 
         $user = Users::where('email_address', '=', $credentials['email_address'])->first();
@@ -80,13 +81,25 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     * Get the authenticated User (full profile).
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+        $query = Users::query()->where("users.id", "=", $user->id);
+
+        if (isset($user->dev_id)) {
+            $query->join("developers", "developers.id", "=", "users.dev_id");
+        }
+        if (isset($user->recrut_id)) {
+            $query->join("recruiters", "recruiters.id", "=", "users.recrut_id");
+        }
+
+        $userDetails = $query->get();
+
+        return response()->json(['userId' => $user->id, 'userDetails' => $userDetails]);
     }
 
     /**
