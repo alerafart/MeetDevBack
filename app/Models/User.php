@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use App\Http\Traits\MustVerifyEmail as MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+//use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
-    use Authenticatable, Authorizable; //Notifiable;
-
+    use Authorizable, Notifiable, Authenticatable, MustVerifyEmail;
 
      /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -37,6 +38,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 
     /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return array|string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        // Return email address only...
+        return $this->email_address;
+
+        // Return email address and name...
+       // return [$this->email_address => $this->name];
+    }
+
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -53,5 +70,30 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
        // 'password',
     ];
+
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($model) {/**
+        * If user email have changed email verification is required
+        */
+        if( $model->isDirty('email') ) {
+            $model->setAttribute('email_verified_at', null);
+            $model->sendEmailVerificationNotification();
+        }});
+    }
 
 }

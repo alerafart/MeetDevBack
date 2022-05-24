@@ -6,9 +6,12 @@ use App\Models\Users;
 use App\Models\Developers;
 use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Contracts\Providers\Auth;
 
 class UsersController extends Controller
 {
@@ -175,6 +178,8 @@ class UsersController extends Controller
                             $user->recrut_id = $recruiterId;
 
                             if ($user->save()) {
+                                event(new Registered($user));
+
                                 return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter]);
                             }
                         }
@@ -356,8 +361,7 @@ class UsersController extends Controller
         }
 
         $dev =[];
-        $devs = $results->map(function($item){
-
+        $devs = $results->map(function ($item) {
             $dev['userId'] = $item->id;
 
             $devDetails = Users::join('developers', 'users.dev_id', '=', 'developers.id')
@@ -370,4 +374,5 @@ class UsersController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
     }
+
 }

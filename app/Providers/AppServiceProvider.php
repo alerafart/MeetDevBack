@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\UrlGenerator as UrlGenerator;
 use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+
     }
 
 }
