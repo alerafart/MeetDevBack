@@ -11,7 +11,7 @@ class RecruitersController extends Controller
     /**
      * get all recruiters list
      *
-     * @return void
+     * @return object
      */
     public function list(){
         return Recruiters::all();
@@ -21,7 +21,7 @@ class RecruitersController extends Controller
      * get single recruiters by id
      *
      * @param [int] $id
-     * @return void
+     * @return object
      */
 
     public function item($id){
@@ -32,7 +32,7 @@ class RecruitersController extends Controller
      * Create new recruiter
      *
      * @param Request $request
-     * @return void
+     * @return object
      */
     public function create(Request $request){
 
@@ -55,7 +55,7 @@ class RecruitersController extends Controller
      *
      * @param Request $request
      * @param [type] $id
-     * @return void
+     * @return object
      */
     public function update(Request $request, $id){
         try {

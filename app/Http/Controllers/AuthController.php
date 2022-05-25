@@ -18,6 +18,9 @@ class AuthController extends Controller
 {
     use MustVerifyEmail;
 
+    /**
+     * create a new AuthController instance
+     */
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['register', 'registerDev', 'registerRecrut', 'login', 'refresh', 'logout']]);
