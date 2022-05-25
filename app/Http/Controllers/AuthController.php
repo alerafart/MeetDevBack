@@ -26,7 +26,7 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['register', 'registerDev', 'registerRecrut', 'login', 'refresh', 'logout']]);
     }
 
-/*    public function register(Request $request)
+    /*public function register(Request $request)
     {
         $this->validate($request, [
             'email_address' => 'required|unique:users,email_address,1,id',

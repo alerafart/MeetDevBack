@@ -22,16 +22,22 @@ Duplicate `.env.example`, rename as `.env` and fill DB_DATABASE, DB_USERNAME, DB
 ## Composer packages for CORS authorizations handling 
 `composer require nordsoftware/lumen-cors`
 
+## Composer packages for JWT token authentification
+`composer require tymon/jwt-auth`
+Run `php artisan jwt:secret`. It will update the .env file.
+Then add this line in the .env file `JWT_BLACKLIST_GRACE_PERIOD=120`
 
 ## Composer packages for email sending feature
 `composer require illuminate/mail`
+`composer require illuminate/notifications`
+Then modify in the .env file as follow  
+`MAIL_USERNAME=meetdev.apollo22@gmail.com
+MAIL_PASSWORD=meetdev22`
 
 ### Guzzle HTTP library
 `composer require guzzlehttp/guzzle`
 *required*
 
-#### Postmark Driver
-`composer require wildbit/swiftmailer-postmark`
-#### Amazon SES driver
-`composer require aws/aws-sdk-php`
+
+
 

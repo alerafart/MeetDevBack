@@ -1,10 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\Http\Controllers\EmailController;
-use Illuminate\Mail\Markdown;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,11 +16,8 @@ use Illuminate\Mail\Markdown;
  * API global unsecured users routes
  */
 $router->group(['prefix' => 'api'], function() use ($router){
-    //$router->post('/users/developers', 'UsersController@createNewDevUser');
-    //$router->post('/users/recruiters', 'UsersController@createNewRecruiterUser');
     $router->post('/register/users/developers', 'AuthController@registerDev');
     $router->post('/register/users/recruiters', 'AuthController@registerRecrut');
-    //  $router->post('/login', 'AuthController@login');
     $router->post('/logout', 'AuthController@logout');
     $router->post('/refresh', 'AuthController@refresh');
     //Verify user email address
