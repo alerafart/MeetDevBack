@@ -24,7 +24,6 @@ class EnsureEmailIsVerified
         $user = $auth->meNoJson();
 
         //$user = User::where('email_address', '=', $userComp->pluck('email_address'))->first();
-        return $user;
 
         if ( $request->fullUrl() != route('email.request.verification') &&
            ( ! $user || ! $this->hasVerifiedEmail($user) ) )
