@@ -4,9 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-
     "content-hash": "d082bffdb10ef467c6e08953f8b11098",
-
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1571,7 +1569,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.83.13",
+            "version": "v8.83.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
