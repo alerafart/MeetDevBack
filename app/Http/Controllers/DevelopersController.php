@@ -12,7 +12,7 @@ class DevelopersController extends Controller
     /**
      * Get all users list
      *
-     * @return void
+     * @return objects
      */
     public function list(){
         return Developers::all();
@@ -22,7 +22,7 @@ class DevelopersController extends Controller
      * get single developer by id
      *
      * @param [int] $id
-     * @return void
+     * @return object
      */
     public function item($id){
         return Developers::whereId($id)->first();
@@ -32,7 +32,7 @@ class DevelopersController extends Controller
      * Create new developper
      *
      * @param Request $request
-     * @return void
+     * @return object
      */
     public function create(Request $request) {
         try {
@@ -65,7 +65,7 @@ class DevelopersController extends Controller
      *
      * @param Request $request
      * @param [type] $id
-     * @return void
+     * @return object
      */
     public function update(Request $request, $id) {
         try {
@@ -101,7 +101,7 @@ class DevelopersController extends Controller
      * Delete developer
      *
      * @param [type] $id
-     * @return void
+     * @return object
      */
     public function delete($id) {
         try {
