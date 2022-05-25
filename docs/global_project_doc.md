@@ -40,6 +40,13 @@ This method handles the sending of an email to a user's mailbox and the creation
 The method is linked to the `ressources` folder which contains the markdown blade file and the custom components and CSS files.
 
 
+## Middleware
+### Authenticate middleware
+This middleware is not used anymore as we now pass by the `jwt.auth` middleware providied by the Tymon\jwt-auth package.
+
+### EnsureEmailsVerified middleware a.k.a Verified 
+This middleware check if the user has a verified email in the DB or is currently verifying his email address before to grant access to all the routes it protects. It uses the MustVerifyEmail traits to check the DB.
+
 
 ## Models organization
 The models contains mostly the table relationships and the default fields data. Some also use or implements specific packages or traits to allow the JWT authentification, email address verification and mail/notification send. The User model also contains method to retrieve a user using only JWT, the notification "route" to send it and an unused boot method to handle email address update in one user profile, firing a new verification email.
@@ -60,7 +67,5 @@ If a file or provider is missing there, the app won't load it and therefore won'
 
 
 ## Database folder
-The DB folder contains all migration related folders. Which means the migrations themselves and the dummies data. Those process are described in the *DB_migration_doc.md*.
-
-
+The DB folder contains all migration related folders. Which means the migrations themselves and the dummies data (factories and seeders files). Those process are described in the *DB_migration_doc.md*.
 
