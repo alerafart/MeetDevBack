@@ -37,6 +37,7 @@ class DevelopersController extends Controller
     public function create(Request $request) {
         try {
             $developers = new Developers();
+            $developers->label = $request->label;
             $developers->description = $request->description;
             if ($request->available_for_recruiters !== null) {
                 $developers->available_for_recruiters = $request->available_for_recruiters;
@@ -47,13 +48,15 @@ class DevelopersController extends Controller
             $developers->minimum_salary_requested = $request->minimum_salary_requested;
             $developers->maximum_salary_requested = $request->maximum_salary_requested;
             $developers->age = $request->age;
+            $developers->languages = $request->languages;
             $developers->years_of_experience = $request->years_of_experience;
+            $developers->english_spoken = $request->english_spoken;
             $developers->github_link = $request->github_link;
             $developers->portfolio_link = $request->portfolio_link;
             $developers->other_link = $request->other_link;
 
             if($developers->save()) {
-                return response()->json(['status' => 'success', 'message' => 'Developer created successfully']);
+                return response()->json(['status' => 'success', 'message' => 'Developer created successfully', 'dev' => $developers]);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

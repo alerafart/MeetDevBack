@@ -48,7 +48,7 @@ class UsersController extends Controller
             $users->city = $request->city;
             $users->zip_code = $request->zip_code;
             $users->email_address = $request->email_address;
-            $users->password = $request->password;
+            $users->password = Hash::make($request->password);
             $users->phone = $request->phone;
             if ($request->subscribe_to_push_notif !== null) {
                 $users->subscribe_to_push_notif = $request->subscribe_to_push_notif;
@@ -56,7 +56,7 @@ class UsersController extends Controller
             $users->profile_picture = $request ->profile_picture;
 
             if ($users->save()) {
-                return response()->json(['status' => 'success', 'message' => 'User created successfully']);
+                return response()->json(['status' => 'success', 'message' => 'User created successfully'], 200);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -77,32 +77,20 @@ class UsersController extends Controller
         }
         else {
             try {
-                $user = new Users();
-                $user->lastname = $request->lastname;
-                $user->firstname = $request->firstname;
-                $user->city = $request->city;
-                $user->department = $request->department;
-                $user->zip_code = $request->zip_code;
-                $user->email_address = $request->email_address;
-                $password = $request->password;
-                $hashedPassword = Hash::make($password);
-                $user->password = $hashedPassword;
-                $user->phone = $request->phone;
-                if ($request->subscribe_to_push_notif !== null) {
-                    $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
-                }
-                $user->profile_picture = $request->profile_picture;
+                //call the create() CRUD method of the Users controller
+               $userCreation = $this->create($request);
 
-                if ($user->save()) {
+                if ($userCreation->status() === 200) {
                     try {
+                        //cannot just call the create() method of the Developers controller because the we won't be able to access the id of the newly create row afterward
                         $developer = new Developers();
                         $developer->label = $request->label;
                         $developer->description = $request->description;
                         if ($request->available_for_recruiters !== null) {
-                            $user->available_for_recruiters = $request->available_for_recruiters;
+                            $developer->available_for_recruiters = $request->available_for_recruiters;
                         }
                         if ($request->available_for_developers !== null) {
-                            $user->available_for_developers = $request->available_for_developers;
+                            $developer->available_for_developers = $request->available_for_developers;
                         }
                         $developer->minimum_salary_requested = $request->minimum_salary_requested;
                         $developer->maximum_salary_requested = $request->maximum_salary_requested;
@@ -115,16 +103,20 @@ class UsersController extends Controller
                         $developer->other_link = $request->other_link;
 
                         if ($developer->save()) {
+                            $user = Users::where('email_address', '=', $request->email_address)->first();
                             $devId = $developer->id;
                             $user->dev_id = $devId;
 
-                                if ($user->save()) {
-                                    return response()->json(['status' => 'success', 'message' =>'Developer user created successfully and language saved', 'general' => $user, 'spec' => $developer]);
-                                } else {
-                                    return response()->json(['status' => 'error', 'message' => 'dev_id not saved'], 400);
-                                }
+                            if ($user->save()) {
+                                return response()->json(['status' => 'success', 'message' =>'Developer user created successfully', 'general' => $user, 'spec' => $developer]);
+                            } else {
+                                return response()->json(['status' => 'error', 'message' => 'dev_id not saved'], 400);
                             }
+                        }
                         }catch (\Exception $e) {
+                            //if creation fail, the user and developer rows are deleted
+                            $developer->delete();
+                            $user = Users::where('email_address', '=', $request->email_address)->first();
                             $user->delete();
                             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                         }
@@ -150,23 +142,10 @@ class UsersController extends Controller
         }
         else {
             try {
-                $user = new Users();
-                $user->lastname = $request->lastname;
-                $user->firstname = $request->firstname;
-                $user->city = $request->city;
-                $user->department = $request->department;
-                $user->zip_code = $request->zip_code;
-                $user->email_address = $request->email_address;
-                $password = $request->password;
-                $hashedPassword = Hash::make($password);
-                $user->password = $hashedPassword;
-                $user->phone = $request->phone;
-                if ($request->subscribe_to_push_notif !== null) {
-                    $user->subscribe_to_push_notif = $request->subscribe_to_push_notif;
-                }
-                $user->profile_picture = $request->profile_picture;
+                 //call the create() CRUD method of the Users controller
+               $userCreation = $this->create($request);
 
-                if ($user->save()) {
+               if ($userCreation->status() === 200) {
                     try {
                         $recruiter = new Recruiters();
                         $recruiter->company_name = $request->company_name;
@@ -174,16 +153,16 @@ class UsersController extends Controller
                         $recruiter->web_site_link = $request-> web_site_link;
 
                         if ($recruiter->save()) {
+                            $user = Users::where('email_address', '=', $request->email_address)->first();
                             $recruiterId = $recruiter->id;
                             $user->recrut_id = $recruiterId;
 
                             if ($user->save()) {
-                                event(new Registered($user));
-
                                 return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter]);
                             }
                         }
                     } catch (\Exception $e) {
+                        $recruiter->delete();
                         $user->delete();
                         return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                     }
@@ -233,6 +212,7 @@ class UsersController extends Controller
      */
     public function updateUser(Request $request, $id){
         try {
+            //calls the update() from the CRUD of the users controller
             $this->update($request, $id);
 
             if(response()->json(["success"])){
@@ -241,6 +221,7 @@ class UsersController extends Controller
                 $profileDev = $profile->dev_id;
 
                 if (isset($profileDev)) {
+                    //calls the update() from CRUD of the developers/recruiters controller
                     $devCtrl = new DevelopersController;
                     return $devCtrl->update($request, $profileDev);
                 } elseif (isset($profileRec)) {
