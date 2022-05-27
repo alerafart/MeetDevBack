@@ -3,7 +3,6 @@
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
 
-<img src="{{url('http://localhost/MeetDev/projet-10-meet-dev-back/public/meetdevMail.png')}}" class="logo-md" alt="meetdev">
 @endcomponent
 @endslot
 

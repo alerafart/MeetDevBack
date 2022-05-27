@@ -2,10 +2,6 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-use App\Http\Controllers\MessagesController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\EmailController;
-use App\Mail\SendEmail;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +19,6 @@ $router->get('/', function () use ($router) {
 });
 
 
-
 /**
  *  Users CRUD methods routes
  */
@@ -31,7 +26,7 @@ $router->group(['prefix' => 'users'], function() use ($router){
     $router->get('/', 'UsersController@list');
     $router->get('/{id}', 'UsersController@item');
     $router->post('/', 'UsersController@create');
-    //$router->put('/{id}', 'UsersController@update');
+    $router->put('/{id}', 'UsersController@update');
     $router->delete('/{id}', 'UsersController@delete');
 });
 

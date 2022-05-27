@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d759af63d2dcd156cac273628073828",
+    "content-hash": "d082bffdb10ef467c6e08953f8b11098",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -756,6 +756,55 @@
             "time": "2021-11-21T21:41:47+00:00"
         },
         {
+            "name": "grosv/laravel-passwordless-login",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/grosv/laravel-passwordless-login.git",
+                "reference": "425c43cd6a2d66d53b61a76469ada35f36047715"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/grosv/laravel-passwordless-login/zipball/425c43cd6a2d66d53b61a76469ada35f36047715",
+                "reference": "425c43cd6a2d66d53b61a76469ada35f36047715",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": "Grosv\\LaravelPasswordlessLogin\\LaravelPasswordlessLoginProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Grosv\\LaravelPasswordlessLogin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ed Grosvenor",
+                    "email": "ed.grosvenor@wickedviral.com"
+                }
+            ],
+            "description": "Passwordless login using temporary signed URL",
+            "support": {
+                "issues": "https://github.com/grosv/laravel-passwordless-login/issues",
+                "source": "https://github.com/grosv/laravel-passwordless-login/tree/1.8.0"
+            },
+            "time": "2022-04-28T14:34:55+00:00"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "7.4.2",
             "source": {
@@ -1080,7 +1129,7 @@
         },
         {
             "name": "illuminate/auth",
-            "version": "v8.83.12",
+            "version": "v8.83.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/auth.git",
@@ -1520,7 +1569,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.83.12",
+            "version": "v8.83.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -2065,6 +2114,64 @@
             "time": "2022-01-05T15:17:19+00:00"
         },
         {
+            "name": "illuminate/notifications",
+            "version": "v8.83.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/notifications.git",
+                "reference": "c9922cd9150df9e5a61429e48101b9abb58aaaae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/notifications/zipball/c9922cd9150df9e5a61429e48101b9abb58aaaae",
+                "reference": "c9922cd9150df9e5a61429e48101b9abb58aaaae",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/broadcasting": "^8.0",
+                "illuminate/bus": "^8.0",
+                "illuminate/collections": "^8.0",
+                "illuminate/container": "^8.0",
+                "illuminate/contracts": "^8.0",
+                "illuminate/filesystem": "^8.0",
+                "illuminate/mail": "^8.0",
+                "illuminate/queue": "^8.0",
+                "illuminate/support": "^8.0",
+                "php": "^7.3|^8.0"
+            },
+            "suggest": {
+                "illuminate/database": "Required to use the database transport (^8.0)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Notifications\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Notifications package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2021-12-25T18:26:44+00:00"
+        },
+        {
             "name": "illuminate/pagination",
             "version": "v8.83.12",
             "source": {
@@ -2575,6 +2682,100 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2022-04-14T13:47:10+00:00"
+        },
+        {
+            "name": "laravel-foundation/auth",
+            "version": "v5.7.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-foundation/auth.git",
+                "reference": "f09414bd9ad95db28c257fcaea7c2a0ed35d78da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-foundation/auth/zipball/f09414bd9ad95db28c257fcaea7c2a0ed35d78da",
+                "reference": "f09414bd9ad95db28c257fcaea7c2a0ed35d78da",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Foundation\\Auth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ashley Clarke",
+                    "email": "me@ashleyclarke.me"
+                },
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Auth component from Laravel Foundation.",
+            "keywords": [
+                "auth",
+                "foundation",
+                "framework",
+                "illuminate",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-foundation/auth/issues",
+                "source": "https://github.com/laravel-foundation/auth/tree/v5.7.11"
+            },
+            "abandoned": true,
+            "time": "2018-10-26T18:15:44+00:00"
+        },
+        {
+            "name": "laravel-zero/foundation",
+            "version": "v8.81.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-zero/foundation.git",
+                "reference": "a50fb07d04f01296424e2369b48bf94fdc4267b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-zero/foundation/zipball/a50fb07d04f01296424e2369b48bf94fdc4267b0",
+                "reference": "a50fb07d04f01296424e2369b48bf94fdc4267b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-8.x": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Illuminate/Foundation/helpers.php"
+                ],
+                "psr-4": {
+                    "Illuminate\\": "src/Illuminate/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This is a mirror from illuminate/foundation.",
+            "keywords": [
+                "framework",
+                "laravel"
+            ],
+            "support": {
+                "source": "https://github.com/laravel-zero/foundation/tree/v8.81.0"
+            },
+            "time": "2022-01-26T13:11:46+00:00"
         },
         {
             "name": "laravel/lumen-framework",
