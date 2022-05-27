@@ -58,7 +58,7 @@ class MessagesController extends Controller
      *
      * @param Request $request
      * @param [type] $id
-     * @return void
+     * @return objects
      */
     public function update(Request $request, $id) {
         try {
@@ -80,7 +80,7 @@ class MessagesController extends Controller
      * Delete single message with id
      *
      * @param [int] $id
-     * @return void
+     * @return object
      */
     public function delete($id) {
 
@@ -99,7 +99,7 @@ class MessagesController extends Controller
      * Retrieve all messages from One User using id and correspondent profile details
      *
      * @param [int] $id
-     * @return void
+     * @return objects
      */
     public function getAllMessagesFromOneUser($id) {
         $messagesReceived = Messages::where('receiver_user_id','=', $id)->get();
@@ -146,9 +146,9 @@ class MessagesController extends Controller
 
      /**
      * Retrieve one message send of a user profile using id and correspondent profile details
-     *
+     * @param Request $request
      * @param [int] $id
-     * @return void
+     * @return object
      */
     public function getOneFromAUser(Request $request) {
         $currentUserId = $request->userId;
@@ -176,7 +176,7 @@ class MessagesController extends Controller
      * Create new message from user
      *
      * @param Request $request
-     * @return void
+     * @return object
      */
     public function createMessageInDb(Request $request) {
 

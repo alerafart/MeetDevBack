@@ -2,10 +2,6 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-use App\Http\Controllers\MessagesController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\EmailController;
-use App\Mail\SendEmail;
 
 /*
 |--------------------------------------------------------------------------

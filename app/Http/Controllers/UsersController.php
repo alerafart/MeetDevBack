@@ -6,16 +6,19 @@ use App\Models\Users;
 use App\Models\Developers;
 use App\Http\Controllers\DevelopersController;
 use App\Models\Recruiters;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Contracts\Providers\Auth;
 
 class UsersController extends Controller
 {
     /**
      * get all users
      *
-     * @return void
+     * @return objects
      */
     public function list(){
         return Users::all();
@@ -25,7 +28,7 @@ class UsersController extends Controller
      * get user by id
      *
      * @param [int] $id
-     * @return void
+     * @return object
      */
     public function item($id){
         return Users::whereId($id)->first();
@@ -35,7 +38,7 @@ class UsersController extends Controller
      * insert new user into entity
      *
      * @param Request $request
-     * @return void
+     * @return object
      */
     public function create(Request $request){
         try {
@@ -137,7 +140,7 @@ class UsersController extends Controller
      * create new recruiter user into DB which means: 1 new row in the Users tables, 1 other in the Recruiters table and the id of the recruiter newly created row being pushed into the Users recrut_id column.
      *
      * @param Request $request
-     * @return void
+     * @return object
      */
 
     public function createNewRecruiterUser(Request $request){
@@ -175,6 +178,8 @@ class UsersController extends Controller
                             $user->recrut_id = $recruiterId;
 
                             if ($user->save()) {
+                                event(new Registered($user));
+
                                 return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter]);
                             }
                         }
@@ -195,7 +200,7 @@ class UsersController extends Controller
      *
      * @param Request $request
      * @param [int] $id
-     * @return void
+     * @return object
      */
     public function update(Request $request, $id){
         try {
@@ -224,7 +229,7 @@ class UsersController extends Controller
      *
      * @param Request $request
      * @param [int] $id
-     * @return void
+     * @return object
      */
     public function updateUser(Request $request, $id){
         try {
@@ -255,7 +260,7 @@ class UsersController extends Controller
      * Delete user row
      *
      * @param [int] $id
-     * @return void
+     * @return object
      */
     public function delete($id) {
 
@@ -275,7 +280,7 @@ class UsersController extends Controller
      * User login method that return user data, including dev or recruiter info
      *
      * @param Request $request
-     * @return void
+     * @return object
      */
     public function login(Request $request){
         $isDev = false;
@@ -356,8 +361,7 @@ class UsersController extends Controller
         }
 
         $dev =[];
-        $devs = $results->map(function($item){
-
+        $devs = $results->map(function ($item) {
             $dev['userId'] = $item->id;
 
             $devDetails = Users::join('developers', 'users.dev_id', '=', 'developers.id')
@@ -370,4 +374,5 @@ class UsersController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Profile loaded successfuly', 'res' => $devs]);
     }
+
 }

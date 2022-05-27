@@ -1,4 +1,4 @@
 <div>
-        Hello <b>{{ $name }}</b>,
+        Hello <b>{{ $firstname }}</b>,
         <p>{{body}}</p>
     </div>
