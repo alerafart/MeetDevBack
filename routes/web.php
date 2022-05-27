@@ -19,7 +19,6 @@ $router->get('/', function () use ($router) {
 });
 
 
-
 /**
  *  Users CRUD methods routes
  */
@@ -27,7 +26,7 @@ $router->group(['prefix' => 'users'], function() use ($router){
     $router->get('/', 'UsersController@list');
     $router->get('/{id}', 'UsersController@item');
     $router->post('/', 'UsersController@create');
-    //$router->put('/{id}', 'UsersController@update');
+    $router->put('/{id}', 'UsersController@update');
     $router->delete('/{id}', 'UsersController@delete');
 });
 
