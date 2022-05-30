@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
-    use Authorizable, Notifiable, Authenticatable, MustVerifyEmail;
+    use Notifiable, Authenticatable, MustVerifyEmail;
 
      /**
      * Get the identifier that will be stored in the subject claim of the JWT.
