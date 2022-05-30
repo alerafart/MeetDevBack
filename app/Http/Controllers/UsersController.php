@@ -46,6 +46,7 @@ class UsersController extends Controller
             $users->lastname = $request->lastname;
             $users->firstname = $request->firstname;
             $users->city = $request->city;
+            $users->department = $request->department;
             $users->zip_code = $request->zip_code;
             $users->email_address = $request->email_address;
             $users->password = Hash::make($request->password);
