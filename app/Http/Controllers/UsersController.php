@@ -117,7 +117,7 @@ class UsersController extends Controller
                             //if creation fail, the user and developer rows are deleted
                             $developer->delete();
                             $user = Users::where('email_address', '=', $request->email_address)->first();
-                            $user->delete();
+                            $this->delete($user->id);
                             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
                         }
                     }
