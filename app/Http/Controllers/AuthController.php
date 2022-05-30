@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Users;
 use App\Models\Developers;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UsersController;
 use App\Models\Recruiters;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Support\Facades\DB;
