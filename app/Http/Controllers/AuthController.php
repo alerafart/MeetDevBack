@@ -158,10 +158,10 @@ class AuthController extends Controller
      */
     public function registerDev(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'email_address' => 'required|unique:users,email_address,1,id',
             'password' => 'required'//|confirmed'
-        ]);
+        ]);*/
 
         //check if user email address exists in DB, if not proceed to creation
         if (Users::where('email_address', '=', $request->email_address)->exists()) {
