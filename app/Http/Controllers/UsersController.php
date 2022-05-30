@@ -80,7 +80,6 @@ class UsersController extends Controller
             try {
                 //call the create() CRUD method of the Users controller
                $userCreation = $this->create($request);
-               return $userCreation;
 
                 if ($userCreation->status() === 200) {
                     try {

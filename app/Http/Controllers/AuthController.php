@@ -170,13 +170,11 @@ class AuthController extends Controller
             $userCtrler = new UsersController;
             //call the createNewDevUser() from the UsersController
             $userCreation = $userCtrler->createNewDevUser($request);
-            return $userCreation;
 
             if ($userCreation->status() === 200) {
                 //if the user has been created in DB, then we create a new JWT token for them and send a verification email
-                $user = Users::where('email_address', '=', $request->email_address)->first();
-                return $user;
-               // $token = auth()->login($user);
+                $user = User::where('email_address', '=', $request->email_address)->first();
+                $token = auth()->login($user);
                 $this->emailRequestVerification($request);
 
                 $developer = Developers::where('id', '=', $user->dev_id)->first();
