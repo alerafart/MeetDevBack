@@ -16,7 +16,7 @@ trait MustVerifyEmail
      */
     public function hasVerifiedEmail($user)
     {
-        return ! isset($user->email_verified_at);
+        return isset($user->email_verified_at);
     }
 
     /**

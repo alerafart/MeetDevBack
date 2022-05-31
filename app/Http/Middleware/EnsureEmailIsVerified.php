@@ -21,15 +21,26 @@ class EnsureEmailIsVerified
     public function handle($request, Closure $next)
     {
         $auth = new AuthController;
-        $user = $auth->meNoJson();
 
-        //$user = User::where('email_address', '=', $userComp->pluck('email_address'))->first();
+        if($request->email_address){
+            $user = User::where('email_address', '=', $request->email_address)->first();
 
-        if ( $request->fullUrl() != route('email.request.verification') &&
-           ( ! $user || ! $this->hasVerifiedEmail($user) ) )
-        {
-            return $$this->hasVerifiedEmail($user);
-            throw new AuthorizationException('Unauthorized, your email address '.$user->pluck('email_address').' is not verified.');
-        }return $next($request);
+            if ( $request->fullUrl() != route('email.request.verification') &&
+            //( ! $user || ! $user->hasVerifiedEmail($user) ) )
+            ( ! $user || !isset($user->email_verified_at) ) )
+            {
+                //throw new AuthorizationException('Unauthorized, your email address '.$user->email_address.' is not verified.');
+                return response()->json('Unauthorized, your email address '.$user->email_address.' is not verified.');
+            }
+        }else {
+            $user = $auth->meNoJson();
+            $userEmailVerified = $user->pluck('email_verified_at');
+            if ( $request->fullUrl() != route('email.request.verification') && ( ! $user || ! isset($userEmailVerified) ) )
+            {
+                //throw new AuthorizationException('Unauthorized, your email address '.$user->email_address.' is not verified.');
+                return response()->json('Unauthorized, your email address '.$user->pluck('email_address').' is not verified.');
+            }
+        }
+        return $next($request);
     }
 }

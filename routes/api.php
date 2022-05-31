@@ -22,7 +22,6 @@ $router->group(['prefix' => 'api'], function() use ($router){
     $router->post('/refresh', 'AuthController@refresh');
     //Verify user email address
     $router->post('/email/verify', ['as' => 'email.verify', 'uses' => 'AuthController@emailVerify']);
-    $router->post('/login', 'AuthController@login');
 });
 
 
@@ -30,7 +29,7 @@ $router->group(['prefix' => 'api'], function() use ($router){
  * API unsecured but only accessible to verified users routes
  */
 $router->group(['middleware' => 'verified'], function () use ($router) {
-    $router->post('/login', 'AuthController@login');
+    $router->post('api/login', 'AuthController@login');
 });
 
 
@@ -48,7 +47,7 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'jwt.auth', 'jwt.refre
       $router->group(['prefix' => '/users'], function () use ($router) {
           $router->post('/logout', 'AuthController@logout');
           $router->put('/{id}', 'UsersController@updateUser');
-          $router->get('/me', 'AuthController@me');
+          $router->get('/me', 'AuthController@meNoJson');
           $router->get('/search', 'UsersController@getDevSearchResults');
           $router->get('/contact', 'MailController@contactUser');
       });

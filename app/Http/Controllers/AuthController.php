@@ -210,7 +210,7 @@ class AuthController extends Controller
                 $this->emailRequestVerification($request);
 
                 $recruiter = Recruiters::where('id', '=', $user->recrut_id)->first();
-                return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter]);
+                return response()->json(['status' => 'success', 'message' =>'Recruter user created successfully', 'general' => $user, 'spec' => $recruiter, 'token' => $token]);
             } else {
                 // the case of user creation failing is handled within the creation method so we only send a message here
                 return response()->json(['status' => 'error', 'message' => 'Creation failed'], 400);
@@ -249,6 +249,7 @@ class AuthController extends Controller
         \Tymon\JWTAuth\Facades\JWTAuth::parseToken()->authenticate();
 
         $userInfo = $request->user();
+
         if ( ! $userInfo ) {
             return response()->json('Invalid token', 401);
         }
@@ -258,7 +259,6 @@ class AuthController extends Controller
         }$request->user()->markEmailAsVerified();
 
 
-       // $userInfo = $request->user();
         $query = Users::query()->where("users.id", "=", $userInfo->id);
 
         if (isset($userInfo->dev_id)) {
